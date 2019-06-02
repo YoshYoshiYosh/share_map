@@ -1,0 +1,11 @@
+h1 Home#index
+p Find me in app/views/home/index.html.slim
+
+p.notice= notice
+p.alert= alert
+
+- unless user_signed_in?
+  = link_to 'ログイン', new_user_session_path
+  = link_to '新規登録はこちら', new_user_registration
+-else
+  = link_to 'ログアウト', destroy_user_session_path, method: :delete
