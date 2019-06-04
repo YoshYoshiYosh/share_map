@@ -28,6 +28,13 @@ module ShareMap
     # the framework and any gems in your application.
 
     # Don't generate system test files.
-    config.generators.system_tests = nil
+
+    # テストフレームワークにRSpec指定、テンプレートエンジンにSlim指定
+    config.generators do |g|
+      g.system_tests :nil
+      g.template_engine :slim
+      g.test_framework :rspec
+    end
+
   end
 end
