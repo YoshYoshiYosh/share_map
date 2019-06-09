@@ -8,8 +8,6 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/ruby:2.5.3-node-browsers
-        environment:
-          DATABASE_URL: postgresql://postgres:Password@localhost:5432
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
