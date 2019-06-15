@@ -18,10 +18,10 @@ ActiveRecord::Schema.define(version: 2019_06_15_100231) do
   create_table "maps", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.integer "author"
+    t.bigint "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author"], name: "index_maps_on_author"
+    t.index ["author_id"], name: "index_maps_on_author_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -41,5 +41,5 @@ ActiveRecord::Schema.define(version: 2019_06_15_100231) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "maps", "users", column: "author"
+  add_foreign_key "maps", "users", column: "author_id"
 end
