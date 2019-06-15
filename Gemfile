@@ -62,3 +62,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # slim導入
 gem 'html2slim'
 gem 'slim-rails'
+
+gem 'rb-readline'
