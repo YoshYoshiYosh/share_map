@@ -1,5 +1,7 @@
 class MapsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_map, only: [:show, :edit, :update, :destroy]
+  before_action :can_edit?, only: [:edit, :update, :destroy]
 
   # GET /maps
   # GET /maps.json
@@ -25,6 +27,7 @@ class MapsController < ApplicationController
   # POST /maps.json
   def create
     @map = Map.new(map_params)
+    @map.author = current_user
 
     respond_to do |format|
       if @map.save
@@ -69,6 +72,12 @@ class MapsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def map_params
-      params.require(:map).permit(:title, :description, :author_id)
+      params.require(:map).permit(:title, :description)
+    end
+
+    def can_edit?
+      if current_user != @map.author
+        render 'errors/forbidden', status: 403
+      end
     end
 end
