@@ -2,10 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "maps/show", type: :view do
   before(:each) do
+    @user = assign(:user, User.create!(
+      :email => 'yoshikik@live.jp',
+      :password => 'Password',
+      :password_confirmation => 'Password'
+    ))
+    
     @map = assign(:map, Map.create!(
       :title => "Title",
       :description => "MyText",
-      :author_id => 1
+      :author => @user
     ))
   end
 
