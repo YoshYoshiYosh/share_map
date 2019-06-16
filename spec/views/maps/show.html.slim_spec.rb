@@ -5,7 +5,7 @@ RSpec.describe "maps/show", type: :view do
     @map = assign(:map, Map.create!(
       :title => "Title",
       :description => "MyText",
-      :author => nil
+      :author_id => 1
     ))
   end
 
