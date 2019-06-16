@@ -5,7 +5,7 @@ p.notice= notice
 p.alert= alert
 
 - unless user_signed_in?
-  = link_to 'ログイン', new_user_session_path
-  = link_to '新規登録はこちら', new_user_registration
--else
-  = link_to 'ログアウト', destroy_user_session_path, method: :delete
+  p= link_to 'ログイン', new_user_session_path
+  p= link_to '新規登録はこちら', new_user_registration_path
+- else
+  p= link_to 'ログアウト', destroy_user_session_path, method: :delete
