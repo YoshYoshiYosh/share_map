@@ -5,7 +5,7 @@ RSpec.describe "maps/edit", type: :view do
     @map = assign(:map, Map.create!(
       :title => "MyString",
       :description => "MyText",
-      :author_id => 1
+      :author => User.new
     ))
   end
 
@@ -17,8 +17,6 @@ RSpec.describe "maps/edit", type: :view do
       assert_select "input[name=?]", "map[title]"
 
       assert_select "textarea[name=?]", "map[description]"
-
-      assert_select "input[name=?]", "map[author_id]"
     end
   end
 end

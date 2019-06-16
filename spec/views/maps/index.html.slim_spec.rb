@@ -6,12 +6,12 @@ RSpec.describe "maps/index", type: :view do
       Map.create!(
         :title => "Title",
         :description => "MyText",
-        :author => nil
+        :author => User.new
       ),
       Map.create!(
         :title => "Title",
         :description => "MyText",
-        :author => nil
+        :author => User.new
       )
     ])
   end
@@ -20,6 +20,5 @@ RSpec.describe "maps/index", type: :view do
     render
     assert_select "tr>td", :text => "Title".to_s, :count => 2
     assert_select "tr>td", :text => "MyText".to_s, :count => 2
-    assert_select "tr>td", :text => nil.to_s, :count => 2
   end
 end
