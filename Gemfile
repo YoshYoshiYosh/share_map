@@ -65,3 +65,4 @@ gem 'slim-rails'
 
 gem 'bootstrap'
 gem 'devise-bootstrap-views'
+gem 'rb-readline'
