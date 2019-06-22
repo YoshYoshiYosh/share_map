@@ -30,6 +30,7 @@ development:
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
   username: postgres
+  adapter:  postgis
 
   # The password associated with the postgres role (username).
   password: Password

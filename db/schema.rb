@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_22_043140) do
+ActiveRecord::Schema.define(version: 2019_06_22_052052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "maps", force: :cascade do |t|
     t.string "title"
@@ -30,6 +31,7 @@ ActiveRecord::Schema.define(version: 2019_06_22_043140) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geography "lonlat", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
     t.index ["author_id"], name: "index_pins_on_author_id"
   end
 
