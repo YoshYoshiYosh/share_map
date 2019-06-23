@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2019_06_22_052052) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.geography "lonlat", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
+    t.geometry "lonlat", limit: {:srid=>0, :type=>"st_point"}
     t.index ["author_id"], name: "index_pins_on_author_id"
   end
 
