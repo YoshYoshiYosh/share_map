@@ -1,0 +1,21 @@
+= form_for @pin do |f|
+  - if @pin.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@pin.errors.count, "error")} prohibited this pin from being saved:"
+      ul
+        - @pin.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :author
+    = f.text_field :author
+  .field
+    = f.label :title
+    = f.text_field :title
+  .field
+    = f.label :description
+    = f.text_area :description
+  .field
+    = f.label :lonlat
+    = f.text_field :lonlat
+  .actions = f.submit

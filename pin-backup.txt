@@ -15,3 +15,7 @@ class CreatePins < ActiveRecord::Migration[5.2]
     end
   end
 end
+
+class Pin < ApplicationRecord
+  belongs_to :author, class_name: 'User'
+end
