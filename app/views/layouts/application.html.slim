@@ -8,4 +8,8 @@ html
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = yield
+    / - if flash[:message]
+    - flash.notice.present?
+      = content_tag(:div, flash[:message], class: "alert alert-success")
+    h2= link_to 'ルートへ', '/'
+    .container.mt-5= yield

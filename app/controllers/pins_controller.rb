@@ -1,5 +1,7 @@
 class PinsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_pin, only: [:show, :edit, :update, :destroy]
+  before_action :can_edit?, only: [:edit, :update, :destroy]
 
   # GET /pins
   # GET /pins.json
@@ -25,6 +27,7 @@ class PinsController < ApplicationController
   # POST /pins.json
   def create
     @pin = Pin.new(pin_params)
+    @pin.author = current_user
 
     respond_to do |format|
       if @pin.save
@@ -71,4 +74,11 @@ class PinsController < ApplicationController
     def pin_params
       params.require(:pin).permit(:author_id, :title, :description, :lonlat)
     end
+
+    def can_edit?
+      if current_user != @pin.author
+        render 'errors/forbidden', status: 403
+      end
+    end
+    
 end

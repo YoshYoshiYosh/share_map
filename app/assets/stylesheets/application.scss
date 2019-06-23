@@ -1,1 +1,21 @@
 @import 'bootstrap';
+
+$base-back: #fefefe;
+body {
+  background-color: $base-back;
+
+  .map-box {
+    padding: 30px;
+    border: 1px solid #555;
+    .map-text {
+      color: #555;
+      text-decoration: none;
+    }
+  }
+}
+
+.logout {
+  position: fixed;
+  top: 10%;
+  right: 10%;
+}
