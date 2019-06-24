@@ -1,4 +1,4 @@
-h1 Listing pins
+h1= @map.title
 
 table
   thead
@@ -18,10 +18,10 @@ table
         td = pin.title
         td = pin.description
         td = pin.lonlat
-        td = link_to 'Show', pin
-        td = link_to 'Edit', edit_pin_path(pin)
-        td = link_to 'Destroy', pin, data: { confirm: 'Are you sure?' }, method: :delete
+        / td = link_to 'Show', map_pin_path(pin)
+        / td = link_to 'Edit', edit_pin_path(pin)
+        / td = link_to 'Destroy', pin, data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
-= link_to 'New Pin', new_pin_path
+= link_to 'New Pin', new_map_pin_path

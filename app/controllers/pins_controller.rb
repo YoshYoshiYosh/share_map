@@ -1,12 +1,19 @@
 class PinsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_pin, only: [:show, :edit, :update, :destroy]
+  before_action :set_map
   before_action :can_edit?, only: [:edit, :update, :destroy]
 
   # GET /pins
   # GET /pins.json
   def index
-    @pins = Pin.all
+    @map = Map.find(params[:map_id])
+    @pins = Pin.all.where(map: @map)
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @map }
+    end
   end
 
   # GET /pins/1
@@ -15,6 +22,7 @@ class PinsController < ApplicationController
   end
 
   # GET /pins/new
+  # Mapモデルと紐づけるのを忘れないように実装する
   def new
     @pin = Pin.new
   end
@@ -27,11 +35,14 @@ class PinsController < ApplicationController
   # POST /pins.json
   def create
     @pin = Pin.new(pin_params)
+    # @pin = @map.pins.build(pin_params)
     @pin.author = current_user
+    @map = Map.find(params[:map_id])
+    @pin.map = @map
 
     respond_to do |format|
       if @pin.save
-        format.html { redirect_to @pin, notice: 'Pin was successfully created.' }
+        format.html { redirect_to map_pin_url(@map, @pin), notice: 'Pin was successfully created.' }
         format.json { render :show, status: :created, location: @pin }
       else
         format.html { render :new }
@@ -68,6 +79,10 @@ class PinsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_pin
       @pin = Pin.find(params[:id])
+    end
+
+    def set_map
+      @map = Map.find(params[:map_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
