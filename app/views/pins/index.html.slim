@@ -1,5 +1,5 @@
 h1.d-inline= @map.title
-p.d-inline= link_to 'マップ一覧へ', mymap_maps_path
+p.d-inline-block.ml-5.pd-5= link_to 'マップ一覧へ', mymap_maps_path
 
 table.table
   thead
@@ -10,6 +10,7 @@ table.table
       th Lonlat
       th 
       th
+      th
 
   tbody
     - @pins.each do |pin|
@@ -19,7 +20,7 @@ table.table
         td = pin.description
         td = pin.lonlat
         td = link_to 'Show', map_pin_path(@map, pin)
-        td = link_to 'Edit', edit_map_pin_path(pin.map, pin)
+        td = link_to 'Edit', edit_map_pin_path(@map, pin)
         td = link_to 'Destroy', map_pin_path(@map, pin), data: { confirm: 'Are you sure?' }, method: :delete
 
 br
