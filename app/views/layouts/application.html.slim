@@ -11,5 +11,11 @@ html
     / - if flash[:message]
     - flash.notice.present?
       = content_tag(:div, flash[:message], class: "alert alert-success")
-    h2= link_to 'ルートへ', '/'
+    nav.navbar.navbar-expand-sm.navbar-dark.bg-dark.mb-3
+      ul.navbar-nav
+        li.nav-item
+          = link_to 'ルートへ', '/', class: 'nav-link'
+        li.nav-item
+          = link_to '自分のマップへ', mymap_maps_path, class: 'nav-link'
+        
     .container.mt-5= yield

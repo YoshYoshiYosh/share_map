@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   
   mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   
-  resources :maps do
+  resources :maps, except: [:show] do
     get :mymap, on: :collection
     resources :pins
   end

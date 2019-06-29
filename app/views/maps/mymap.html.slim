@@ -1,7 +1,23 @@
 h3.mb-5= "#{current_user.email}さんのMap一覧"
-/ ~さんのマップ一覧ではなくて、このページの中に「あなたのマップ」「あなたが見られるマップ(友人が作って招待されたやつ)」の2パターンに分けてかく。そしたらindexアクションはいらないので削除する
-- @maps.each.with_index(1) do |map, i|
-  h5= "No.1 #{map.title}"
-  p.m-0= map.description
-  p= link_to '編集する', edit_map_path(map), class: 'btn btn-outline-primary'
-  p= link_to '削除する', map_path(map), method: :delete, data: { confirm: "マップ「#{map.title}」を削除しますか？この操作を取り消すことはできません。"}, class: 'btn btn-outline-danger'
+
+table.table
+  thead
+    tr
+      th No.
+      th Title
+      th Description
+      th
+      th
+      th
+      th
+
+  tbody
+    - @maps.each.with_index(1) do |map, i|
+      tr
+        td= "#{i}"
+        td= "#{map.title}"
+        td.m-0= map.description
+        td= link_to 'マップを見に行く！(仮)', root_path
+        td= link_to 'Pinを確認する', map_pins_path(map)
+        td= link_to '編集する', edit_map_path(map)
+        td= link_to '削除する', map_path(map), method: :delete, data: { confirm: "マップ「#{map.title}」を削除しますか？この操作を取り消すことはできません。"}, class: 'text-danger'
