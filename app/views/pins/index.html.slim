@@ -1,26 +1,25 @@
 h1= @map.title
 
-table
+table.table
   thead
     tr
       th Author
       th Title
       th Description
       th Lonlat
-      th
-      th
+      th 
       th
 
   tbody
     - @pins.each do |pin|
       tr
-        td = pin.author
+        td = pin.author.email
         td = pin.title
         td = pin.description
         td = pin.lonlat
-        / td = link_to 'Show', map_pin_path(pin)
-        / td = link_to 'Edit', edit_pin_path(pin)
-        / td = link_to 'Destroy', pin, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Show', map_pin_path(@map, pin)
+        td = link_to 'Edit', edit_map_pin_path(pin.map, pin)
+        td = link_to 'Destroy', map_pin_path(@map, pin), data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 

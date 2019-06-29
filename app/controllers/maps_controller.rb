@@ -9,7 +9,7 @@ class MapsController < ApplicationController
     # 削除予定
     @maps = Map.all
   end
-
+  
   # GET /maps/1
   # GET /maps/1.json
   def show

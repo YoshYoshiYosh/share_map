@@ -35,9 +35,7 @@ class PinsController < ApplicationController
   # POST /pins.json
   def create
     @pin = Pin.new(pin_params)
-    # @pin = @map.pins.build(pin_params)
     @pin.author = current_user
-    @map = Map.find(params[:map_id])
     @pin.map = @map
 
     respond_to do |format|
@@ -56,7 +54,7 @@ class PinsController < ApplicationController
   def update
     respond_to do |format|
       if @pin.update(pin_params)
-        format.html { redirect_to @pin, notice: 'Pin was successfully updated.' }
+        format.html { redirect_to map_pin_url(@map, @pin), notice: 'Pin was successfully updated.' }
         format.json { render :show, status: :ok, location: @pin }
       else
         format.html { render :edit }
@@ -70,7 +68,7 @@ class PinsController < ApplicationController
   def destroy
     @pin.destroy
     respond_to do |format|
-      format.html { redirect_to pins_url, notice: 'Pin was successfully destroyed.' }
+      format.html { redirect_to map_pins_url(@map), notice: 'Pin was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -87,6 +85,7 @@ class PinsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pin_params
+      params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
       params.require(:pin).permit(:author_id, :title, :description, :lonlat)
     end
 
@@ -95,5 +94,5 @@ class PinsController < ApplicationController
         render 'errors/forbidden', status: 403
       end
     end
-    
+
 end

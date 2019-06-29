@@ -1,4 +1,11 @@
-= form_with model: @pin, local: true, url: map_pins_path do |f|
+/ - if request.url.match(/\maps\/\d\/pins\/new/)
+/   - pin_post_path = new_map_pin_path
+/ - elsif request.url.match(/\/maps\/\d\/pins\/\d\/edit/)
+/   - pin_post_path = map_pin_path
+
+- pin_post_path = request.url.match(/\maps\/\d\/pins\/new/) ? new_map_pin_path : map_pin_path
+
+= form_with model: @pin, local: true, url: pin_post_path do |f|
   - if @pin.errors.any?
     #error_explanation
       h2 = "#{pluralize(@pin.errors.count, "error")} prohibited this pin from being saved:"
