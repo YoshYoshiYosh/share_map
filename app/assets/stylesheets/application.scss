@@ -1,6 +1,15 @@
 @import 'bootstrap';
 
+$image-color: #022144;
+
 $base-back: #fefefe;
+
+body {
+  font-family: '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  }
+
 body {
   background-color: $base-back;
 
@@ -18,4 +27,8 @@ body {
   position: fixed;
   top: 10%;
   right: 10%;
+}
+
+.bg-image-color {
+  background-color: $image-color;
 }

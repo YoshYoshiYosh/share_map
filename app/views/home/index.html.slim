@@ -1,20 +1,7 @@
 h1 シェアマップ
-
-- if flash.notice
-  p.alert.alert-success= notice
-- elsif flash.alert
-  p.alert.alert-danger= alert
-
-- unless user_signed_in?
-  p= link_to 'ログイン', new_user_session_path
-  p= link_to '新規登録はこちら', new_user_registration_path
-- else
-
 h2.text-center Map
 .mt-5.mb-3.d-flex.justify-content-around
   .map-box
     = link_to '新しくMapを作成する', new_map_path, class: 'map-text'
   .map-box
     = link_to '自分のマップを見に行く', mymap_maps_path, class: 'map-text'
-
-p.logout= link_to 'ログアウト', destroy_user_session_path, method: :delete
