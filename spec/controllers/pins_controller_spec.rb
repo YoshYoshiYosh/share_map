@@ -28,12 +28,29 @@ RSpec.describe PinsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Pin. As you add validations to Pin, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+  
+  let(:map) {
+
+  }
+
+
+  let(:tmp_valid_attributes) {
+    skip('skip')
+  }
+
+  let(:tmp_valid_attributes) {
+    title: "hello", 
+    description: 'description',
+    lonlat: 'POINT(10 10)'
   }
 
   let(:invalid_attributes) {
     skip("Add a hash of attributes invalid for your model")
+  }
+
+  let(:map_attributes) {
+    title: 'test',
+    description: 'test'
   }
 
   # This should return the minimal set of values that should be in the session
@@ -45,7 +62,7 @@ RSpec.describe PinsController, type: :controller do
     it "returns a success response" do
       Pin.create! valid_attributes
       get :index, params: {}, session: valid_session
-      expect(response).to be_successful
+      expect(response).not_to be_successful
     end
   end
 
@@ -59,7 +76,9 @@ RSpec.describe PinsController, type: :controller do
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      # mapを作成する
+      map = Map.create! map_attributes
+      get :new, params: { map_id: map.id }, session: valid_session
       expect(response).to be_successful
     end
   end
