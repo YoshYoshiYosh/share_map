@@ -24,13 +24,26 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe PinsController, type: :controller do
+  
 
   # This should return the minimal set of attributes required to create a valid
   # Pin. As you add validations to Pin, be sure to
   # adjust the attributes here as well.
   
+  let(:user) { FactoryBot.create(:user) }
+
+  let(:map)  { FactoryBot.create(:map, author: user) }
+
+  let(:same_author_pin) { FactoryBot.create(:pin, :same_author, map: map, author: user) }
+
+  let(:pin)  { FactoryBot.create(:pin) }
+  
   let(:valid_attributes) {
-    skip('skip')
+    {
+      title: "hello",
+      description: 'description',
+      lonlat: 'POINT(10 10)'
+    }
   }
 
   let(:tmp_valid_attributes) {
@@ -42,121 +55,128 @@ RSpec.describe PinsController, type: :controller do
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {}
   }
 
-  let(:map_attributes) {
-    {
-      title: 'test',
-      description: 'test',
-      author: User.first
-    }
-  }
+  let(:map_and_pin_params) { { map_id: map.id, id: same_author_pin.id } }
+
+  # let(:map_attributes) {
+  #   {
+  #     title: 'test',
+  #     description: 'test',
+  #     author: User.first
+  #   }
+  # }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # PinsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "returns a success response" do
-      Pin.create! valid_attributes
-      get :index, params: {}, session: valid_session
-      expect(response).not_to be_successful
-    end
-  end
-
-  describe "GET #show" do
-    it "returns a success response" do
-      pin = Pin.create! valid_attributes
-      get :show, params: {id: pin.to_param}, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET #new" do
+  context "condition with user signed in" do
     login_user
-    it "returns a success response" do
-      # mapを作成する
-      map = Map.create! map_attributes
-      map.author
-      get :new, params: { map_id: map.id }, session: valid_session
-      expect(response).to be_successful
+    
+    describe "GET #index" do
+      it "returns a success response" do
+        get :index, params: { map_id: map.id }, session: valid_session
+        expect(response).to be_successful
+      end
     end
-  end
 
-  describe "GET #edit" do
-    it "returns a success response" do
-      pin = Pin.create! valid_attributes
-      get :edit, params: {id: pin.to_param}, session: valid_session
-      expect(response).to be_successful
+    describe "GET #show" do
+      it "returns a success response" do
+        # get :show, params: { map_id: map.id, id: pin.id }, session: valid_session
+        get :show, params: map_and_pin_params, session: valid_session
+        expect(response).to be_successful
+      end
     end
-  end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new Pin" do
+    describe "GET #new"  do
+      it "returns a success response" do
+        # mapを作成する
+        # map = Map.create! map_attributes
+        # map.author
+        get :new, params: { map_id: map.id }, session: valid_session
+        expect(response).to be_successful
+      end
+    end
+
+    describe "GET #edit" do
+      it "returns a success response" do
+        get :edit, params: map_and_pin_params, session: valid_session
+        expect(response).to be_successful
+      end
+    end
+
+    describe "POST #create" do
+      context "with valid params" do
+        it "creates a new Pin" do
+          expect {
+            post :create, params: { map_id: map.id, pin: valid_attributes }, session: valid_session
+          }.to change(Pin, :count).by(1)
+        end
+
+        it "redirects to the created pin" do
+          post :create, params: { map_id: map.id,  pin: valid_attributes }, session: valid_session
+          expect(response).to redirect_to([map, Pin.last])
+        end
+      end
+
+      context "with invalid params" do
+        it "returns a success response (i.e. to display the 'new' template)" do
+           # titleとかでvalidateさせてから、再度テストする
+          post :create, params: { map_id: map.id, pin: invalid_attributes }, session: valid_session
+          expect(response).to be_successful
+        end
+      end
+    end
+
+    describe "PUT #update" do
+      context "with valid params" do
+        let(:new_attributes) {
+          {
+            title: "rename",
+            description: 'rename',
+            lonlat: 'POINT(100 100)'
+          }
+        }
+
+        it "updates the requested pin" do
+          put :update, params: { map_id: map.id, id: same_author_pin.id, pin: new_attributes }, session: valid_session
+          same_author_pin.reload
+          expect(same_author_pin.title).to eq 'rename'
+        end
+
+        it "redirects to the pin" do
+          put :update, params: { map_id: map.id, id: same_author_pin.id, pin: new_attributes }, session: valid_session
+          expect(response).to redirect_to([map, same_author_pin])
+        end
+      end
+
+      context "with invalid params" do
+        it "returns a success response (i.e. to display the 'edit' template)" do
+          # titleとかでvalidateさせてから、再度テストする
+          put :update, params: { map_id: map.id, id: same_author_pin.id, pin: invalid_attributes }, session: valid_session
+          expect(response).to be_successful
+        end
+      end
+    end
+
+    describe "DELETE #destroy" do
+      it "destroys the requested pin", focus: true do
+        # same_author_pin
         expect {
-          post :create, params: {pin: valid_attributes}, session: valid_session
-        }.to change(Pin, :count).by(1)
+          delete :destroy, params: { map_id: map.id, id: same_author_pin.id }, session: valid_session
+        }.to change(Pin, :count).by(-1)
       end
 
-      it "redirects to the created pin" do
-        post :create, params: {pin: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Pin.last)
-      end
-    end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {pin: invalid_attributes}, session: valid_session
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested pin" do
+      it "redirects to the pins list" do
         pin = Pin.create! valid_attributes
-        put :update, params: {id: pin.to_param, pin: new_attributes}, session: valid_session
-        pin.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the pin" do
-        pin = Pin.create! valid_attributes
-        put :update, params: {id: pin.to_param, pin: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(pin)
-      end
-    end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        pin = Pin.create! valid_attributes
-        put :update, params: {id: pin.to_param, pin: invalid_attributes}, session: valid_session
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested pin" do
-      pin = Pin.create! valid_attributes
-      expect {
         delete :destroy, params: {id: pin.to_param}, session: valid_session
-      }.to change(Pin, :count).by(-1)
+        expect(response).to redirect_to(pins_url)
+      end
     end
 
-    it "redirects to the pins list" do
-      pin = Pin.create! valid_attributes
-      delete :destroy, params: {id: pin.to_param}, session: valid_session
-      expect(response).to redirect_to(pins_url)
-    end
   end
 
 end

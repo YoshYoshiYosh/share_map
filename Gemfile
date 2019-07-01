@@ -43,6 +43,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # RSpec導入
   gem 'rspec-rails', '3.8.0'
+  gem 'factory_bot_rails', '5.0.2'
   gem 'rspec_junit_formatter'
 end
 
@@ -54,6 +55,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'letter_opener_web', '~> 1.0'
+  gem 'spring-commands-rspec'
 end
 
 
