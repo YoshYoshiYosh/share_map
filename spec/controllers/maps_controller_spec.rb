@@ -28,12 +28,23 @@ RSpec.describe MapsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Map. As you add validations to Map, be sure to
   # adjust the attributes here as well.
+  
+  let(:user) { FactoryBot.create(:user) }
+  
+  let(:map) { FactoryBot.create(:map, author: user) }
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      title: 'テストタイトル',
+      description: '説明'
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      title: nil,
+      description: 'test'
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -41,101 +52,105 @@ RSpec.describe MapsController, type: :controller do
   # MapsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "returns a success response" do
-      Map.create! valid_attributes
-      get :index, params: {}, session: valid_session
-      expect(response).to be_successful
-    end
-  end
+  context "user signed in" do
+    login_user
 
-  describe "GET #show" do
-    it "returns a success response" do
-      map = Map.create! valid_attributes
-      get :show, params: {id: map.to_param}, session: valid_session
-      expect(response).to be_successful
+    describe "GET #index" do
+      it "returns a success response" do
+        get :index, params: {}, session: valid_session
+        expect(response).to be_successful
+      end
     end
-  end
-
-  describe "GET #new" do
-    it "returns a success response" do
-      get :new, params: {}, session: valid_session
-      expect(response).to redirect_to "/users/sign_in"
+  
+    describe "GET #show" do
+      it "returns a success response" do
+        get :show, params: { id: map.id }, session: valid_session
+        expect(response).to be_successful
+      end
     end
-  end
-
-  describe "GET #edit" do
-    it "returns a success response" do
-      map = Map.create! valid_attributes
-      get :edit, params: {id: map.to_param}, session: valid_session
-      expect(response).to be_successful
+  
+    describe "GET #edit" do
+      it "returns a success response" do
+        get :edit, params: { id: map.id }, session: valid_session
+        expect(response).to be_successful
+      end
     end
-  end
-
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new Map" do
-        expect {
+  
+    describe "POST #create" do
+      context "with valid params" do
+        it "creates a new Map" do
+          expect {
+            post :create, params: {map: valid_attributes}, session: valid_session
+          }.to change(Map, :count).by(1)
+        end
+  
+        it "redirects to the created map" do
           post :create, params: {map: valid_attributes}, session: valid_session
-        }.to change(Map, :count).by(1)
+          expect(response).to redirect_to(Map.last)
+        end
       end
-
-      it "redirects to the created map" do
-        post :create, params: {map: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Map.last)
+  
+      context "with invalid params" do
+        it "returns a success response (i.e. to display the 'new' template)" do
+          post :create, params: {map: invalid_attributes}, session: valid_session
+          expect(response).to be_successful
+        end
       end
     end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {map: invalid_attributes}, session: valid_session
-        expect(response).to be_successful
+  
+    describe "PUT #update" do
+      context "with valid params" do
+        let(:new_attributes) {
+          {
+            title: '新しい名前',
+            description: '新しい説明'
+          }
+        }
+  
+        it "updates the requested map" do
+          put :update, params: {id: map.id, map: new_attributes}, session: valid_session
+          map.reload
+          expect(map.title).to eq '新しい名前'
+        end
+  
+        it "redirects to the map" do
+          put :update, params: {id: map.id, map: new_attributes}, session: valid_session
+          expect(response).to redirect_to(map)
+        end
+      end
+  
+      context "with invalid params" do
+        it "returns a success response (i.e. to display the 'edit' template)" do
+          put :update, params: {id: map.id, map: invalid_attributes}, session: valid_session
+          expect(response).to be_successful
+        end
+      end
+    end
+  
+    describe "DELETE #destroy" do
+      it "destroys the requested map" do
+        map
+        expect {
+          delete :destroy, params: {id: map.id}, session: valid_session
+        }.to change(Map, :count).by(-1)
+      end
+  
+      it "redirects to the maps list" do
+        delete :destroy, params: {id: map.id}, session: valid_session
+        expect(response).to redirect_to(maps_url)
       end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested map" do
-        map = Map.create! valid_attributes
-        put :update, params: {id: map.to_param, map: new_attributes}, session: valid_session
-        map.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "redirects to the map" do
-        map = Map.create! valid_attributes
-        put :update, params: {id: map.to_param, map: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(map)
+  context "user don't login" do
+    
+    describe "GET #new" do
+      it "returns a success response" do
+        get :new, params: {}, session: valid_session
+        expect(response).to redirect_to "/users/sign_in"
       end
     end
 
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        map = Map.create! valid_attributes
-        put :update, params: {id: map.to_param, map: invalid_attributes}, session: valid_session
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested map" do
-      map = Map.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: map.to_param}, session: valid_session
-      }.to change(Map, :count).by(-1)
-    end
-
-    it "redirects to the maps list" do
-      map = Map.create! valid_attributes
-      delete :destroy, params: {id: map.to_param}, session: valid_session
-      expect(response).to redirect_to(maps_url)
-    end
   end
 
 end

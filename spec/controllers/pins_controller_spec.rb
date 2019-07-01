@@ -42,7 +42,7 @@ RSpec.describe PinsController, type: :controller do
     {
       title: "hello",
       description: 'description',
-      lonlat: 'POINT(10 10)'
+      lonlat: '10 10'
     }
   }
 
@@ -50,12 +50,16 @@ RSpec.describe PinsController, type: :controller do
     {
       title: "hello",
       description: 'description',
-      lonlat: 'POINT(10 10)'
+      lonlat: '10 10'
     }
   }
 
   let(:invalid_attributes) {
-    {}
+    {
+      title: nil,
+      description: 'test',
+      lonlat: '10 10'
+    }
   }
 
   let(:map_and_pin_params) { { map_id: map.id, id: same_author_pin.id } }
@@ -73,7 +77,7 @@ RSpec.describe PinsController, type: :controller do
   # PinsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  context "condition with user signed in" do
+  context "user signed in" do
     login_user
     
     describe "GET #index" do
@@ -137,7 +141,7 @@ RSpec.describe PinsController, type: :controller do
           {
             title: "rename",
             description: 'rename',
-            lonlat: 'POINT(100 100)'
+            lonlat: '100 100'
           }
         }
 
@@ -163,17 +167,16 @@ RSpec.describe PinsController, type: :controller do
     end
 
     describe "DELETE #destroy" do
-      it "destroys the requested pin", focus: true do
-        # same_author_pin
+      it "destroys the requested pin" do
+        same_author_pin
         expect {
           delete :destroy, params: { map_id: map.id, id: same_author_pin.id }, session: valid_session
         }.to change(Pin, :count).by(-1)
       end
 
       it "redirects to the pins list" do
-        pin = Pin.create! valid_attributes
-        delete :destroy, params: {id: pin.to_param}, session: valid_session
-        expect(response).to redirect_to(pins_url)
+        delete :destroy, params: { map_id: map.id, id: same_author_pin.id }, session: valid_session
+        expect(response).to redirect_to(map_pins_url)
       end
     end
 
