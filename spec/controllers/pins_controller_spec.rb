@@ -36,8 +36,6 @@ RSpec.describe PinsController, type: :controller do
 
   let(:same_author_pin) { FactoryBot.create(:pin, :same_author, map: map, author: user) }
 
-  let(:pin)  { FactoryBot.create(:pin) }
-  
   let(:valid_attributes) {
     {
       title: "hello",
@@ -64,14 +62,6 @@ RSpec.describe PinsController, type: :controller do
 
   let(:map_and_pin_params) { { map_id: map.id, id: same_author_pin.id } }
 
-  # let(:map_attributes) {
-  #   {
-  #     title: 'test',
-  #     description: 'test',
-  #     author: User.first
-  #   }
-  # }
-
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # PinsController. Be sure to keep this updated too.
@@ -89,7 +79,6 @@ RSpec.describe PinsController, type: :controller do
 
     describe "GET #show" do
       it "returns a success response" do
-        # get :show, params: { map_id: map.id, id: pin.id }, session: valid_session
         get :show, params: map_and_pin_params, session: valid_session
         expect(response).to be_successful
       end
@@ -97,9 +86,6 @@ RSpec.describe PinsController, type: :controller do
 
     describe "GET #new"  do
       it "returns a success response" do
-        # mapを作成する
-        # map = Map.create! map_attributes
-        # map.author
         get :new, params: { map_id: map.id }, session: valid_session
         expect(response).to be_successful
       end
@@ -128,7 +114,6 @@ RSpec.describe PinsController, type: :controller do
 
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'new' template)" do
-           # titleとかでvalidateさせてから、再度テストする
           post :create, params: { map_id: map.id, pin: invalid_attributes }, session: valid_session
           expect(response).to be_successful
         end
