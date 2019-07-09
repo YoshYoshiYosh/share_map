@@ -155,7 +155,7 @@ RSpec.describe PinsController, type: :controller do
       it "destroys the requested pin" do
         
         # same_author_pin をコメントアウトすると、テストが失敗します
-        same_author_pin
+        # same_author_pin
         
         expect {
           delete :destroy, params: { map_id: map.id, id: same_author_pin.id }, session: valid_session
