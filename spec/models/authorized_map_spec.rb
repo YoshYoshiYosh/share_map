@@ -13,5 +13,5 @@ RSpec.describe AuthorizedMap, type: :model do
 
   it 'is other_user\'s map that user can edit' do
     expect(authorized_map.user).to eq user
-  end
+  end 
 end
