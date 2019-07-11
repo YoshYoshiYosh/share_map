@@ -1,6 +1,7 @@
 class MapsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_map, only: [:show, :edit, :update, :destroy]
+  before_action :set_pins, only: [:show]
   before_action :can_edit?, only: [:edit, :update, :destroy]
 
   # GET /maps
@@ -13,6 +14,7 @@ class MapsController < ApplicationController
   # GET /maps/1
   # GET /maps/1.json
   def show
+
   end
 
   # GET /maps/mymap
@@ -80,6 +82,10 @@ class MapsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_map
       @map = Map.find(params[:id])
+    end
+
+    def set_pins
+      @pins = @map.pins
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

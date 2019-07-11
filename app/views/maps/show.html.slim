@@ -1,8 +1,16 @@
 p#notice = notice
 
 #mapid
+- @pins.each.with_index(1) do |pin, index|
+  / p#test= index.to_s + ':' + pin.title
+  / p#lon.d-none= pin.lonlat.x
+  / p#lat.d-none= pin.lonlat.y
 
-p
+  p.pin-title= index.to_s + ':' + pin.title
+  p.lon.d-none= pin.lonlat.x
+  p.lat.d-none= pin.lonlat.y
+
+p#tap-me
   strong Title:
   = @map.title
 p
@@ -11,6 +19,8 @@ p
 p
   strong Author:
   = @map.author
+
+p= link_to 'Pinを作成する', new_map_pin_path(@map)
 
 => link_to 'Edit', edit_map_path(@map)
 '|
