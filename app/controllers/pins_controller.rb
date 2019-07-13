@@ -7,12 +7,11 @@ class PinsController < ApplicationController
   # GET /pins
   # GET /pins.json
   def index
-    @map = Map.find(params[:map_id])
     @pins = Pin.all.where(map: @map)
 
     respond_to do |format|
       format.html
-      format.json { render :json => @map }
+      format.json
     end
   end
 

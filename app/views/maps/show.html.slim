@@ -1,14 +1,13 @@
-p#notice = notice
+p#notice.mb-0 = notice
 
 #mapid
+p.circle.d-inline-block
 - @pins.each.with_index(1) do |pin, index|
-  / p#test= index.to_s + ':' + pin.title
-  / p#lon.d-none= pin.lonlat.x
-  / p#lat.d-none= pin.lonlat.y
 
   p.pin-title= index.to_s + ':' + pin.title
   p.lon.d-none= pin.lonlat.x
   p.lat.d-none= pin.lonlat.y
+  p.pin.d-none= pin
 
 p#tap-me
   strong Title:

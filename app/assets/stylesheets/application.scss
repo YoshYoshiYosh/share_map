@@ -27,8 +27,17 @@ body {
 
 #mapid {
   // height: 180px;
-  height: 500px;
-  width: 1000px;
+  height: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 5;
+}
+
+.circle {
+  border: 1px solid #555;
+  z-index: 10;
+  text-align: center;
+  border-radius: 50%;
 }
 
 .logout {
