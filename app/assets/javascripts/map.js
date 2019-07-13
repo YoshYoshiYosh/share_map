@@ -82,7 +82,7 @@ async function mapInit(lons, lats) {
 
   for (let i = 0; i < lons.length; i++) {
     L.marker([lons[i], lats[i]]).addTo(map)
-    .bindPopup(`This is ${json[i].title}.`)
+    .bindPopup(`This is <br><h3>${json[i].title}</h3>`)
     .openPopup();
   }
 
