@@ -6,6 +6,7 @@ async function mapInit(lons, lats) {
       return response.json();
     })
     .then(function(myJson) {
+      console.log(myJson);
       return myJson;
     });
 
@@ -57,7 +58,7 @@ async function mapInit(lons, lats) {
   };
   
   L.control.watermark({ position: 'topright' }).addTo(map);
-
+  
   for (let i = 0; i < lons.length; i++) {
     L.marker([lons[i], lats[i]]).addTo(map)
     .bindPopup(`This is <br><h3>${json[i].title}</h3>`)
@@ -67,7 +68,7 @@ async function mapInit(lons, lats) {
   let pinMarker = L.marker([20, 20], {icon: pinIcon}).addTo(map);
   pinMarker.bindPopup('my pin')
   .openPopup();
-    
+  
 };
 
 document.addEventListener("DOMContentLoaded", async function(){
@@ -86,14 +87,16 @@ document.addEventListener("DOMContentLoaded", async function(){
 
   await mapInit(lons, lats);
 
-  let testElement = document.querySelector('.pin-icon')
+  let testElement = document.querySelector('.pin-icon');
 
   let jsonElement = testElement.addEventListener('click', () => {
-  fetch('http://localhost:3000/maps/1/pins.json')
-    .then((response) => {
-      return response.json();
-    })
+    fetch('http://localhost:3000/maps/1/pins.json')
+      .then((response) => {
+        return response.json();
+      })
   });
 
+  // jsonElementの代入が完了するまで、呼び出したくない
+  console.log(jsonElement);
 
 });
