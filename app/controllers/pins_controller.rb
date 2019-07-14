@@ -66,7 +66,6 @@ class PinsController < ApplicationController
   # DELETE /pins/1
   # DELETE /pins/1.json
   def destroy
-    byebug
     @pin.destroy
     respond_to do |format|
       format.html { redirect_to map_pins_url(@map), notice: 'Pin was successfully destroyed.' }
