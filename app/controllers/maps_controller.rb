@@ -6,12 +6,24 @@ class MapsController < ApplicationController
   # GET /maps
   # GET /maps.json
   def index
+    # 削除予定
     @maps = Map.all
   end
-
+  
   # GET /maps/1
   # GET /maps/1.json
   def show
+  end
+
+  # GET /maps/mymap
+  # GET /maps/mymap.json
+  def mymap
+    @maps = Map.all.where(author: current_user)
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @maps }
+    end
   end
 
   # GET /maps/new

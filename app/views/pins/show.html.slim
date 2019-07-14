@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Author:
+  = @pin.author
+p
+  strong Title:
+  = @pin.title
+p
+  strong Description:
+  = @pin.description
+p
+  strong Lonlat:
+  = @pin.lonlat
+
+=> link_to 'Edit', edit_map_pin_path(@map, @pin)
+'|
+=< link_to 'Back', map_pins_path(@map)
