@@ -71,3 +71,4 @@ gem 'devise-bootstrap-views'
 gem 'rb-readline'
 gem 'activerecord-postgis-adapter'
 gem 'leaflet-rails'
+gem 'rubocop', '~> 0.72.0', require: false
