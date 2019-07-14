@@ -3,6 +3,7 @@ class PinsController < ApplicationController
   before_action :set_pin, only: [:show, :edit, :update, :destroy]
   before_action :set_map
   before_action :can_edit?, only: [:edit, :update, :destroy] # :showを制限するか悩み中
+  protect_from_forgery
 
   # GET /pins
   # GET /pins.json

@@ -107,16 +107,17 @@ body {
   z-index: 5;
 }
 
+@media (min-width: 1500px) {
+  #mapid {
+    height: 1150px;
+  }
+}
+
 .circle {
   border: 1px solid #555;
   z-index: 10;
   text-align: center;
   border-radius: 50%;
-}
-
-.leaflet-top.leaflet-right {
-  // top: 3%;
-  // right: 1%;
 }
 
 .small-text {
@@ -135,9 +136,21 @@ body {
   &:hover {
     opacity: .5;
     transform: scale(1.1,1.1);
-    cursor: pointer;
+    cursor: pointer;    
   }
 }
+
+//  ピンのイラストを変更したりする時用
+// .marker {
+//   width: 20px !important;
+//   height: 20px !important;
+//   margin: -10px !important;
+//   border-radius: 10px;
+//   border: 3px solid #fdfdfd;
+//   box-shadow: 0 1px 4px rgba(0,0,0,0.8);
+//   background-color: #c43;
+//   z-index: 20 !important;
+// }
 
 .logout {
   position: fixed;
