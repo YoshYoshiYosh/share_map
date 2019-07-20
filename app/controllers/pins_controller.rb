@@ -41,7 +41,8 @@ class PinsController < ApplicationController
     respond_to do |format|
       if @pin.save
         format.html { redirect_to map_pin_url(@map, @pin), notice: 'Pin was successfully created.' }
-        format.json { render :show, status: :created, location: @pin }
+        # format.json { render :show, status: :created, location: [@map, @pin] }
+        format.json { render :index }
       else
         format.html { render :new }
         format.json { render json: @pin.errors, status: :unprocessable_entity }

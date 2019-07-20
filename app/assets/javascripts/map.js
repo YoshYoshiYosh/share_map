@@ -1,13 +1,10 @@
 async function mapInit(lons, lats) {
 
-  // 36行目~46行目は、fetchでPinを取得する方のやり方。
   let json = await fetch('http://localhost:3000/maps/1/pins.json')
     .then(function(response) {
+      console.log(response);
       return response.json();
     })
-    .then(function(myJson) {
-      return myJson;
-    });
 
   map = L.map('mapid').setView([lons[0], lats[0]], 5);
 
@@ -22,7 +19,7 @@ async function mapInit(lons, lats) {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // 最終的には、「画像をクリックするとPinを新規作成する」というようにしたい
+  // 縦並びのアイコン4つのうち、一番上のものをクリックするとテスト用ピンが登録される(今後変更予定)
   L.Control.Watermark = L.Control.extend({
     onAdd: function(map) {
 
@@ -72,6 +69,7 @@ async function mapInit(lons, lats) {
 };
 
 document.addEventListener("DOMContentLoaded", async function(){
+  console.log('読み込まれました');
 
   let lonsRaw = document.querySelectorAll(".lon");
   let latsRaw = document.querySelectorAll(".lat") ; 
@@ -87,7 +85,6 @@ document.addEventListener("DOMContentLoaded", async function(){
 
   await mapInit(lons, lats);
 
-
   // テスト用のPin
   let sightSeeing = [
     { country: 'USA', name: 'Grand Canyon National Park', lonlat: [36.0922146, -113.4035967]},
@@ -100,81 +97,33 @@ document.addEventListener("DOMContentLoaded", async function(){
   let button = document.querySelector('.pin-icon');
   button.addEventListener('click', async () => {
     for (let i = 0; i < sightSeeing.length; i++) {
-      L.marker(sightSeeing[i].lonlat).addTo(map)
-      .bindPopup(`This is <br><h3>${sightSeeing[i].name}</h3>in ${sightSeeing[i].country}`)
-      .openPopup();
-
-      if(i === 0) {
-        console.log(i);
-        
         // CSRF用のトークン
         const token = document.getElementsByName('csrf-token').item(0).content;
 
         // ボディを作る
         const formData = new FormData();
+
+        // 成功する
         formData.append('authenticity_token', token);
         formData.append('pin[title]', `${sightSeeing[i].name}`);
         formData.append('pin[description]', `${sightSeeing[i].country}の世界遺産ですよ。`);
         formData.append('pin[lonlat]', `${sightSeeing[i].lonlat[0]} ${sightSeeing[i].lonlat[1]}`);
-        
-        const postRequest = await fetch(location.href + '/pins', {
+        // 
+
+        const postRequest = await fetch(location.href + '/pins.json', {
           method: "POST",
           body: formData
         });
-        
+
+        console.log(postRequest);
+
         if (postRequest.status === 200) {
           console.log('成功');
         } else {
           console.log('失敗');
-          console.log(postRequest.status);
         }
-      }
     }
+
   });
 
 });
-
-
-
-
-
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   const form = document.querySelector('form');
-//   const messages = document.querySelector('#messages');
-
-//   form.onsubmit = async (e) => {
-//     e.preventDefault();
-//     const formData = new FormData();
-//     const message = form.message.value;
-//     if (message === '') return;
-//     formData.append('message', message);
-//     const row = await fetch(location.href, {
-//       method: "post",
-//       body: formData
-//     });
-    
-//     if (row.status === 200) {
-//       const newMessage = document.createTextNode(message);
-//       const newMessageElement = document.createElement("li");
-//       newMessageElement.appendChild(newMessage);
-//       messages.appendChild(newMessageElement);
-//     }
-//   };
-// });
-
-
-// // CSRFトークン
-// function testRequest(){
-//   var xhr = new XMLHttpRequest();
-//   xhr.onreadystatechange = function() {
-//     if (this.readyState==4 && this.status==200) {
-//       location.href = '/';
-//     }
-//   };
-//   var token = document.getElementsByName('csrf-token').item(0).content; // 追加
-//   xhr.responseType = 'json';
-//   xhr.open('POST', '/something.json', true);
-//   xhr.setRequestHeader('X-CSRF-Token', token); // 追加
-//   xhr.send();
-// }
