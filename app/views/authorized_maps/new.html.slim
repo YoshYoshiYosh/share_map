@@ -1,0 +1,22 @@
+.container
+  = form_with model: @new_authorized, url: map_authorize_index_path(@map), class: 'mt-5', remote: true do |f|
+    / - if @new_authorized.errors.any?
+    /   #error_explanation
+    /     h2 = "#{pluralize(@new_authorized.errors.count, "error")} prohibited this map from being saved:"
+    /     ul
+    /       - @new_authorized.errors.full_messages.each do |message|
+    /         li = message
+    .form_group.mb-3
+      / バックアップ
+      / = f.label :user_id
+      / = f.text_field :user_id, class: 'form-control'
+      = f.label :email
+      = f.text_field :email, class: 'form-control'
+    = f.submit nil, class: 'btn btn-primary'
+
+ul#result
+  - @authorized_users.each do |user|
+    - if current_user == user
+      li= "#{user.email}（所有者）"
+    - else
+      li= user.email

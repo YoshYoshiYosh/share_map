@@ -3,23 +3,34 @@ class AuthorizedMapsController < ApplicationController
   before_action :set_map, only: [:index, :new, :create, :update]
 
   def index
-    @authorized_maps = AuthorizedMap.where(map: @map)
+    @authorized_users = @map.authorized_users
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
 
   def new
-    @authorized = AuthorizedMap.new
+    @new_authorized = AuthorizedMap.new
+    @authorized_users = @map.authorized_users
   end
   
   def create
-    @new_authorized = AuthorizedMap.new(authorized_params)
-    @new_authorized.map = @map
+    @authorized_users = @map.authorized_users
+    if @authorized_user = User.find_by(authorized_params)
+      @map.authorizing_user(@authorized_user)
+      flash[:notice] = "ユーザー：#{@authorized_user.email} を追加しました。"
+      respond_to do |format|
+        # format.html { redirect_to new_map_authorize_url(@map) }
 
-    if @new_authorized.save
-      flash[:notice] = "ユーザー：#{@new_authorized.user.email} を追加しました。"
-      redirect_to map_url(@map)
+        # jQueryを導入した上でcreate.js.erbに処理内容を書く　or app/assets/javascripts/tasks.js を書く?
+        format.js { flash[:notice] = "ユーザー：#{@authorized_user.email} を追加しました。" } 
+      end
     else
+      flash[:notice] = "招待できないメールアドレスです"
       render 'new'
     end
+
   end
 
   def edit
@@ -42,8 +53,12 @@ class AuthorizedMapsController < ApplicationController
     end
 
     def authorized_params
-      allowed_user = User.find_by(email: params[:authorized][:user_id])
-      params[:authorized][:user_id] = allowed_user.id
-      params.require(:authorized).permit(:user_id)
+      # バックアップ
+      # allowed_user = User.find_by(email: params[:authorized_map][:user_id])
+      # params[:authorized_map][:user_id] = allowed_user.id unless allowed_user == nil
+      # params.require(:authorized_map).permit(:user_id)
+
+      # チャレンジ
+      params.require(:authorized_map).permit(:email)
     end
 end

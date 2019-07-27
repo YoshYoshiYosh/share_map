@@ -6,4 +6,8 @@ class Map < ApplicationRecord
   has_many :authorized_users, through: :authorized_maps, source: :user
 
   validates :title, presence: true
+
+  def authorizing_user(user)
+    self.authorized_users.push(user)
+  end
 end

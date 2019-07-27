@@ -2,7 +2,7 @@ class MapsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_map, only: [:show, :edit, :update, :destroy]
   before_action :set_pins, only: [:show]
-  before_action :can_edit?, only: [:edit, :update, :destroy]
+  before_action :can_edit?, only: [:show, :edit, :update, :destroy]
 
   # GET /maps
   # GET /maps.json
@@ -94,7 +94,7 @@ class MapsController < ApplicationController
     end
 
     def can_edit?
-      if current_user != @map.author
+      if current_user != @map.author && @map.authorized_users.exclude?(current_user)
         render 'errors/forbidden', status: 403
       end
     end

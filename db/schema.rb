@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2019_07_09_144016) do
     t.bigint "map_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["map_id", "user_id"], name: "index_authorized_maps_on_map_id_and_user_id"
+    t.index ["map_id", "user_id"], name: "index_authorized_maps_on_map_id_and_user_id", unique: true
     t.index ["map_id"], name: "index_authorized_maps_on_map_id"
     t.index ["user_id"], name: "index_authorized_maps_on_user_id"
   end
