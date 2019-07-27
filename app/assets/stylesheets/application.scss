@@ -137,6 +137,15 @@ body {
     transform: scale(1.1,1.1);
     cursor: pointer;    
   }
+
+}
+
+.add-menber-form {
+  display: none;
+}
+
+.shown {
+  display: block;
 }
 
 //  ピンのイラストを変更したりする時用
@@ -179,10 +188,6 @@ body {
     }
 }
 
-
-
-
-
 // これをコメントアウトしないと、ポップアップの位置がずれる
   .map-button-container {
     -webkit-box-orient: vertical;
@@ -201,3 +206,4 @@ body {
   }
 
 }
+

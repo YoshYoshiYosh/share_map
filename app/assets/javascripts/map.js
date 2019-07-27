@@ -2,7 +2,7 @@ async function mapInit(lons, lats) {
 
   let json = await fetch('http://localhost:3000/maps/1/pins.json')
     .then(function(response) {
-      console.log(response);
+      // console.log(response);
       return response.json();
     })
 
@@ -35,7 +35,23 @@ async function mapInit(lons, lats) {
 
       for(let i = 0; i < 4; i++) {
         let div = L.DomUtil.create('div', "map-button-container__box", outer_div);
-        let img = L.DomUtil.create('img', "pin-icon", div);
+        let img = L.DomUtil.create('img', "pin-icon", div);   
+        
+        switch(i) {
+          case 0: {
+            img.classList.add("add-pin");
+            break;
+          }
+          case 2: {
+            img.classList.add("add-menber-form");
+            break;
+          }
+          case 3: {
+            img.classList.add("add-member");
+            break;
+          }
+        }
+
         let smallText = L.DomUtil.create('p', "small-text", div);
         img.src = image_sources[i]
         smallText.textContent = textContents[i]
@@ -94,8 +110,8 @@ document.addEventListener("turbolinks:load", async function(){
   ];
 
   // JavaScriptでPOSTする
-  let button = document.querySelector('.pin-icon');
-  button.addEventListener('click', async () => {
+  let addPinButton = document.querySelector('.add-pin');
+  addPinButton.addEventListener('click', async () => {
     for (let i = 0; i < sightSeeing.length; i++) {
         // CSRF用のトークン
         const token = document.getElementsByName('csrf-token').item(0).content;
@@ -125,5 +141,13 @@ document.addEventListener("turbolinks:load", async function(){
     }
 
   });
+
+  let addMemberButton = document.querySelector('.add-member');
+  addMemberButton.addEventListener('click', async () => {
+    
+    document.querySelector('.add-menber-form').classList.add("shown");
+    open('http://localhost:3000/maps/1/authorizing/new', '_blank');
+
+  })
 
 });
