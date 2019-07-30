@@ -68,7 +68,7 @@ async function mapInit(lons, lats) {
   
 };
 
-document.addEventListener("DOMContentLoaded", async function(){
+document.addEventListener("turbolinks:load", async function(){
   console.log('読み込まれました');
 
   let lonsRaw = document.querySelectorAll(".lon");
