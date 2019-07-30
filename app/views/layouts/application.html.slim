@@ -6,9 +6,11 @@ html
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
+    link[rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"]
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+
   body
-    nav.navbar.navbar-expand-sm.navbar-dark.bg-image-color.
+    nav.navbar.navbar-expand-sm.navbar-dark.bg-image-color
       = link_to image_tag("/earth-icon.svg", size: "45x45"), '/', class: 'navbar-brand'
       ul.navbar-nav.mr-auto
         -if user_signed_in?
@@ -28,5 +30,5 @@ html
       p.alert.alert-success= notice
     - elsif flash.alert
       p.alert.alert-danger= alert
-      
-    .container.mt-5= yield
+    
+    .wrapper= yield

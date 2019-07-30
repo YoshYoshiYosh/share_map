@@ -1,15 +1,42 @@
-p#notice = notice
+ul.breadcrumb.m-0.p-1.pl-3
+  li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
+    = link_to root_path do
+      i.fas.fa-home.mr-1
+      span.bread-text[itemprop="title"]
+        | ホーム
+  span.mx-2 >
+  li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
+    = link_to maps_path do
+      i.fas.fa-map-marked-alt.mr-1
+      span.bread-text[itemprop="title"]
+        | Map一覧
+  span.mx-2 >
+  - if current_user == @map.author
+    li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
+    span.bread-text[itemprop="title"]
+      = link_to @map.title, edit_map_path(@map)
+      i.fas.fa-edit.ml-1
+  - else
+    li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
+    span.bread-text[itemprop="title"]
+      = @map.title
+#mapid
+- @pins.each.with_index(1) do |pin, index|
+  p.lon.d-none= pin.lonlat.x
+  p.lat.d-none= pin.lonlat.y
 
-p
-  strong Title:
-  = @map.title
-p
-  strong Description:
-  = @map.description
-p
-  strong Author:
-  = @map.author
+/ p
+/   strong Title:
+/   = @map.title
+/ p
+/   strong Description:
+/   = @map.description
+/ p
+/   strong Author:
+/   = @map.author
 
-=> link_to 'Edit', edit_map_path(@map)
-'|
-=< link_to 'Back', maps_path
+/ p= link_to 'Pinを作成する', new_map_pin_path(@map)
+
+/ => link_to 'Edit', edit_map_path(@map)
+/ '|
+/ =< link_to 'Back', maps_path

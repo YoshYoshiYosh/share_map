@@ -3,16 +3,16 @@ class PinsController < ApplicationController
   before_action :set_pin, only: [:show, :edit, :update, :destroy]
   before_action :set_map
   before_action :can_edit?, only: [:edit, :update, :destroy] # :showを制限するか悩み中
+  protect_from_forgery
 
   # GET /pins
   # GET /pins.json
   def index
-    @map = Map.find(params[:map_id])
     @pins = Pin.all.where(map: @map)
 
     respond_to do |format|
       format.html
-      format.json { render :json => @map }
+      format.json
     end
   end
 
@@ -41,7 +41,8 @@ class PinsController < ApplicationController
     respond_to do |format|
       if @pin.save
         format.html { redirect_to map_pin_url(@map, @pin), notice: 'Pin was successfully created.' }
-        format.json { render :show, status: :created, location: @pin }
+        # format.json { render :show, status: :created, location: [@map, @pin] }
+        format.json { render :index }
       else
         format.html { render :new }
         format.json { render json: @pin.errors, status: :unprocessable_entity }

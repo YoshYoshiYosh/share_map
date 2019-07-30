@@ -1,17 +1,65 @@
 @import 'bootstrap';
+@import "leaflet/dist/leaflet.css";
 
 $image-color: #022144;
 
 $base-back: #fefefe;
+
+
+// html {
+//   font-size: 62.5%;
+// }
+
+// body {
+//   font-size: 1.2rem;
+//   font-family: 'BrandonTextWeb', 'YuGothic','.SF NS Text', 'YuGothic','Yu Gothic','Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', Meiryo,'ＭＳ Ｐゴシック','MS PGothic';
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+//   }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a, a:hover, a:active, a:visited {
+  text-decoration: none;
+  transition: 0.5s;
+  color: inherit;
+}
+
 
 body {
   font-family: '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   }
+  
+.wrapper {
+  padding-top: 70px; /* 打ち消し用のパディング */
+}
 
 body {
   background-color: $base-back;
+
+  .navbar {
+    position: fixed;
+    width: 100%;
+    height: 10vh;
+    z-index: 999;
+  }
+
+  @media (min-width: 1500px) {
+    .navbar {
+      height: inherit;
+      font-size: 20px;
+    }
 
   .map-box {
     padding: 30px;
@@ -23,6 +71,86 @@ body {
   }
 }
 
+  //  パンくずリスト
+  .fa-map-marked-alt {
+    font-size: 13px;
+    color: #479cec;
+    // color: #000;
+  }
+
+  .bread-text {
+    font-size: 15px;
+  }
+
+  .fa-home {
+    font-size: 13px;
+    color: #479cec;
+    // color: #000;
+  }
+
+  @media (min-width: 1500px) {
+    .fa-map-marked-alt,.fa-home {
+      font-size: 15px;
+    }
+
+    .bread-text {
+      font-size: 18px;
+    }
+}
+
+#mapid {
+  // height: 180px;
+  height: 80vh;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 5;
+}
+
+@media (min-width: 1500px) {
+  #mapid {
+    height: 1150px;
+  }
+}
+
+.circle {
+  border: 1px solid #555;
+  z-index: 10;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.small-text {
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.pin-icon {
+  display: block;
+  transition-duration: .5s;
+  width: 5vw;
+  z-index: 10;
+  margin-bottom: 8px;
+
+  &:hover {
+    opacity: .5;
+    transform: scale(1.1,1.1);
+    cursor: pointer;    
+  }
+}
+
+//  ピンのイラストを変更したりする時用
+// .marker {
+//   width: 20px !important;
+//   height: 20px !important;
+//   margin: -10px !important;
+//   border-radius: 10px;
+//   border: 3px solid #fdfdfd;
+//   box-shadow: 0 1px 4px rgba(0,0,0,0.8);
+//   background-color: #c43;
+//   z-index: 20 !important;
+// }
+
 .logout {
   position: fixed;
   top: 10%;
@@ -31,4 +159,45 @@ body {
 
 .bg-image-color {
   background-color: $image-color;
+}
+
+.products-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:  space-around;
+}
+
+.product-box {
+  flex-basis: 48%;
+  border: 1px solid #c5bfbf;
+  border-radius: 2px;
+  // box-shadow: 0 0 1px 1px rgba(170, 164, 164, 0.6);
+  box-shadow: 0 2px 0 rgba(131, 128, 128, 0.589);
+    .sub {
+      border-top: #c5bfbf 1px solid;
+    }
+}
+
+
+
+
+
+// これをコメントアウトしないと、ポップアップの位置がずれる
+  .map-button-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+          height: inherit;
+  }
+
+// .leaflet-pane, .leaflet-control-container, .leaflet-top {
+//   height: inherit;
+// }
+
+  .leaflet-control-container, .leaflet-top {
+    height: inherit;
+  }
+
 }

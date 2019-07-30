@@ -1,5 +1,7 @@
 {
   "name": "share_map",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "leaflet": "^1.5.1"
+  }
 }
