@@ -21,22 +21,7 @@ ul.breadcrumb.m-0.p-1.pl-3
     span.bread-text[itemprop="title"]
       = @map.title
 #mapid
-- @pins.each.with_index(1) do |pin, index|
-  p.lon.d-none= pin.lonlat.x
-  p.lat.d-none= pin.lonlat.y
-
-/ p
-/   strong Title:
-/   = @map.title
-/ p
-/   strong Description:
-/   = @map.description
-/ p
-/   strong Author:
-/   = @map.author
-
-/ p= link_to 'Pinを作成する', new_map_pin_path(@map)
-
-/ => link_to 'Edit', edit_map_path(@map)
-/ '|
-/ =< link_to 'Back', maps_path
+- if @pins != nil
+  - @pins.each.with_index(1) do |pin, index|
+    p.lon.d-none= pin.lonlat.x
+    p.lat.d-none= pin.lonlat.y
