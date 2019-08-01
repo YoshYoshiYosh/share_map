@@ -1,5 +1,7 @@
+
 - @authorized_users.each do |user|
+ul
   - if current_user == user
-    p= "#{user.email}（所有者）"
+    li= "#{user.email}（所有者）"
   - else
-    p= user.email
+    li= user.email
