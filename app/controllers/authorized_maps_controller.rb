@@ -23,7 +23,7 @@ class AuthorizedMapsController < ApplicationController
       respond_to do |format|
         # format.html { redirect_to new_map_authorize_url(@map) }
 
-        # jQueryを導入した上でcreate.js.erbに処理内容を書く　or app/assets/javascripts/tasks.js を書く?
+        # jQueryを導入した上でcreate.js.erbに処理内容を書く
         format.js { flash[:notice] = "ユーザー：#{@authorized_user.email} を追加しました。" } 
       end
     else
