@@ -42,7 +42,7 @@ body {
   }
   
 .wrapper {
-  padding-top: 70px; /* 打ち消し用のパディング */
+  padding-top: 72.6px; /* 打ち消し用のパディング */
 }
 
 body {
@@ -53,6 +53,11 @@ body {
     width: 100%;
     height: 10vh;
     z-index: 999;
+  }
+
+  .alert {
+    padding-top: 83px;
+    margin-bottom: 0;
   }
 
   @media (min-width: 1500px) {
@@ -140,9 +145,9 @@ body {
 
 }
 
-.add-menber-form {
-  display: none;
-}
+// .add-menber-form {
+//   display: none;
+// }
 
 .shown {
   display: block;

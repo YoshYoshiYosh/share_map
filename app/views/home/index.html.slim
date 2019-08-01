@@ -1,5 +1,8 @@
-h1 このページは、ShareMapを紹介するページにする(ログイン不要)
-h2.text-center ShareMap
+
+- if flash.present?
+  h2.text-center ShareMapとは？
+- else
+  h2.mt-5.text-center ShareMapとは？
 .mt-5.mb-3.d-flex.justify-content-around
   .map-box
     = link_to '新しくMapを作成する（後ほど削除）', new_map_path, class: 'map-text'
