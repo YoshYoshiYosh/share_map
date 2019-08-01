@@ -19,7 +19,9 @@ async function mapInit(lons, lats) {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // 縦並びのアイコン4つのうち、一番上のものをクリックするとテスト用ピンが登録される(今後変更予定)
+  // 縦並びのアイコン4つのうち、
+  // 1番目をクリックするとテスト用ピンが登録される(今後変更予定)
+  // 4番目をクリックすると、このマップを閲覧することができるユーザーを追加する画面が別タブで開く（モーダルからPostできるようにしたいです）
   L.Control.Watermark = L.Control.extend({
     onAdd: function(map) {
 
@@ -31,7 +33,7 @@ async function mapInit(lons, lats) {
       outer_div.style.zIndex = '5';
 
       let image_sources = ['/single_point_gps_navigation_pin_icon-icons.com_59903.svg', '/目的地アイコン2.svg', '/位置情報の無料アイコン2.svg', '/人物アイコン　チーム.svg']
-      let textContents  = ['New Pin', 'New Pin', 'View Pins', 'Friends']
+      let textContents  = ['New Pin', 'New Pin', 'View Pins', 'Add Member']
 
       for(let i = 0; i < 4; i++) {
         let div = L.DomUtil.create('div', "map-button-container__box", outer_div);
@@ -145,7 +147,7 @@ document.addEventListener("turbolinks:load", async function(){
   let addMemberButton = document.querySelector('.add-member');
   addMemberButton.addEventListener('click', async () => {
     
-    document.querySelector('.add-menber-form').classList.add("shown");
+    // document.querySelector('.add-menber-form').classList.add("shown");
     open('http://localhost:3000/maps/1/authorizing/new', '_blank');
 
   })
