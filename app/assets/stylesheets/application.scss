@@ -60,6 +60,10 @@ body {
     margin-bottom: 0;
   }
 
+  #added-message > .alert {
+    padding-top: 12px;
+  }
+
   @media (min-width: 1500px) {
     .navbar {
       height: inherit;

@@ -14,6 +14,7 @@
       = f.text_field :email, class: 'form-control'
     = f.submit nil, class: 'btn btn-primary'
 
+  #added-message.mt-3
   p.mt-5 ・許可されたユーザ
   ul#result
     - @authorized_users.each do |user|
@@ -21,3 +22,5 @@
         li= "#{user.email}（所有者）"
       - else
         li= user.email
+
+        

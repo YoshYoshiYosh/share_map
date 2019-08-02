@@ -19,11 +19,8 @@ class AuthorizedMapsController < ApplicationController
     @authorized_users = @map.authorized_users
     if @authorized_user = User.find_by(authorized_params)
       @map.authorizing_user(@authorized_user)
-      flash[:notice] = "ユーザー：#{@authorized_user.email} を追加しました。"
+      
       respond_to do |format|
-        # format.html { redirect_to new_map_authorize_url(@map) }
-
-        # jQueryを導入した上でcreate.js.erbに処理内容を書く
         format.js { flash[:notice] = "ユーザー：#{@authorized_user.email} を追加しました。" } 
       end
     else

@@ -1,0 +1,14 @@
+users_list = '\
+      <% @authorized_users.each do |user| %>\
+        <% if current_user == user %>\
+          <li><%= "#{user.email}（所有者）" %></li>\
+        <% else %>\
+          <li><%= user.email %></li>\
+        <% end %>\
+      <% end %>\
+    ';
+
+<% flash.each do |type, message| %>
+  $("#added-message").html('<p class="alert alert-success"><%= message %></p>')
+  $("#result").html(users_list)
+<% end %>
