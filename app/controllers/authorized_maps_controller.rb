@@ -5,7 +5,6 @@ class AuthorizedMapsController < ApplicationController
   def index
     @authorized_users = @map.authorized_users
     respond_to do |format|
-      format.html
       format.json
     end
   end
