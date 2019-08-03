@@ -1,10 +1,19 @@
+.container.mt-5
+  .main-title-content.d-flex
+    .title-message
+      - if flash.present?
+        h1.site-title 食も遊びも、シェアしよう。
+      - else
+        h1.site-title.mt-5 食も遊びも、シェアしよう。
+      p.text-m.font-weight-light.mt-3
+        | ShareMapは、自分の生活を誰かとシェアするツールです。あなたの訪れた場所、食べたもの、楽しんだこと、そしてその場所を「あなただけの地図」という形で簡単にシェアすることが可能となります。
+    .title-image
+      = image_tag("/shareMapsample.png", size: "600x600")
 
-- if flash.present?
-  h2.text-center ShareMapとは？
-- else
-  h2.mt-5.text-center ShareMapとは？
-.mt-5.mb-3.d-flex.justify-content-around
-  .map-box
-    = link_to '新しくMapを作成する（後ほど削除）', new_map_path, class: 'map-text'
-  .map-box
-    = link_to '自分のマップを見に行く（後ほど削除）', mymap_maps_path, class: 'map-text'
+  .about-share-map
+    h2.sub-title.text-center ShareMapで出来ること
+    .mt-5.mb-3.d-flex.justify-content-around
+      .map-box
+        = link_to '新しくMapを作成する（後ほど削除）', new_map_path, class: 'map-text'
+      .map-box
+        = link_to '自分のマップを見に行く（後ほど削除）', mymap_maps_path, class: 'map-text'

@@ -1,9 +1,15 @@
 .container
-  = form_with model: @new_authorized, url: map_authorize_index_path(@map), class: 'mt-5', remote: true do |f|
-    .form_group.mb-3
-      = f.label :email
-      = f.text_field :email, class: 'form-control'
-    = f.submit nil, class: 'btn btn-primary'
+  .form-container.mt-5
+    h2.text-center.text-muted
+      = "友達を#{@map.title}へ招待する"
+      i.fas.fa-users
+    = form_with model: @new_authorized, url: map_authorize_index_path(@map), class: 'invite-form mt-5', remote: true do |f|
+
+      .form-group.mb-3
+        = f.label :email, '招待する友達のメールアドレスを入力してください', class: 'mb-3 left-border'
+        = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'form-control  font-weight-lighter'
+        
+      = f.submit '招待する', class: 'btn-flat-border'
 
   #added-message.mt-3
   p.mt-5 ・許可されたユーザ
