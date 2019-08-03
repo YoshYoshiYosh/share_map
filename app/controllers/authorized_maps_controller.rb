@@ -1,9 +1,10 @@
 class AuthorizedMapsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_map, only: [:index, :new, :create, :update]
+  before_action :set_map, only: [:index, :new, :create, :update, :destroy]
+  before_action :set_authorized_users, only: [:index, :new, :create, :destroy]
 
   def index
-    @authorized_users = @map.authorized_users
+    # @authorized_users = @map.authorized_users
     respond_to do |format|
       format.json
     end
@@ -11,11 +12,11 @@ class AuthorizedMapsController < ApplicationController
 
   def new
     @new_authorized = AuthorizedMap.new
-    @authorized_users = @map.authorized_users
+    # @authorized_users = @map.authorized_users
   end
   
   def create
-    @authorized_users = @map.authorized_users
+    # @authorized_users = @map.authorized_users
     if @authorized_user = User.find_by(authorized_params)
       @map.authorizing_user(@authorized_user)
       respond_to do |format|
@@ -36,9 +37,9 @@ class AuthorizedMapsController < ApplicationController
 
   # 今のところテストデータを消す目的だけでこのアクションを利用中
   def destroy
-    User.all.each do |user|
-      unless user.email == 'yoshikik@live.jp'
-        AuthorizedMap.find_by(user_id: user.id)&.destroy
+    @authorized_users.each do |user|
+      unless user.email == current_user.email
+        AuthorizedMap.find_by(user_id: user.id).destroy
       end
     end
   end
@@ -56,13 +57,11 @@ class AuthorizedMapsController < ApplicationController
       author?
     end
 
-    def authorized_params
-      # バックアップ
-      # allowed_user = User.find_by(email: params[:authorized_map][:user_id])
-      # params[:authorized_map][:user_id] = allowed_user.id unless allowed_user == nil
-      # params.require(:authorized_map).permit(:user_id)
+    def set_authorized_users
+      @authorized_users = @map.authorized_users
+    end
 
-      # チャレンジ
+    def authorized_params
       params.require(:authorized_map).permit(:email)
     end
 end
