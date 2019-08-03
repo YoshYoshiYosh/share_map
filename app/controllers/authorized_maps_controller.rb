@@ -18,21 +18,29 @@ class AuthorizedMapsController < ApplicationController
     @authorized_users = @map.authorized_users
     if @authorized_user = User.find_by(authorized_params)
       @map.authorizing_user(@authorized_user)
-      
       respond_to do |format|
         format.js { flash[:notice] = "ユーザー：#{@authorized_user.email} を追加しました。" } 
       end
     else
-      flash[:notice] = "招待できないメールアドレスです"
-      render 'new'
+      respond_to do |format|
+        format.js { flash[:warning] = "招待できないメールアドレスです" } 
+      end
     end
-
   end
 
   def edit
   end
 
   def update
+  end
+
+  # 今のところテストデータを消す目的だけでこのアクションを利用中
+  def destroy
+    User.all.each do |user|
+      unless user.email == 'yoshikik@live.jp'
+        AuthorizedMap.find_by(user_id: user.id)&.destroy
+      end
+    end
   end
 
   private
