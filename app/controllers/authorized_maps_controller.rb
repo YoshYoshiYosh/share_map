@@ -4,7 +4,6 @@ class AuthorizedMapsController < ApplicationController
   before_action :set_authorized_users, only: [:index, :new, :create, :destroy]
 
   def index
-    # @authorized_users = @map.authorized_users
     respond_to do |format|
       format.json
     end
@@ -12,11 +11,9 @@ class AuthorizedMapsController < ApplicationController
 
   def new
     @new_authorized = AuthorizedMap.new
-    # @authorized_users = @map.authorized_users
   end
   
   def create
-    # @authorized_users = @map.authorized_users
     if @authorized_user = User.find_by(authorized_params)
       @map.authorizing_user(@authorized_user)
       respond_to do |format|
