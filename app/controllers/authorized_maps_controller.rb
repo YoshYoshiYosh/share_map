@@ -1,6 +1,6 @@
 class AuthorizedMapsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_map, only: [:index, :new, :create, :update, :destroy]
+  before_action :set_map, except: [:edit]
   before_action :set_authorized_users, only: [:index, :new, :create, :destroy]
 
   def index

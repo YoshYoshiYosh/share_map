@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index'
+  get '/mypage', to: 'home#mypage'
 
   devise_for :users
   
@@ -7,7 +8,7 @@ Rails.application.routes.draw do
   
   resources :maps do
     get :mymap, on: :collection
-    resources :authorized_maps, only: [:index, :new, :create, :update, :destroy], as: 'authorize', path: 'authorizing'
+    resources :authorized_maps, except: [:edit], as: 'authorize', path: 'authorizing'
     resources :pins
   end
   
