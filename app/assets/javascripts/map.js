@@ -1,3 +1,11 @@
+function showEditButton(e) {
+  e.target.firstElementChild.classList.add('shown');
+}
+
+function hideEditButton(e) {
+  e.target.firstElementChild.classList.remove('shown');
+}
+
 async function mapInit(lons, lats) {
 
   let json = await fetch('http://localhost:3000/maps/1/pins.json')
@@ -89,6 +97,14 @@ async function mapInit(lons, lats) {
 document.addEventListener("turbolinks:load", async function(){
   console.log('読み込まれました');
 
+  let showEditButtonAtAdminPages = [document.querySelector('.manage-title'), document.querySelector('.manage-description'), document.querySelector('.manage-users'), document.querySelector('.manage-pins')];
+  
+  showEditButtonAtAdminPages.forEach((element) => {
+    element.addEventListener('mouseover', showEditButton, false);
+    element.addEventListener('mouseleave', hideEditButton, false)
+  });
+
+  // マップ読み込み
   let lonsRaw = document.querySelectorAll(".lon");
   let latsRaw = document.querySelectorAll(".lat") ; 
   
@@ -100,7 +116,7 @@ document.addEventListener("turbolinks:load", async function(){
     lons.push(lonsRaw[i].textContent);
     lats.push(latsRaw[i].textContent);
   };
-
+  
   await mapInit(lons, lats);
 
   // テスト用のPin
@@ -148,8 +164,9 @@ document.addEventListener("turbolinks:load", async function(){
   addMemberButton.addEventListener('click', async () => {
     
     // document.querySelector('.add-menber-form').classList.add("shown");
-    open('http://localhost:3000/maps/1/authorizing/new', '_blank');
+    open('http://localhost:3000/maps/1/authorized_maps/new', '_blank');
 
   })
+
 
 });
