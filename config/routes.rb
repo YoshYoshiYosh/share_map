@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   
   resources :maps do
     get :mymap, on: :collection
-    resources :authorized_maps, except: [:edit], as: 'authorize', path: 'authorizing'
+    get :admin, on: :member # それぞれのMapの管理画面みたいなもの、ここからauthorized_maps/newとかに遷移させる。もしくはeditアクションで対応？
+    resources :authorized_maps, except: [:edit]
     resources :pins
   end
   

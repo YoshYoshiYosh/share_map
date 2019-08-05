@@ -10,22 +10,53 @@ class AuthorizedMapsController < ApplicationController
   end
 
   def new
-    @new_authorized = AuthorizedMap.new
+    @new_authorized = AuthorizedMap.new(map: @map)
   end
   
   def create
     if @authorized_user = User.find_by(authorized_params)
-      @map.authorizing_user(@authorized_user)
-      respond_to do |format|
-        format.js { flash[:notice] = "ユーザー：#{@authorized_user.email} を追加しました。" } 
+      begin
+        @map.authorizing_user(@authorized_user)
+        flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
+      rescue ActiveRecord::RecordNotUnique => e
+        puts "----------------------------------------------------------------------"
+        puts "#{e.class}"
+        puts "#{e.message}"
+        puts "----------------------------------------------------------------------"
+        
+        flash.delete(:success)
+        flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
       end
     else
-      respond_to do |format|
-        format.js { flash[:warning] = "招待できないメールアドレスです" } 
-      end
+      flash[:danger] = "（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
     end
+
+    redirect_to new_map_authorized_map_path(@map)
+
   end
 
+
+  # バックアップ
+  # def create
+  #   if @authorized_user = User.find_by(authorized_params)
+  #     if @map.authorizing_user(@authorized_user)
+  #       flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
+  #     else
+  #       flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
+  #       # これが呼ばれる前にサーバーエラー500が返る
+  #     end
+  #   else
+  #     flash[:danger] = "招待できないメールアドレスです"
+  #     # ちゃんと動く
+  #   end
+
+  #   puts '呼ばれました。'
+  #   redirect_to new_map_authorized_map_path(@map)
+
+  # end
+  
+  
+  
   def edit
   end
 

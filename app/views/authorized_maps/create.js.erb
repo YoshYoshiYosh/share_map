@@ -9,10 +9,10 @@ users_list = '\
     ';
 
 <% flash.each do |type, message| %>
-<% if type == 'notice' %>
-  $("#added-message").html('<p class="alert alert-success"><%= message %></p>')
-  $("#result").html(users_list)
-<% elsif type == 'warning' %>
-  $("#added-message").html('<p class="alert alert-danger"><%= message %></p>')
-<% end %>
+  <% if type == 'notice' %>
+    $("#added-message").html('<p class="alert alert-success"><%= message %></p>')
+    $("#result").html(users_list)
+  <% elsif type == 'warning' %>
+    $("#added-message").html('<p class="alert alert-danger"><%= message %></p>')
+  <% end %>
 <% end %>
