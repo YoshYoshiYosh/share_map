@@ -1,8 +1,10 @@
 .container.mt-5.text-center
-  h1.mb-5
+  h1.mb-3
     = "#{@map.title}管理画面"
-    = link_to map_path(@map), class: 'ml-3 text-red' do
-      span.profile-count.small マップへ
+  = link_to map_path(@map), class: 'mb-5 to-map-text' do
+    span.to-map
+      |マップへ
+      <i class="far fa-map"></i>
 
   .manage-wrap.d-flex
     .manage-title
@@ -10,8 +12,6 @@
       p.py-2.gb-white タイトル
       p
         = @map.title
-        / = link_to edit_map_path(@map) do
-        /   i.fas.fa-edit.ml-1
     .manage-description
       = link_to '編集する', edit_map_path(@map), class: 'btn-flat-border hidden'
       p.py-2.gb-white 説明
@@ -36,7 +36,3 @@
       ul.d-flex.px-3
         - @map.pins.each_with_index do |pin, i|
           li= "#{i+1}：#{pin.title}"
-          - if i >= 5
-            p ・
-            p ・
-            p ・

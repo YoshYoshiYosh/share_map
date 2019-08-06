@@ -14,8 +14,9 @@ ul.breadcrumb.m-0.p-1.pl-3
   - if current_user == @map.author
     li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
     span.bread-text[itemprop="title"]
-      = link_to @map.title, edit_map_path(@map)
-      i.fas.fa-edit.ml-1
+      = @map.title
+      = link_to admin_map_path(@map) do
+        i.fas.fa-cogs.ml-1
   - else
     li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
     span.bread-text[itemprop="title"]

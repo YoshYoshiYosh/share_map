@@ -404,8 +404,28 @@ body {
   }
 }
 
+span.to-map {
+  // line-height: 30px;
+  // display: inline-block;
+  font-size: 15px;
+  color: royalblue;
+  border-bottom: 1px double royalblue;
+  bottom: 5px;
+  .fa-map {
+    padding-left: 5px;
+  }
+}
+
+.to-map-text {
+  display: inline-block;
+}
+
 
 .gb-white {
   // background-color: #d1d5da;
   background-color: #f7f7f7;
+}
+
+.fa-cogs {
+  font-size: 12px;
 }
