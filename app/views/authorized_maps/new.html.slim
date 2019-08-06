@@ -5,12 +5,12 @@
       i.fas.fa-users
     = form_with model: [:map, @new_authorized], class: 'invite-form mt-5', remote: true do |f|
 
-      - if @new_authorized.errors.any?
-        #error_explanation
-          h2 = "#{pluralize(@new_authorized.errors.count, "error")} prohibited this new_authorized from being saved:"
-          ul
-            - @new_authorized.errors.full_messages.each do |message|
-              li = message
+      / - if @new_authorized.errors.any?
+      /   #error_explanation
+      /     h2 = "#{pluralize(@new_authorized.errors.count, "error")} prohibited this new_authorized from being saved:"
+      /     ul
+      /       - @new_authorized.errors.full_messages.each do |message|
+      /         li = message
 
       .form-group.mb-3
         = f.label :email, '招待する友達のメールアドレスを入力してください', class: 'mb-3 left-border'

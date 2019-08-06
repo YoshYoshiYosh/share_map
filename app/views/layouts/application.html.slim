@@ -41,10 +41,10 @@ html
     - flash.each do |type, message|
       = content_tag(:p, message, class: "alert alert-#{type}")
 
-    - if flash[:success]
-      p.alert.alert-unkokko= success
-    - elsif flash[:danger]
-      p.alert.alert-unko= danger
+    / - if flash[:success]
+    /   p.alert.alert-success= flash[:success]
+    / - elsif flash[:danger]
+    /   p.alert.alert-danger= flash[:danger]
 
     
     .wrapper= yield
