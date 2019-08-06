@@ -23,8 +23,18 @@
   /         td= link_to '編集する', edit_map_path(map)
   /         td= link_to '削除する', map_path(map), method: :delete, data: { confirm: "マップ「#{map.title}」を削除しますか？この操作を取り消すことはできません。"}, class: 'text-danger'
 
+  h3 あなたの所有するMap
   .mymap-container.d-flex
     - @maps.each do |map|
+      .mymap-box
+        .mymap-box__title
+          p.m-0.text-center= link_to map.title, admin_map_path(map)
+        .mymap-box__description
+          p= map.description
+  
+  h3.mt-5 あなたの参加しているマップ（所有しているマップは省きたい）
+  .mymap-container.d-flex
+    - @can_view_map.each do |map|
       .mymap-box
         .mymap-box__title
           p.m-0.text-center= link_to map.title, admin_map_path(map)

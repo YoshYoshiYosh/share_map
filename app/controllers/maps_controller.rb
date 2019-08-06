@@ -23,6 +23,7 @@ class MapsController < ApplicationController
   # GET /maps/mymap.json
   def mymap
     @maps = Map.all.where(author: current_user)
+    @can_view_map = current_user.can_edit_maps
 
     respond_to do |format|
       format.html

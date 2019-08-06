@@ -451,6 +451,10 @@ span.to-map {
       border-radius: 10px 10px 0 0;
       letter-spacing: 1.2px;
       font-weight: bold;
+
+      p:first-letter {
+        font-size: 2em;
+      }
     }
     
     .mymap-box__description {
