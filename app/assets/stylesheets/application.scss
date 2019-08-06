@@ -434,3 +434,34 @@ span.to-map {
   // max-width: 80%;
   // width: 150%;
 }
+
+.mymap-container {
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  .mymap-box {
+    flex-basis: 30%;
+    min-height: 150px;
+
+    .mymap-box__title {
+      padding: 10px;
+      border: 1px solid #458ae4;
+      background: #458ae4;
+      color: white;
+      border-radius: 10px 10px 0 0;
+      letter-spacing: 1.2px;
+      font-weight: bold;
+    }
+    
+    .mymap-box__description {
+      font-size: 13px;
+      height: 100%;
+      padding: 10px;
+      border: 1.5px solid #458ae4;
+      border-radius: 0 0 3px 3px;
+      .bg-secondary {
+        height: 100%;
+      }
+    }
+  }
+}
