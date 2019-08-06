@@ -14,6 +14,10 @@ async function mapInit(lons, lats) {
       return response.json();
     })
 
+  if(json.length === 0) {
+    json.push({ title: 'default' })
+  }
+
   map = L.map('mapid').setView([lons[0], lats[0]], 5);
 
   let pinIcon = L.icon({
@@ -50,6 +54,8 @@ async function mapInit(lons, lats) {
         switch(i) {
           case 0: {
             img.classList.add("add-pin");
+            img.setAttribute('data-toggle', 'modal');
+            img.setAttribute('data-target', '#exampleModalCenter')
             break;
           }
           case 2: {
@@ -66,7 +72,6 @@ async function mapInit(lons, lats) {
         img.src = image_sources[i]
         smallText.textContent = textContents[i]
       };
-      
       return outer_div;
     },
 
@@ -88,9 +93,9 @@ async function mapInit(lons, lats) {
     .openPopup()
   }
 
-  let pinMarker = L.marker([20, 20], {icon: pinIcon, draggable:true}).addTo(map);
-  pinMarker.bindPopup('my pin')
-  .openPopup();
+  // let pinMarker = L.marker([20, 20], {icon: pinIcon, draggable:true}).addTo(map);
+  // pinMarker.bindPopup('my pin')
+  // .openPopup();
   
 };
 
@@ -120,6 +125,9 @@ document.addEventListener("turbolinks:load", async function(){
       lats.push(latsRaw[i].textContent);
     };
 
+    lons.push('10')
+    lats.push('10')
+
     await mapInit(lons, lats);
 
     // テスト用のPin
@@ -131,37 +139,37 @@ document.addEventListener("turbolinks:load", async function(){
     ];
 
     // JavaScriptでPOSTする
-    let addPinButton = document.querySelector('.add-pin');
-    addPinButton.addEventListener('click', async () => {
-      for (let i = 0; i < sightSeeing.length; i++) {
-          // CSRF用のトークン
-          const token = document.getElementsByName('csrf-token').item(0).content;
+    // let addPinButton = document.querySelector('.add-pin');
+    // addPinButton.addEventListener('click', async () => {
+    //   for (let i = 0; i < sightSeeing.length; i++) {
+    //       // CSRF用のトークン
+    //       const token = document.getElementsByName('csrf-token').item(0).content;
 
-          // ボディを作る
-          const formData = new FormData();
+    //       // ボディを作る
+    //       const formData = new FormData();
 
-          // 成功する
-          formData.append('authenticity_token', token);
-          formData.append('pin[title]', `${sightSeeing[i].name}`);
-          formData.append('pin[description]', `${sightSeeing[i].country}の世界遺産ですよ。`);
-          formData.append('pin[lonlat]', `${sightSeeing[i].lonlat[0]} ${sightSeeing[i].lonlat[1]}`);
-          // 
+    //       // 成功する
+    //       formData.append('authenticity_token', token);
+    //       formData.append('pin[title]', `${sightSeeing[i].name}`);
+    //       formData.append('pin[description]', `${sightSeeing[i].country}の世界遺産ですよ。`);
+    //       formData.append('pin[lonlat]', `${sightSeeing[i].lonlat[0]} ${sightSeeing[i].lonlat[1]}`);
+    //       // 
 
-          const postRequest = await fetch(location.href + '/pins.json', {
-            method: "POST",
-            body: formData
-          });
+    //       const postRequest = await fetch(location.href + '/pins.json', {
+    //         method: "POST",
+    //         body: formData
+    //       });
 
-          console.log(postRequest);
+    //       console.log(postRequest);
 
-          if (postRequest.status === 200) {
-            console.log('成功');
-          } else {
-            console.log('失敗');
-          }
-      }
+    //       if (postRequest.status === 200) {
+    //         console.log('成功');
+    //       } else {
+    //         console.log('失敗');
+    //       }
+    //   }
 
-    });
+    // });
 
     let addMemberButton = document.querySelector('.add-member');
     addMemberButton.addEventListener('click', async () => {
