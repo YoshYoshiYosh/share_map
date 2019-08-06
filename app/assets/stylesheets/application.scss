@@ -249,7 +249,6 @@ body {
 }
 
 .form-container {
-
   .left-border {
     // border-left: 2px solid rgb(59, 101, 228);
     padding-left: 5px;
@@ -428,4 +427,10 @@ span.to-map {
 
 .fa-cogs {
   font-size: 12px;
+}
+
+.modal-dialog {
+  min-width:50%;
+  // max-width: 80%;
+  // width: 150%;
 }

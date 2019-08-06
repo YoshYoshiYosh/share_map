@@ -15,7 +15,8 @@ class MapsController < ApplicationController
   # GET /maps/1
   # GET /maps/1.json
   def show
-
+    @new_authorized = AuthorizedMap.new(map: @map)
+    @pin = Pin.new(map: @map)
   end
 
   # GET /maps/mymap
