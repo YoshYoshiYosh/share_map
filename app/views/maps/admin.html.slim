@@ -1,6 +1,7 @@
-.container.mt-5.text-center
+.container.not-top.mt-4.pt-4.px-4.text-center
   h1.mb-3
     = "#{@map.title}管理画面"
+    
   = link_to map_path(@map), class: 'mb-5 to-map-text' do
     span.to-map
       |マップへ
