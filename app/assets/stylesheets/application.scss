@@ -18,6 +18,8 @@ $sky-blue: #67c5ff;
 //   -moz-osx-font-smoothing: grayscale;
 //   }
 
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -46,6 +48,7 @@ body {
 .wrapper {
   padding-top: 72.6px; /* 打ち消し用のパディング */
   background-color: #f0ebeb;
+  height: 100vh;
 }
 
 body {

@@ -33,7 +33,7 @@
       = link_to '編集する', map_pins_path(@map), class: 'btn-flat-border hidden'
       p.py-2.gb-white
         |ピン一覧
-        span.profile-count.text-center 100
+        span.profile-count.text-center= @map.pins.count
       ul.d-flex.px-3
         - @map.pins.each_with_index do |pin, i|
           li= "#{i+1}：#{pin.title}"
