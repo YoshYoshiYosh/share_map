@@ -17,6 +17,8 @@ class AuthorizedMapsController < ApplicationController
     if @authorized_user = User.find_by(authorized_params)
       begin
         @map.authorizing_user(@authorized_user)
+        # authorizing_userメソッドを呼んでいるモデル側のファイルでbegin~endまでかく。validateでもかく。
+        
         flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
       rescue ActiveRecord::RecordNotUnique => e
         puts "----------------------------------------------------------------------"

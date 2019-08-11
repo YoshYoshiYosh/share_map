@@ -89,9 +89,11 @@ async function mapInit(lons, lats) {
   for (let i = 0; i < lons.length; i++) {
     L.marker([lons[i], lats[i]]).addTo(map)
     // L.marker([lons[i], lats[i]],{icon: L.divIcon({className: 'marker'})}).addTo(map)
-    .bindPopup(`This is <br><h3>${json[i].title}</h3>`)
+    .bindPopup(`This is <br><h3>${json[i].title}</h3>`) 
     .openPopup()
   }
+  // bindPopupの箇所で、XSSを防げるようにする
+  
 
   // let pinMarker = L.marker([20, 20], {icon: pinIcon, draggable:true}).addTo(map);
   // pinMarker.bindPopup('my pin')

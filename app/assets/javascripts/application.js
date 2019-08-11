@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery/dist/jquery.js
 //= require leaflet/dist/leaflet.js
 //= require bootstrap/dist/js/bootstrap.js
 //= require rails-ujs
