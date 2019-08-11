@@ -11,8 +11,8 @@
 // about supported directives.
 //
 //= require leaflet/dist/leaflet.js
+//= require bootstrap/dist/js/bootstrap.js
 //= require rails-ujs
-//= require bootstrap-sprockets
 //= require activestorage
 //= require turbolinks
 //= require_tree .

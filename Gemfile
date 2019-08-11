@@ -65,7 +65,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'html2slim'
 gem 'slim-rails'
 
-gem 'bootstrap'
 gem 'devise-bootstrap-views'
 gem 'rb-readline'
 gem 'activerecord-postgis-adapter'
