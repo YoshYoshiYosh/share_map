@@ -20,7 +20,7 @@ class AuthorizedMapsController < ApplicationController
         # authorizing_userメソッドを呼んでいるモデル側のファイルでbegin~endまでかく。validateでもかく。
         
         flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
-      rescue ActiveRecord::RecordNotUnique => e
+      rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
         puts "----------------------------------------------------------------------"
         puts "#{e.class}"
         puts "#{e.message}"
