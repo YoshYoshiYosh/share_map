@@ -15,19 +15,26 @@ class AuthorizedMapsController < ApplicationController
   
   def create
     if @authorized_user = User.find_by(authorized_params)
-      begin
-        @map.authorizing_user(@authorized_user)
-        # authorizing_userメソッドを呼んでいるモデル側のファイルでbegin~endまでかく。validateでもかく。
+      # begin
+      #   @map.authorizing_user(@authorized_user)
+      #   authorizing_userメソッドを呼んでいるモデル側のファイルでbegin~endまでかく。validateでもかく。
         
-        flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
-      rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
-        puts "----------------------------------------------------------------------"
-        puts "#{e.class}"
-        puts "#{e.message}"
-        puts "----------------------------------------------------------------------"
+      #   flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
+      # rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
+      #   puts "----------------------------------------------------------------------"
+      #   puts "#{e.class}"
+      #   puts "#{e.message}"
+      #   puts "----------------------------------------------------------------------"
         
-        flash.delete(:success)
-        flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
+      #   flash.delete(:success)
+      #   flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
+      # end
+      result = @map.authorizing_user(@authorized_user)
+      case result
+        when true
+          flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
+        when false
+          flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
       end
     else
       flash[:danger] = "（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
@@ -38,27 +45,6 @@ class AuthorizedMapsController < ApplicationController
   end
 
 
-  # バックアップ
-  # def create
-  #   if @authorized_user = User.find_by(authorized_params)
-  #     if @map.authorizing_user(@authorized_user)
-  #       flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
-  #     else
-  #       flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
-  #       # これが呼ばれる前にサーバーエラー500が返る
-  #     end
-  #   else
-  #     flash[:danger] = "招待できないメールアドレスです"
-  #     # ちゃんと動く
-  #   end
-
-  #   puts '呼ばれました。'
-  #   redirect_to new_map_authorized_map_path(@map)
-
-  # end
-  
-  
-  
   def edit
   end
 
