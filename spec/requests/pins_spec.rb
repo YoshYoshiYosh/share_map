@@ -16,7 +16,7 @@ RSpec.describe "Pins", type: :request do
       user.confirm
       sign_in user
       # get map_pins_path([map, same_author_pin])
-      get map_pins_path([map, pins])
+      get map_pins_path(map)
       expect(response).to have_http_status(200)
     end
   end
