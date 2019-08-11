@@ -8,6 +8,14 @@ RSpec.describe "maps/show", type: :view do
       :description => "MyText",
       :author => User.new
     ))
+
+    @pin = assign(:pin, Pin.create!(
+      title: 'pin-title',
+      description: 'pin-description',
+      lonlat: 'POINT(10 10)',
+      map: @map,
+      author: User.new
+    ))
   end
 
   it "renders attributes in <p>" do

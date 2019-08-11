@@ -26,7 +26,7 @@ RSpec.describe PinsController, type: :controller do
   let(:invalid_attributes) {
     {
       title: nil,
-      description: 'test',
+      description: nil,
       lonlat: '10 10'
     }
   }
@@ -73,20 +73,16 @@ RSpec.describe PinsController, type: :controller do
       context "with valid params" do
         it "creates a new Pin" do
           expect {
-            post :create, params: { map_id: map.id, pin: valid_attributes }, session: valid_session
-          }.to change(Pin, :count).by(1)
-        end
-
-        it "redirects to the created pin" do
-          post :create, params: { map_id: map.id,  pin: valid_attributes }, session: valid_session
-          expect(response).to redirect_to([map, Pin.last])
+            post :create, params: { map_id: map.id, pin: valid_attributes }, session: valid_session, format: :js
+          }.to change(Pin, :count).by(1) 
         end
       end
 
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'new' template)" do
-          post :create, params: { map_id: map.id, pin: invalid_attributes }, session: valid_session
-          expect(response).to be_successful
+          expect {
+            post :create, params: { map_id: map.id, pin: invalid_attributes }, session: valid_session, format: :js
+          }.to change(Pin, :count).by(0)
         end
       end
     end

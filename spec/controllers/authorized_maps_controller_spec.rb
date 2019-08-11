@@ -15,7 +15,7 @@ RSpec.describe AuthorizedMapsController, type: :controller do
 
     describe "GET #index" do
       it "returns a success response" do
-        get :index, params: { map_id: map.id }, session: valid_session
+        get :index, params: { map_id: map.id }, session: valid_session, format: :json
         expect(response).to be_successful
       end
     end
