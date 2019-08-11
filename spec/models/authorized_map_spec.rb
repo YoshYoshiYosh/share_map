@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AuthorizedMap, type: :model, focus: true do
+RSpec.describe AuthorizedMap, type: :model do
 
   let(:user) { FactoryBot.create(:user) }
   let(:other_user) { FactoryBot.create(:user) }
@@ -18,9 +18,12 @@ RSpec.describe AuthorizedMap, type: :model, focus: true do
   end
 
   context 'when authorizing the user who already had authorized the same map' do
-    it 'raises ActiveRecord::RecordInvalid error.' do
+    it 'is invalid AuthorizedMap model' do
       map.authorizing_user(user)
-      expect{map.authorizing_user(user)}.to raise_error(ActiveRecord::RecordInvalid)
+      new_authorized = FactoryBot.build(:authorized_map, user: user, map: map)
+      new_authorized.valid?
+      # expect{map.authorizing_user(user)}.to raise_error(ActiveRecord::RecordInvalid)
+      expect(new_authorized.errors[:map]).to include('has already been taken')
     end
   end
 end
