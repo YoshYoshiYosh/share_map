@@ -1,3 +1,44 @@
+// function escapeHtml(str){
+//   str = str.replace(/&/g, '&amp;');
+//   str = str.replace(/>/g, '&gt;');
+//   str = str.replace(/</g, '&lt;');
+//   str = str.replace(/"/g, '&quot;');
+//   str = str.replace(/'/g, '&#x27;');
+//   str = str.replace(/`/g, '&#x60;');
+//   return str;
+// }
+
+function escape_html (string) {
+  // if(typeof string !== 'string') {
+  //   return string;
+  // }
+  return string.replace(/[&'`"<>]/g, function(match) {
+    return {
+      '&': '&amp;',
+      "'": '&#x27;',
+      '`': '&#x60;',
+      '"': '&quot;',
+      '<': '&lt;',
+      '>': '&gt;',
+    }
+    [match]
+  });
+}
+
+// escape_html関数の理解用の関数
+function escape_aiueo (str) {
+  return str.replace(/[12345]/g, function(matchText){
+    return {
+            '1': 'あ',
+            '2': 'い',
+            '3': 'う',
+            '4': 'え',
+            '5': 'え',
+        }[matchText]
+  })
+}
+
+
 function showEditButton(e) {
   e.target.firstElementChild.classList.add('shown');
 }
@@ -86,13 +127,16 @@ async function mapInit(lons, lats) {
   
   L.control.watermark({ position: 'topright' }).addTo(map);
   
+  // bindPopupの箇所で、XSSを防げるようにする
   for (let i = 0; i < lons.length; i++) {
     L.marker([lons[i], lats[i]]).addTo(map)
     // L.marker([lons[i], lats[i]],{icon: L.divIcon({className: 'marker'})}).addTo(map)
-    .bindPopup(`This is <br><h3>${json[i].title}</h3>`) 
+    // .bindPopup(`This is <br><h3>${json[i].title}</h3>`) 
+    // .bindPopup(`This is <br><h3>${escapeHtml(json[i].title)}</h3>`) 
+    .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3>`) 
     .openPopup()
   }
-  // bindPopupの箇所で、XSSを防げるようにする
+
   
 
   // let pinMarker = L.marker([20, 20], {icon: pinIcon, draggable:true}).addTo(map);
