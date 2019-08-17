@@ -8,16 +8,6 @@ class Map < ApplicationRecord
   validates :title, presence: true
 
   def authorizing_user(user)
-    begin
-      self.authorized_users.push(user)
-      return true
-    rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
-      puts "----------------------------------------------------------------------"
-      puts "#{e.class}"
-      puts "#{e.message}"
-      puts "----------------------------------------------------------------------"
-      
-      return false
-    end
+    self.authorized_users.push(user)
   end
 end

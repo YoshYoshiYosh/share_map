@@ -15,26 +15,17 @@ class AuthorizedMapsController < ApplicationController
   
   def create
     if @authorized_user = User.find_by(authorized_params)
-      # begin
-      #   @map.authorizing_user(@authorized_user)
-      #   authorizing_userメソッドを呼んでいるモデル側のファイルでbegin~endまでかく。validateでもかく。
+      begin
+        @map.authorizing_user(@authorized_user)
+        flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
+      rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
+        puts "----------------------------------------------------------------------"
+        puts "#{e.class}"
+        puts "#{e.message}"
+        puts "----------------------------------------------------------------------"
         
-      #   flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
-      # rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
-      #   puts "----------------------------------------------------------------------"
-      #   puts "#{e.class}"
-      #   puts "#{e.message}"
-      #   puts "----------------------------------------------------------------------"
-        
-      #   flash.delete(:success)
-      #   flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
-      # end
-      
-      case @map.authorizing_user(@authorized_user)
-        when true
-          flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
-        when false
-          flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
+        flash.delete(:success)
+        flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
       end
     else
       flash[:danger] = "（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
