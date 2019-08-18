@@ -30,6 +30,7 @@ RSpec.describe AuthorizedMap, type: :model do
       # 同じmap_idとuser_idの組み合わせが成立する。rails consoleではエラー「ActiveRecord::RecordNotUnique」が発生するが、本specでは発生しない。
       puts "#{map.authorized_users.count}"
 
+      # expect{map.authorizing_user(user)}.to raise_error(ActiveRecord::RecordNotUnique)
       expect{map.authorizing_user(user)}.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
