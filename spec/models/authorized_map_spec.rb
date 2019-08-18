@@ -22,8 +22,9 @@ RSpec.describe AuthorizedMap, type: :model do
       # 1回目：mapにユーザーを追加する
       map.authorizing_user(user)
 
-      # expect{map.authorizing_user(user)}.to raise_error(ActiveRecord::RecordNotUnique)
-      expect{map.authorizing_user(user)}.to raise_error(ActiveRecord::RecordNotUnique)
+      authorized_map = AuthorizedMap.new(map: map, user: user)
+
+      expect{ authorized_map.save(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
 end
