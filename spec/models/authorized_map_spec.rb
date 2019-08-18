@@ -18,17 +18,9 @@ RSpec.describe AuthorizedMap, type: :model do
   end
 
   context 'when authorizing user who already had authorized the same map' do
-    it 'is invalid AuthorizedMap model', focus: true do
+    it 'is invalid AuthorizedMap model' do
       # 1回目：mapにユーザーを追加する
       map.authorizing_user(user)
-      puts "#{map.id} : #{user.id}"
-
-      # 2回目：1回目と同じmapに,同じユーザーを追加する
-      map.authorizing_user(user)
-      puts "#{map.id} : #{user.id}"
-
-      # 同じmap_idとuser_idの組み合わせが成立する。rails consoleではエラー「ActiveRecord::RecordNotUnique」が発生するが、本specでは発生しない。
-      puts "#{map.authorized_users.count}"
 
       # expect{map.authorizing_user(user)}.to raise_error(ActiveRecord::RecordNotUnique)
       expect{map.authorizing_user(user)}.to raise_error(ActiveRecord::RecordNotUnique)

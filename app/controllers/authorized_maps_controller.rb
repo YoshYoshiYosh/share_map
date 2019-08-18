@@ -19,11 +19,6 @@ class AuthorizedMapsController < ApplicationController
         @map.authorizing_user(@authorized_user)
         flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
       rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
-        puts "----------------------------------------------------------------------"
-        puts "#{e.class}"
-        puts "#{e.message}"
-        puts "----------------------------------------------------------------------"
-        
         flash.delete(:success)
         flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
       end
