@@ -1,0 +1,39 @@
+.container.not-top.mt-4.pt-4.px-4.text-center
+  h1.mb-3
+    = "#{@map.title}管理画面"
+    
+  = link_to map_path(@map), class: 'mb-5 to-map-text' do
+    span.to-map
+      |マップへ
+      <i class="far fa-map"></i>
+
+  .manage-wrap.d-flex
+    .manage-title
+      = link_to '編集する', edit_map_path(@map), class: 'btn-flat-border hidden'
+      p.py-2.gb-white タイトル
+      p
+        = @map.title
+    .manage-description
+      = link_to '編集する', edit_map_path(@map), class: 'btn-flat-border hidden'
+      p.py-2.gb-white 説明
+      p
+        = @map.description
+    .manage-users
+      = link_to '編集する', new_map_authorized_map_path(@map), class: 'btn-flat-border hidden', target: :_blank
+      p.py-2.gb-white
+        |招待者一覧
+        span.profile-count= @map.authorized_users.count
+      
+      ul.d-flex.px-3
+        - @map.authorized_users.each do |user|
+          li
+            = user.email
+
+    .manage-pins
+      = link_to '編集する', map_pins_path(@map), class: 'btn-flat-border hidden'
+      p.py-2.gb-white
+        |ピン一覧
+        span.profile-count.text-center= @map.pins.count
+      ul.d-flex.px-3
+        - @map.pins.each_with_index do |pin, i|
+          li= "#{i+1}：#{pin.title}"

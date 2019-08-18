@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'home#index'
+  get '/mypage', to: 'home#mypage'
 
   devise_for :users
   
@@ -7,6 +8,9 @@ Rails.application.routes.draw do
   
   resources :maps do
     get :mymap, on: :collection
+    get :admin, on: :member # それぞれのMapの管理画面みたいなもの、ここからauthorized_maps/newとかに遷移させる。もしくはeditアクションで対応？
+    resources :authorized_maps, except: [:edit]
     resources :pins
   end
+  
 end

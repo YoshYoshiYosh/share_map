@@ -14,29 +14,60 @@ ul.breadcrumb.m-0.p-1.pl-3
   - if current_user == @map.author
     li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
     span.bread-text[itemprop="title"]
-      = link_to @map.title, edit_map_path(@map)
-      i.fas.fa-edit.ml-1
+      = @map.title
+      = link_to admin_map_path(@map) do
+        i.fas.fa-cogs.ml-1
   - else
     li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
     span.bread-text[itemprop="title"]
       = @map.title
 #mapid
-- @pins.each.with_index(1) do |pin, index|
-  p.lon.d-none= pin.lonlat.x
-  p.lat.d-none= pin.lonlat.y
+- if @pins != nil
+  - @pins.each.with_index(1) do |pin, index|
+    p.lon.d-none= pin.lonlat.x
+    p.lat.d-none= pin.lonlat.y
 
-/ p
-/   strong Title:
-/   = @map.title
-/ p
-/   strong Description:
-/   = @map.description
-/ p
-/   strong Author:
-/   = @map.author
+#exampleModalCenter.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"]
+  .modal-dialog.modal-dialog-centered[role="document"]
+    .modal-content.invite-form
+      .modal-header.p-3
+        p#exampleModalLongTitle.modal-title ピンを追加する
+        button.close[type="button" data-dismiss="modal" aria-label="Close"]
+          span[aria-hidden="true"]
+            | ×
+      = form_with model: [@map, @pin], remote: true do |f|
+        / - if @pin.errors.any?
+        /   #error_explanation
+        /     h2 = "#{pluralize(@pin.errors.count, "error")} prohibited this pin from being saved:"
+        /     ul
+        /       - @pin.errors.full_messages.each do |message|
+        /         li = message
+        .form-group
+          = f.label :title, 'タイトル', class: 'mb-1 mt-3 left-border'
+          = f.text_field :title, autofocus: true, autocomplete: 'title', placeholder: '例) お気に入りの中華料理屋さん', class: 'form-control mb-3 font-weight-lighter'
+        .form-group
+          = f.label :description, '説明', class: 'mb-1 left-border'
+          = f.text_area :description, autofocus: true, autocomplete: 'description', placeholder: '例) チャーハンが相変わらず美味しかった...', class: 'form-control mb-3 font-weight-lighter'
+        .form-group
+          = f.label :lonlat, '座標（後々は消したい）', class: 'mb-1 left-border'
+          = f.text_field :lonlat, autofocus: true, autocomplete: 'lonlat', placeholder: '10 10', class: 'form-control mb-3 font-weight-lighter'
+        = f.submit 'ピンを作成', class: 'btn-flat-border'
+      #added-message.mt-3
 
-/ p= link_to 'Pinを作成する', new_map_pin_path(@map)
-
-/ => link_to 'Edit', edit_map_path(@map)
-/ '|
-/ =< link_to 'Back', maps_path
+          
+/ #exampleModalCenter.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"]
+/   .modal-dialog.modal-dialog-centered[role="document"]
+/     .modal-content.invite-form
+/       .modal-header
+/         h5#exampleModalLongTitle.modal-title
+/           | Modal title
+/         button.close[type="button" data-dismiss="modal" aria-label="Close"]
+/           span[aria-hidden="true"]
+/             | ×
+/       .modal-body
+/         |  ... 
+/       .modal-footer
+/         button.btn.btn-secondary[type="button" data-dismiss="modal"]
+/           | Close
+/         button.btn.btn-primary[type="button"]
+/           | Save changes

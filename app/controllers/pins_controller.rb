@@ -40,12 +40,14 @@ class PinsController < ApplicationController
 
     respond_to do |format|
       if @pin.save
-        format.html { redirect_to map_pin_url(@map, @pin), notice: 'Pin was successfully created.' }
+        # format.html { redirect_to map_pin_url(@map, @pin), notice: 'Pin was successfully created.' }
         # format.json { render :show, status: :created, location: [@map, @pin] }
-        format.json { render :index }
+        # format.json { render :index }
+        format.js { flash[:success] = "ピンが無事に作成された。" }
       else
-        format.html { render :new }
-        format.json { render json: @pin.errors, status: :unprocessable_entity }
+        # format.html { render :new }
+        # format.json { render json: @pin.errors, status: :unprocessable_entity }
+        format.js { flash[:danger] = "入力が完了していない項目があります。" }
       end
     end
   end

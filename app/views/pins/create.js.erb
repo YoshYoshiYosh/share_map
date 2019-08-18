@@ -1,0 +1,7 @@
+<% flash.each do |type, message| %>
+  <% if type == 'success' %>
+    $("#added-message").html('<p class="alert alert-success"><%= message %></p>')
+  <% elsif type == 'danger' %>
+    $("#added-message").html('<p class="alert alert-danger"><%= message %></p>')
+  <% end %>
+<% end %>

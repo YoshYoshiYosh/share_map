@@ -1,10 +1,63 @@
+// function escapeHtml(str){
+//   str = str.replace(/&/g, '&amp;');
+//   str = str.replace(/>/g, '&gt;');
+//   str = str.replace(/</g, '&lt;');
+//   str = str.replace(/"/g, '&quot;');
+//   str = str.replace(/'/g, '&#x27;');
+//   str = str.replace(/`/g, '&#x60;');
+//   return str;
+// }
+
+function escape_html (string) {
+  // if(typeof string !== 'string') {
+  //   return string;
+  // }
+  return string.replace(/[&'`"<>]/g, function(match) {
+    return {
+      '&': '&amp;',
+      "'": '&#x27;',
+      '`': '&#x60;',
+      '"': '&quot;',
+      '<': '&lt;',
+      '>': '&gt;',
+    }
+    [match]
+  });
+}
+
+// escape_html関数の理解用の関数
+function escape_aiueo (str) {
+  return str.replace(/[12345]/g, function(matchText){
+    return {
+            '1': 'あ',
+            '2': 'い',
+            '3': 'う',
+            '4': 'え',
+            '5': 'え',
+        }[matchText]
+  })
+}
+
+
+function showEditButton(e) {
+  e.target.firstElementChild.classList.add('shown');
+}
+
+function hideEditButton(e) {
+  e.target.firstElementChild.classList.remove('shown');
+}
+
 async function mapInit(lons, lats) {
 
   let json = await fetch('http://localhost:3000/maps/1/pins.json')
     .then(function(response) {
-      console.log(response);
+      // console.log(response);
       return response.json();
     })
+
+  if(json.length === 0) {
+    json.push({ title: 'default' })
+  }
 
   map = L.map('mapid').setView([lons[0], lats[0]], 5);
 
@@ -19,7 +72,9 @@ async function mapInit(lons, lats) {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // 縦並びのアイコン4つのうち、一番上のものをクリックするとテスト用ピンが登録される(今後変更予定)
+  // 縦並びのアイコン4つのうち、
+  // 1番目をクリックするとテスト用ピンが登録される(今後変更予定)
+  // 4番目をクリックすると、このマップを閲覧することができるユーザーを追加する画面が別タブで開く（モーダルからPostできるようにしたいです）
   L.Control.Watermark = L.Control.extend({
     onAdd: function(map) {
 
@@ -31,16 +86,33 @@ async function mapInit(lons, lats) {
       outer_div.style.zIndex = '5';
 
       let image_sources = ['/single_point_gps_navigation_pin_icon-icons.com_59903.svg', '/目的地アイコン2.svg', '/位置情報の無料アイコン2.svg', '/人物アイコン　チーム.svg']
-      let textContents  = ['New Pin', 'New Pin', 'View Pins', 'Friends']
+      let textContents  = ['New Pin', 'New Pin', 'View Pins', 'Add Member']
 
       for(let i = 0; i < 4; i++) {
         let div = L.DomUtil.create('div', "map-button-container__box", outer_div);
-        let img = L.DomUtil.create('img', "pin-icon", div);
+        let img = L.DomUtil.create('img', "pin-icon", div);   
+        
+        switch(i) {
+          case 0: {
+            img.classList.add("add-pin");
+            img.setAttribute('data-toggle', 'modal');
+            img.setAttribute('data-target', '#exampleModalCenter')
+            break;
+          }
+          case 2: {
+            img.classList.add("add-menber-form");
+            break;
+          }
+          case 3: {
+            img.classList.add("add-member");
+            break;
+          }
+        }
+
         let smallText = L.DomUtil.create('p', "small-text", div);
         img.src = image_sources[i]
         smallText.textContent = textContents[i]
       };
-      
       return outer_div;
     },
 
@@ -55,75 +127,102 @@ async function mapInit(lons, lats) {
   
   L.control.watermark({ position: 'topright' }).addTo(map);
   
+  // bindPopupの箇所で、XSSを防げるようにする
   for (let i = 0; i < lons.length; i++) {
     L.marker([lons[i], lats[i]]).addTo(map)
     // L.marker([lons[i], lats[i]],{icon: L.divIcon({className: 'marker'})}).addTo(map)
-    .bindPopup(`This is <br><h3>${json[i].title}</h3>`)
+    // .bindPopup(`This is <br><h3>${json[i].title}</h3>`) 
+    // .bindPopup(`This is <br><h3>${escapeHtml(json[i].title)}</h3>`) 
+    .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3>`) 
     .openPopup()
   }
 
-  let pinMarker = L.marker([20, 20], {icon: pinIcon, draggable:true}).addTo(map);
-  pinMarker.bindPopup('my pin')
-  .openPopup();
+  
+
+  // let pinMarker = L.marker([20, 20], {icon: pinIcon, draggable:true}).addTo(map);
+  // pinMarker.bindPopup('my pin')
+  // .openPopup();
   
 };
 
 document.addEventListener("turbolinks:load", async function(){
   console.log('読み込まれました');
-
-  let lonsRaw = document.querySelectorAll(".lon");
-  let latsRaw = document.querySelectorAll(".lat") ; 
   
-  let pinsNumber = lonsRaw.length;
-  let lons = [];
-  let lats = [];
+  if (/maps\/\d\/admin$/.test(location.href)) {
+    let showEditButtonAtAdminPages = [document.querySelector('.manage-title'), document.querySelector('.manage-description'), document.querySelector('.manage-users'), document.querySelector('.manage-pins')];
+  
+    showEditButtonAtAdminPages.forEach((element) => {
+      element.addEventListener('pointerover', showEditButton, false);
+      element.addEventListener('pointerleave', hideEditButton, false);
+    });
+  }
 
-  for (let i = 0; i < pinsNumber; i++) {
-    lons.push(lonsRaw[i].textContent);
-    lats.push(latsRaw[i].textContent);
-  };
+  if(/maps\/\d$/.test(location.href)) {
+    // マップ読み込み
+    let lonsRaw = document.querySelectorAll(".lon");
+    let latsRaw = document.querySelectorAll(".lat") ; 
+    
+    let pinsNumber = lonsRaw.length;
+    let lons = [];
+    let lats = [];
 
-  await mapInit(lons, lats);
+    for (let i = 0; i < pinsNumber; i++) {
+      lons.push(lonsRaw[i].textContent);
+      lats.push(latsRaw[i].textContent);
+    };
 
-  // テスト用のPin
-  let sightSeeing = [
-    { country: 'USA', name: 'Grand Canyon National Park', lonlat: [36.0922146, -113.4035967]},
-    { country: '日本', name: '富士山', lonlat: [35.3606422,138.7186086] },
-    { country: '中國', name: '慕田峪长城', lonlat: [40.4319118,116.5681862]},
-    { country: 'France', name: 'Tour Eiffel', lonlat: [48.8583701, 2.2922926]},
-  ];
+    lons.push('10')
+    lats.push('10')
 
-  // JavaScriptでPOSTする
-  let button = document.querySelector('.pin-icon');
-  button.addEventListener('click', async () => {
-    for (let i = 0; i < sightSeeing.length; i++) {
-        // CSRF用のトークン
-        const token = document.getElementsByName('csrf-token').item(0).content;
+    await mapInit(lons, lats);
 
-        // ボディを作る
-        const formData = new FormData();
+    // テスト用のPin
+    let sightSeeing = [
+      { country: 'USA', name: 'Grand Canyon National Park', lonlat: [36.0922146, -113.4035967]},
+      { country: '日本', name: '富士山', lonlat: [35.3606422,138.7186086] },
+      { country: '中國', name: '慕田峪长城', lonlat: [40.4319118,116.5681862]},
+      { country: 'France', name: 'Tour Eiffel', lonlat: [48.8583701, 2.2922926]},
+    ];
 
-        // 成功する
-        formData.append('authenticity_token', token);
-        formData.append('pin[title]', `${sightSeeing[i].name}`);
-        formData.append('pin[description]', `${sightSeeing[i].country}の世界遺産ですよ。`);
-        formData.append('pin[lonlat]', `${sightSeeing[i].lonlat[0]} ${sightSeeing[i].lonlat[1]}`);
-        // 
+    // JavaScriptでPOSTする
+    // let addPinButton = document.querySelector('.add-pin');
+    // addPinButton.addEventListener('click', async () => {
+    //   for (let i = 0; i < sightSeeing.length; i++) {
+    //       // CSRF用のトークン
+    //       const token = document.getElementsByName('csrf-token').item(0).content;
 
-        const postRequest = await fetch(location.href + '/pins.json', {
-          method: "POST",
-          body: formData
-        });
+    //       // ボディを作る
+    //       const formData = new FormData();
 
-        console.log(postRequest);
+    //       // 成功する
+    //       formData.append('authenticity_token', token);
+    //       formData.append('pin[title]', `${sightSeeing[i].name}`);
+    //       formData.append('pin[description]', `${sightSeeing[i].country}の世界遺産ですよ。`);
+    //       formData.append('pin[lonlat]', `${sightSeeing[i].lonlat[0]} ${sightSeeing[i].lonlat[1]}`);
+    //       // 
 
-        if (postRequest.status === 200) {
-          console.log('成功');
-        } else {
-          console.log('失敗');
-        }
-    }
+    //       const postRequest = await fetch(location.href + '/pins.json', {
+    //         method: "POST",
+    //         body: formData
+    //       });
 
-  });
+    //       console.log(postRequest);
+
+    //       if (postRequest.status === 200) {
+    //         console.log('成功');
+    //       } else {
+    //         console.log('失敗');
+    //       }
+    //   }
+
+    // });
+
+    let addMemberButton = document.querySelector('.add-member');
+    addMemberButton.addEventListener('click', async () => {
+      
+      // document.querySelector('.add-menber-form').classList.add("shown");
+      open('http://localhost:3000/maps/1/authorized_maps/new', '_blank');
+    })
+  }
 
 });

@@ -1,10 +1,12 @@
-@import 'bootstrap';
 @import "leaflet/dist/leaflet.css";
+@import "bootstrap/dist/css/bootstrap.css";
+
 
 $image-color: #022144;
 
 $base-back: #fefefe;
 
+$sky-blue: #67c5ff;
 
 // html {
 //   font-size: 62.5%;
@@ -16,6 +18,8 @@ $base-back: #fefefe;
 //   -webkit-font-smoothing: antialiased;
 //   -moz-osx-font-smoothing: grayscale;
 //   }
+
+
 
 * {
   box-sizing: border-box;
@@ -36,13 +40,16 @@ a, a:hover, a:active, a:visited {
 
 
 body {
-  font-family: '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
+  // font-family: '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
+  font-family: 'YuGothic', '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   }
   
 .wrapper {
-  padding-top: 70px; /* 打ち消し用のパディング */
+  padding-top: 72.6px; /* 打ち消し用のパディング */
+  background-color: #f0ebeb;
+  height: 100vh;
 }
 
 body {
@@ -52,7 +59,16 @@ body {
     position: fixed;
     width: 100%;
     height: 10vh;
-    z-index: 999;
+    z-index: 100;
+  }
+
+  .alert {
+    padding-top: 83px;
+    margin-bottom: 0;
+  }
+
+  #added-message > .alert {
+    padding-top: 12px;
   }
 
   @media (min-width: 1500px) {
@@ -137,6 +153,15 @@ body {
     transform: scale(1.1,1.1);
     cursor: pointer;    
   }
+
+}
+
+// .add-menber-form {
+//   display: none;
+// }
+
+.shown {
+  display: block;
 }
 
 //  ピンのイラストを変更したりする時用
@@ -179,10 +204,6 @@ body {
     }
 }
 
-
-
-
-
 // これをコメントアウトしないと、ポップアップの位置がずれる
   .map-button-container {
     -webkit-box-orient: vertical;
@@ -200,4 +221,303 @@ body {
     height: inherit;
   }
 
+}
+
+.invite-form {
+  padding: 30px;
+  // background-color: rgba(0, 0, 0, 0.8);
+  // background-color: rgba(173, 173, 173, 0.534);
+  background-color: #eee;
+  border-left: 15px solid rgb(59, 101, 228);
+  border-radius: 5px;
+}
+
+.btn-flat-border {
+  display: inline-block;
+  padding: 0.3em 1em;
+  text-decoration: none;
+  color: rgb(59, 101, 228);
+  // border: solid 1px rgb(23, 68, 216);
+  border: solid 1px rgb(59, 101, 228);
+  border-radius: 3px;
+  background-color: #fefefe;
+  transition: .4s;
+
+    &:hover {
+      background: rgb(59, 101, 228);
+      color: white;
+    }
+}
+
+.fa-users {
+  color: #022144;
+  padding-left: 5px;
+}
+
+.form-container {
+  .left-border {
+    // border-left: 2px solid rgb(59, 101, 228);
+    padding-left: 5px;
+    color: #3e3e3e;
+  }
+}
+
+.site-title {
+  font-size: 50px;
+  font-weight: bolder;
+}
+
+.about-share-map {
+  text-align: center;
+}
+
+.title-image {
+  // padding-right: 30px;
+  max-width: 50%;
+}
+
+.title-message {
+  // padding-right: 20px;
+  max-width: 40%;
+  
+  .btn-flat-border {
+    color: rgb(59, 101, 228);
+    font-size: 15px;
+    width: 200px;
+    padding: 14px;
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.main-title-content {
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  // align-items: center; テキストのdivを、縦方向に真ん中にする
+}
+
+.about-share-map {
+  margin-top: 70px;
+}
+
+.sub-title {
+  border-bottom: solid 5px rgb(248, 170, 24);
+  display: inline;
+}
+
+.text-m {
+  font-size: 20px;
+}
+
+.manage-wrap {
+
+  a.btn-flat-border {
+    // color: rgb(59, 101, 228);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    width: 90px;
+    padding: 4.5px;
+    border-radius: 20px;
+    border: none;
+    // border-bottom: 1px solid rgb(59, 101, 228);
+    background-color: rgb(59, 101, 228);
+    border: 1px solid rgb(59, 101, 228);
+    position: absolute;
+    // background-color: #f7f7f7;
+    right: 4%;
+    top: 4px;
+    // &:hover {
+    //   background-color: rgb(59, 101, 228);
+    //   color: #fff;
+    // }
+  }
+
+  .hidden {
+    display: none;
+
+  }
+
+  .shown {
+    display: block;
+  }
+  
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 70vh;
+
+  .manage-title,.manage-description,.manage-users,.manage-pins {
+    position: relative;
+    // width: 50%;
+    flex-basis: 47%;
+    margin-bottom: 60px;
+    color: #3e3e3e;
+    // border-top: 3px solid #d1d5da;
+    // border-bottom: 3px solid #d1d5da;
+    // border: 1.5px solid #f7f7f7;
+    border: 1px solid #d1caca;
+    transition-duration: 1s;
+
+    &:hover {
+      // border-top: 3px solid #eebb30;
+      // border-bottom: 3px solid #eebb30;
+      border: 1.5px solid #eebb30;
+    }
+  }
+
+  .manage-users {
+    // padding-right: 10px;
+    // padding-left: 10px;
+    ul {
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    li {
+      flex-basis: 30%;
+    }
+  }
+
+
+  .manage-pins {
+    // padding-right: 10px;
+    // padding-left: 10px;
+    ul {
+      flex-flow: column;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    li {
+      flex-basis: 50%;
+    }
+  }
+
+  .profile-count {
+    font-size: 14px;
+    background-color: #ededee;
+    color: #586069;
+    display: inline-block;
+    line-height: 25px;
+    text-align: center;
+    width: 32px;
+    height: 25px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+}
+
+span.to-map {
+  // line-height: 30px;
+  // display: inline-block;
+  font-size: 15px;
+  color: royalblue;
+  border-bottom: 1px double royalblue;
+  bottom: 5px;
+  .fa-map {
+    padding-left: 5px;
+  }
+}
+
+.to-map-text {
+  display: inline-block;
+}
+
+
+.gb-white {
+  // background-color: #d1d5da;
+  background-color: #f7f7f7;
+}
+
+.fa-cogs {
+  font-size: 12px;
+}
+
+.modal-dialog {
+  min-width:50%;
+  // max-width: 80%;
+  // width: 150%;
+}
+
+.mymap-container {
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 100%;
+
+  .mymap-box {
+    flex-basis: 30%;
+    min-height: 150px;
+
+    .mymap-box__title {
+      padding: 10px;
+      border: 1px solid #458ae4;
+      background: #458ae4;
+      color: white;
+      border-radius: 10px 10px 0 0;
+      letter-spacing: 1.2px;
+      font-weight: bold;
+
+      .mymap-title-text {
+        transition-duration: .5s;
+        &:hover {
+          opacity: .7;
+          transform: scale(1.2);
+        }
+      }
+
+      p:first-letter {
+        font-size: 1.7em;
+      }
+    }
+    
+    .mymap-box__description {
+      font-size: 13px;
+      // height: 100%;
+      padding: 10px;
+      border: 1.5px solid #458ae4;
+      border-radius: 0 0 3px 3px;
+      .bg-secondary {
+        height: 100%;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+h1.mb-3 {
+  position: relative;
+  color: white;
+  // background: #e06737;  
+  // background: #da4b41e3;  
+  background: #da4b41e3;  
+  line-height: 1.4;
+  padding: 0.5em 0.5em 0.5em 1.8em;
+  border-radius: 20px;
+}
+
+h1.mb-3:before {
+  font-family: "Font Awesome 5 Free";
+  // content: "\f14a";
+  content: "\f013";
+  font-weight: bold;
+  position: absolute;
+  left : 0.5em; /*左端からのアイコンまでの距離*/
+}
+
+.yourmap-title {
+  border-left: 7px solid #f8a304;
+  font-weight: normal;
+  padding-left: 5px;
+  color: #75828b;
+}
+
+.container.not-top {
+  // background-color: #f6f6f6;
+  background-color: #fff;
 }

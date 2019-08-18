@@ -1,8 +1,9 @@
 class MapsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_map, only: [:show, :edit, :update, :destroy]
+  before_action :set_map, only: [:show, :edit, :update, :destroy, :admin]
   before_action :set_pins, only: [:show]
-  before_action :can_edit?, only: [:edit, :update, :destroy]
+  before_action :can_edit?, only: [:show, :edit, :update, :destroy]
+  before_action :author?, only: [:admin]
 
   # GET /maps
   # GET /maps.json
@@ -14,18 +15,23 @@ class MapsController < ApplicationController
   # GET /maps/1
   # GET /maps/1.json
   def show
-
+    @new_authorized = AuthorizedMap.new(map: @map)
+    @pin = Pin.new(map: @map)
   end
 
   # GET /maps/mymap
   # GET /maps/mymap.json
   def mymap
     @maps = Map.all.where(author: current_user)
+    @can_view_map = current_user.can_edit_maps
 
     respond_to do |format|
       format.html
       format.json { render :json => @maps }
     end
+  end
+
+  def admin
   end
 
   # GET /maps/new
@@ -94,6 +100,12 @@ class MapsController < ApplicationController
     end
 
     def can_edit?
+      if current_user != @map.author && @map.authorized_users.exclude?(current_user)
+        render 'errors/forbidden', status: 403
+      end
+    end
+
+    def author?
       if current_user != @map.author
         render 'errors/forbidden', status: 403
       end

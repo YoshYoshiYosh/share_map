@@ -16,12 +16,12 @@ def form_num(num)
   end
 end
 
-10.times do |n|
+30.times do |n|
   no = form_num(n+1)
   User.create(
     email: "test#{no}@example.com",
-    password: "Password-#{n}",
-    password_confirmation: "Password-#{n}"
+    password: "Password",
+    password_confirmation: "Password"
   )
 
 end
