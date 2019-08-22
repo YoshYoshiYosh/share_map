@@ -69,3 +69,4 @@ gem 'devise-bootstrap-views'
 gem 'rb-readline'
 gem 'activerecord-postgis-adapter'
 gem 'rubocop', '~> 0.72.0', require: false
+gem "aws-sdk-s3", require: false

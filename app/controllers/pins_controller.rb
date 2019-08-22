@@ -89,7 +89,7 @@ class PinsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pin_params
       params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
-      params.require(:pin).permit(:author_id, :title, :description, :lonlat)
+      params.require(:pin).permit(:author_id, :title, :description, :lonlat, :image)
     end
 
     def can_edit?
