@@ -98,19 +98,12 @@ async function mapInit(lons, lats) {
   
   L.control.watermark({ position: 'topright' }).addTo(map);
   
-  // bindPopupの箇所で、XSSを防げるようにする
   for (let i = 0; i < lons.length; i++) {
     L.marker([lons[i], lats[i]]).addTo(map)
     .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3>`) 
     .openPopup()
   }
 
-  
-
-  // let pinMarker = L.marker([20, 20], {icon: pinIcon, draggable:true}).addTo(map);
-  // pinMarker.bindPopup('my pin')
-  // .openPopup();
-  
 };
 
 document.addEventListener("turbolinks:load", async function(){
@@ -125,7 +118,7 @@ document.addEventListener("turbolinks:load", async function(){
     });
   }
 
-  if(/maps\/\d$/.test(location.href)) {
+  if(/maps\/\d\/?$/.test(location.href)) {
     // マップ読み込み
     let lonsRaw = document.querySelectorAll(".lon");
     let latsRaw = document.querySelectorAll(".lat") ; 
@@ -178,6 +171,7 @@ document.addEventListener("turbolinks:load", async function(){
 
     //       if (postRequest.status === 200) {
     //         console.log('成功');
+    //         ここで作成したマーカーを追加する処理を書く
     //       } else {
     //         console.log('失敗');
     //       }
