@@ -20,8 +20,7 @@ function escape_html (string) {
       '"': '&quot;',
       '<': '&lt;',
       '>': '&gt;',
-    }
-    [match]
+    }[match]
   });
 }
 
@@ -47,11 +46,10 @@ function hideEditButton(e) {
   e.target.firstElementChild.classList.remove('shown');
 }
 
-async function mapInit(lons, lats) {
+async function mapInit() {
 
   let json = await fetch('http://localhost:3000/maps/1/pins.json')
     .then(function(response) {
-      // console.log(response);
       return response.json();
     })
 
@@ -59,7 +57,7 @@ async function mapInit(lons, lats) {
     json.push({ title: 'default' })
   }
 
-  map = L.map('mapid').setView([lons[0], lats[0]], 5);
+  map = L.map('mapid').setView([json[0].lonlat.x, json[0].lonlat.y], 5);
 
   let pinIcon = L.icon({
     iconUrl: '/pin_icon.png',
@@ -72,9 +70,6 @@ async function mapInit(lons, lats) {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // 縦並びのアイコン4つのうち、
-  // 1番目をクリックするとテスト用ピンが登録される(今後変更予定)
-  // 4番目をクリックすると、このマップを閲覧することができるユーザーを追加する画面が別タブで開く（モーダルからPostできるようにしたいです）
   L.Control.Watermark = L.Control.extend({
     onAdd: function(map) {
 
@@ -127,10 +122,16 @@ async function mapInit(lons, lats) {
   
   L.control.watermark({ position: 'topright' }).addTo(map);
   
-  for (let i = 0; i < lons.length; i++) {
-    L.marker([lons[i], lats[i]]).addTo(map)
-    .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3>`) 
-    .openPopup()
+  for (let i = 0; i < json.length; i++) {
+    if (json[i].image === undefined) {
+      L.marker([json[i].lonlat.x, json[i].lonlat.y]).addTo(map)
+      .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3>`)
+      .openPopup()      
+    } else {
+      L.marker([json[i].lonlat.x, json[i].lonlat.y]).addTo(map)
+      .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3><img class="pin-image" src=${json[i].image}>`)
+      .openPopup()
+    }
   }
 
 };
@@ -148,23 +149,9 @@ document.addEventListener("turbolinks:load", async function(){
   }
 
   if(/maps\/\d\/?$/.test(location.href)) {
-    // マップ読み込み
-    let lonsRaw = document.querySelectorAll(".lon");
-    let latsRaw = document.querySelectorAll(".lat") ; 
-    
-    let pinsNumber = lonsRaw.length;
-    let lons = [];
-    let lats = [];
 
-    for (let i = 0; i < pinsNumber; i++) {
-      lons.push(lonsRaw[i].textContent);
-      lats.push(latsRaw[i].textContent);
-    };
-
-    lons.push('10')
-    lats.push('10')
-
-    await mapInit(lons, lats);
+    // await mapInit(lons, lats);
+    await mapInit();
 
     // テスト用のPin
     let sightSeeing = [
@@ -210,8 +197,6 @@ document.addEventListener("turbolinks:load", async function(){
 
     let addMemberButton = document.querySelector('.add-member');
     addMemberButton.addEventListener('click', async () => {
-      
-      // document.querySelector('.add-menber-form').classList.add("shown");
       open('http://localhost:3000/maps/1/authorized_maps/new', '_blank');
     })
   }
