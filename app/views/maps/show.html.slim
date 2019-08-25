@@ -27,50 +27,5 @@ ul.breadcrumb.m-0.p-1.pl-3
     p.lon.d-none= pin.lonlat.x
     p.lat.d-none= pin.lonlat.y
 
-#exampleModalCenter.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"]
-  .modal-dialog.modal-dialog-centered[role="document"]
-    .modal-content.invite-form
-      .modal-header.p-3
-        p#exampleModalLongTitle.modal-title ピンを追加する
-        button.close[type="button" data-dismiss="modal" aria-label="Close"]
-          span[aria-hidden="true"]
-            | ×
-      = form_with model: [@map, @pin], remote: true do |f|
-        / - if @pin.errors.any?
-        /   #error_explanation
-        /     h2 = "#{pluralize(@pin.errors.count, "error")} prohibited this pin from being saved:"
-        /     ul
-        /       - @pin.errors.full_messages.each do |message|
-        /         li = message
-        .form-group
-          = f.label :title, 'タイトル', class: 'mb-1 mt-3 left-border'
-          = f.text_field :title, autofocus: true, autocomplete: 'title', placeholder: '例) お気に入りの中華料理屋さん', class: 'form-control mb-3 font-weight-lighter'
-        .form-group
-          = f.label :description, '説明', class: 'mb-1 left-border'
-          = f.text_area :description, autofocus: true, autocomplete: 'description', placeholder: '例) チャーハンが相変わらず美味しかった...', class: 'form-control mb-3 font-weight-lighter'
-        .form-group
-          = f.label :lonlat, '座標（後々は消したい）', class: 'mb-1 left-border'
-          = f.text_field :lonlat, autofocus: true, autocomplete: 'lonlat', placeholder: '10 10', class: 'form-control mb-3 font-weight-lighter'
-        .form-group
-          = f.label :image
-          = f.file_field :image, class: 'form-control mb-3 p-0 font-weight-lighter'
-        = f.submit 'ピンを作成', class: 'btn-flat-border'
-      #added-message.mt-3
 
-          
-/ #exampleModalCenter.modal.fade[tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"]
-/   .modal-dialog.modal-dialog-centered[role="document"]
-/     .modal-content.invite-form
-/       .modal-header
-/         h5#exampleModalLongTitle.modal-title
-/           | Modal title
-/         button.close[type="button" data-dismiss="modal" aria-label="Close"]
-/           span[aria-hidden="true"]
-/             | ×
-/       .modal-body
-/         |  ... 
-/       .modal-footer
-/         button.btn.btn-secondary[type="button" data-dismiss="modal"]
-/           | Close
-/         button.btn.btn-primary[type="button"]
-/           | Save changes
+= render partial: "pins/modal" , locals: { map: @map, pin: @pin }
