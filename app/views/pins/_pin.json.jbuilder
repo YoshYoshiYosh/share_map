@@ -1,6 +1,6 @@
 json.id           pin.id
 json.author_id    pin.author_id
-json.lonlat       [pin.lonlat.x, pin.lonlat.y]
+json.lonlat       x: pin.lonlat.x, y: pin.lonlat.y
 json.title        pin.title
 json.description  pin.description
 json.created_at   pin.created_at
