@@ -123,7 +123,6 @@ document.addEventListener("turbolinks:load", async function(){
 
   if(/maps\/\d\/?$/.test(location.href)) {
 
-    // await mapInit(lons, lats);
     await mapInit();
 
     // テスト用のPin

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AuthorizedMapsController, type: :controller do
-
   let(:user) { create(:user) }
 
   let(:map) { create(:map, author: user) }
@@ -20,5 +19,4 @@ RSpec.describe AuthorizedMapsController, type: :controller do
       end
     end
   end
-
 end
