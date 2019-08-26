@@ -8,6 +8,6 @@ class Map < ApplicationRecord
   validates :title, presence: true
 
   def authorizing_user(user)
-    self.authorized_users.push(user)
+    authorized_users.push(user)
   end
 end

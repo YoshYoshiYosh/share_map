@@ -9,7 +9,7 @@ RSpec.describe "Pins", type: :request do
   let(:first_pin) { FactoryBot.create(:pin, :same_author, map: map, author: user) }
   let(:second_pin) { FactoryBot.create(:pin, :same_author, map: map, author: user) }
   let(:third_pin) { FactoryBot.create(:pin, :same_author, map: map, author: user) }
-  let(:pins) {[ first_pin, second_pin, third_pin ]}
+  let(:pins) {[first_pin, second_pin, third_pin]}
 
   describe "GET maps/:map_id/pins" do
     it "works! (now write some real specs)" do

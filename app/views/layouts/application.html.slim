@@ -11,8 +11,6 @@ html
 
   body
     nav.navbar.navbar-expand-sm.navbar-dark.bg-image-color
-      / = link_to image_tag("/earth-icon.svg", size: "45x45"), '/', class: 'navbar-brand mr-1'
-      / h2.text-white.m-0.pl-0 ShareMap
       = link_to root_path, class: 'navbar-brand mr-1' do
         = image_tag("/earth-icon.svg", size: "45x45")
         h2.d-inline-block.text-white.m-0.pl-0 ShareMap
@@ -32,19 +30,10 @@ html
           li.nav-item
             = link_to '新規登録はこちら', new_user_registration_path, class: 'nav-link'
     
-    / - if require_flash?
-    / - if flash[:success]
-    /   p.alert.alert-success= flash[:success]
-    / - elsif flash[:danger]
-    /   p.alert.alert-danger= flash[:danger]
-    
     - flash.each do |type, message|
-      = content_tag(:p, message, class: "alert alert-#{type}")
-
-    / - if flash[:success]
-    /   p.alert.alert-success= flash[:success]
-    / - elsif flash[:danger]
-    /   p.alert.alert-danger= flash[:danger]
-
+      - if type == 'success' || type == 'notice'
+        p.alert.alert-success= message
+      - elsif type == 'danger' || type == 'alert'
+        p.alert.alert-danger= message
     
     .wrapper= yield 

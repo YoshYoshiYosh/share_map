@@ -24,7 +24,7 @@ RSpec.describe AuthorizedMap, type: :model do
 
       authorized_map = AuthorizedMap.new(map: map, user: user)
 
-      expect{ authorized_map.save(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
+      expect { authorized_map.save(validate: false) }.to raise_error(ActiveRecord::RecordNotUnique)
     end
   end
 end
