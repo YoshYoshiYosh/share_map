@@ -125,48 +125,6 @@ document.addEventListener("turbolinks:load", async function(){
 
     await mapInit();
 
-    // テスト用のPin
-    let sightSeeing = [
-      { country: 'USA', name: 'Grand Canyon National Park', lonlat: [36.0922146, -113.4035967]},
-      { country: '日本', name: '富士山', lonlat: [35.3606422,138.7186086] },
-      { country: '中國', name: '慕田峪长城', lonlat: [40.4319118,116.5681862]},
-      { country: 'France', name: 'Tour Eiffel', lonlat: [48.8583701, 2.2922926]},
-    ];
-
-    // JavaScriptでPOSTする
-    // let addPinButton = document.querySelector('.add-pin');
-    // addPinButton.addEventListener('click', async () => {
-    //   for (let i = 0; i < sightSeeing.length; i++) {
-    //       // CSRF用のトークン
-    //       const token = document.getElementsByName('csrf-token').item(0).content;
-
-    //       // ボディを作る
-    //       const formData = new FormData();
-
-    //       // 成功する
-    //       formData.append('authenticity_token', token);
-    //       formData.append('pin[title]', `${sightSeeing[i].name}`);
-    //       formData.append('pin[description]', `${sightSeeing[i].country}の世界遺産ですよ。`);
-    //       formData.append('pin[lonlat]', `${sightSeeing[i].lonlat[0]} ${sightSeeing[i].lonlat[1]}`);
-    //       // 
-
-    //       const postRequest = await fetch(location.href + '/pins.json', {
-    //         method: "POST",
-    //         body: formData
-    //       });
-
-    //       console.log(postRequest);
-
-    //       if (postRequest.status === 200) {
-    //         console.log('成功');
-    //         ここで作成したマーカーを追加する処理を書く
-    //       } else {
-    //         console.log('失敗');
-    //       }
-    //   }
-
-    // });
-
     let addMemberButton = document.querySelector('.add-member');
     addMemberButton.addEventListener('click', async () => {
       open('http://localhost:3000/maps/1/authorized_maps/new', '_blank');
