@@ -19,15 +19,15 @@ function hideEditButton(e) {
   e.target.firstElementChild.classList.remove('shown');
 }
 
-async function mapInit() {
+async function mapInit(mapId) {
 
-  let json = await fetch('http://localhost:3000/maps/1/pins.json')
+  let json = await fetch(`http://localhost:3000/maps/${mapId}/pins.json`)
     .then(function(response) {
       return response.json();
     })
 
   if(json.length === 0) {
-    json.push({ title: 'default' })
+    json.push({ title: 'default', lonlat: { x: 51.476853, y: -0.0005002 } })
   }
 
   map = L.map('mapid').setView([json[0].lonlat.x, json[0].lonlat.y], 5);
@@ -123,11 +123,13 @@ document.addEventListener("turbolinks:load", async function(){
 
   if(/maps\/\d\/?$/.test(location.href)) {
 
-    await mapInit();
+    let mapId = location.href.match(/\/(\d+)\/?/)[1]
+
+    await mapInit(mapId);
 
     let addMemberButton = document.querySelector('.add-member');
     addMemberButton.addEventListener('click', async () => {
-      open('http://localhost:3000/maps/1/authorized_maps/new', '_blank');
+      open(`http://localhost:3000/maps/${mapId}/authorized_maps/new`, '_blank');
     })
   }
 
