@@ -73,7 +73,7 @@ RSpec.describe PinsController, type: :controller do
       context "with valid params" do
         it "creates a new Pin" do
           expect {
-            post :create, params: { map_id: map.id, pin: valid_attributes }, session: valid_session, format: :js
+            post :create, params: { map_id: map.id, pin: valid_attributes }, session: valid_session, format: :html
           }.to change(Pin, :count).by(1) 
         end
       end

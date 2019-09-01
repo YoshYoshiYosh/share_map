@@ -486,10 +486,6 @@ span.to-map {
 }
 
 
-
-
-
-
 h1.mb-3 {
   position: relative;
   color: white;
@@ -520,4 +516,14 @@ h1.mb-3:before {
 .container.not-top {
   // background-color: #f6f6f6;
   background-color: #fff;
+}
+
+
+.pin-image {
+  max-width: 500px;
+}
+
+// 要調整
+.leaflet-popup {
+  width: 500px;
 }

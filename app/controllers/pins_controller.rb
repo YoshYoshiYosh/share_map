@@ -40,13 +40,12 @@ class PinsController < ApplicationController
 
     respond_to do |format|
       if @pin.save
-        # format.html { redirect_to map_pin_url(@map, @pin), notice: 'Pin was successfully created.' }
-        # format.json { render :show, status: :created, location: [@map, @pin] }
-        # format.json { render :index }
-        format.js { flash[:success] = "ピンが無事に作成された。" }
+        format.html { redirect_to @map, notice: 'Pin was successfully created.' }
+        # format.js { flash[:success] = "ピンが無事に作成された。" }
+        # format.html do
+        #   redirect_to @map
+        # end
       else
-        # format.html { render :new }
-        # format.json { render json: @pin.errors, status: :unprocessable_entity }
         format.js { flash[:danger] = "入力が完了していない項目があります。" }
       end
     end
@@ -89,7 +88,7 @@ class PinsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def pin_params
       params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
-      params.require(:pin).permit(:author_id, :title, :description, :lonlat)
+      params.require(:pin).permit(:author_id, :title, :description, :lonlat, :image)
     end
 
     def can_edit?

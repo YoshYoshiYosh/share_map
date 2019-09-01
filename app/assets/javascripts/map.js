@@ -19,18 +19,18 @@ function hideEditButton(e) {
   e.target.firstElementChild.classList.remove('shown');
 }
 
-async function mapInit(lons, lats) {
+async function mapInit(mapId) {
 
-  let json = await fetch('http://localhost:3000/maps/1/pins.json')
+  let json = await fetch(`http://localhost:3000/maps/${mapId}/pins.json`)
     .then(function(response) {
       return response.json();
     })
 
   if(json.length === 0) {
-    json.push({ title: 'default' })
+    json.push({ title: 'default', lonlat: { x: 51.476853, y: -0.0005002 } })
   }
 
-  map = L.map('mapid').setView([lons[0], lats[0]], 5);
+  map = L.map('mapid').setView([json[0].lonlat.x, json[0].lonlat.y], 5);
 
   let pinIcon = L.icon({
     iconUrl: '/pin_icon.png',
@@ -43,9 +43,6 @@ async function mapInit(lons, lats) {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
-  // 縦並びのアイコン4つのうち、
-  // 1番目をクリックするとテスト用ピンが登録される(今後変更予定)
-  // 4番目をクリックすると、このマップを閲覧することができるユーザーを追加する画面が別タブで開く（モーダルからPostできるようにしたいです）
   L.Control.Watermark = L.Control.extend({
     onAdd: function(map) {
 
@@ -98,19 +95,18 @@ async function mapInit(lons, lats) {
   
   L.control.watermark({ position: 'topright' }).addTo(map);
   
-  // bindPopupの箇所で、XSSを防げるようにする
-  for (let i = 0; i < lons.length; i++) {
-    L.marker([lons[i], lats[i]]).addTo(map)
-    .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3>`) 
-    .openPopup()
+  for (let i = 0; i < json.length; i++) {
+    if (json[i].image === undefined) {
+      L.marker([json[i].lonlat.x, json[i].lonlat.y]).addTo(map)
+      .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3>`)
+      .openPopup()      
+    } else {
+      L.marker([json[i].lonlat.x, json[i].lonlat.y]).addTo(map)
+      .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3><img class="pin-image" src=${json[i].image}>`)
+      .openPopup()
+    }
   }
 
-  
-
-  // let pinMarker = L.marker([20, 20], {icon: pinIcon, draggable:true}).addTo(map);
-  // pinMarker.bindPopup('my pin')
-  // .openPopup();
-  
 };
 
 document.addEventListener("turbolinks:load", async function(){
@@ -125,71 +121,15 @@ document.addEventListener("turbolinks:load", async function(){
     });
   }
 
-  if(/maps\/\d$/.test(location.href)) {
-    // マップ読み込み
-    let lonsRaw = document.querySelectorAll(".lon");
-    let latsRaw = document.querySelectorAll(".lat") ; 
-    
-    let pinsNumber = lonsRaw.length;
-    let lons = [];
-    let lats = [];
+  if(/maps\/\d\/?$/.test(location.href)) {
 
-    for (let i = 0; i < pinsNumber; i++) {
-      lons.push(lonsRaw[i].textContent);
-      lats.push(latsRaw[i].textContent);
-    };
+    let mapId = location.href.match(/\/(\d+)\/?/)[1]
 
-    lons.push('10')
-    lats.push('10')
-
-    await mapInit(lons, lats);
-
-    // テスト用のPin
-    let sightSeeing = [
-      { country: 'USA', name: 'Grand Canyon National Park', lonlat: [36.0922146, -113.4035967]},
-      { country: '日本', name: '富士山', lonlat: [35.3606422,138.7186086] },
-      { country: '中國', name: '慕田峪长城', lonlat: [40.4319118,116.5681862]},
-      { country: 'France', name: 'Tour Eiffel', lonlat: [48.8583701, 2.2922926]},
-    ];
-
-    // JavaScriptでPOSTする
-    // let addPinButton = document.querySelector('.add-pin');
-    // addPinButton.addEventListener('click', async () => {
-    //   for (let i = 0; i < sightSeeing.length; i++) {
-    //       // CSRF用のトークン
-    //       const token = document.getElementsByName('csrf-token').item(0).content;
-
-    //       // ボディを作る
-    //       const formData = new FormData();
-
-    //       // 成功する
-    //       formData.append('authenticity_token', token);
-    //       formData.append('pin[title]', `${sightSeeing[i].name}`);
-    //       formData.append('pin[description]', `${sightSeeing[i].country}の世界遺産ですよ。`);
-    //       formData.append('pin[lonlat]', `${sightSeeing[i].lonlat[0]} ${sightSeeing[i].lonlat[1]}`);
-    //       // 
-
-    //       const postRequest = await fetch(location.href + '/pins.json', {
-    //         method: "POST",
-    //         body: formData
-    //       });
-
-    //       console.log(postRequest);
-
-    //       if (postRequest.status === 200) {
-    //         console.log('成功');
-    //       } else {
-    //         console.log('失敗');
-    //       }
-    //   }
-
-    // });
+    await mapInit(mapId);
 
     let addMemberButton = document.querySelector('.add-member');
     addMemberButton.addEventListener('click', async () => {
-      
-      // document.querySelector('.add-menber-form').classList.add("shown");
-      open('http://localhost:3000/maps/1/authorized_maps/new', '_blank');
+      open(`http://localhost:3000/maps/${mapId}/authorized_maps/new`, '_blank');
     })
   }
 
