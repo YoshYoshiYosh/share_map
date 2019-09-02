@@ -94,4 +94,3 @@ production:
   password: <%= Rails.application.credentials.db[:password] %>
   url: <%= Rails.application.credentials.db[:url] %>
   adapter: postgis
-  # password: <%= ENV['SHARE_MAP_DATABASE_PASSWORD'] %>
