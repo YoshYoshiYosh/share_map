@@ -92,3 +92,4 @@ production:
   database: share_map_production
   username: share_map
   password: <%= ENV['SHARE_MAP_DATABASE_PASSWORD'] %>
+  url: ec2-184-72-237-95.compute-1.amazonaws.com
