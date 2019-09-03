@@ -17,7 +17,6 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: Password
           POSTGRES_DB: share_map_test
-          POSTGRES_HOST: localhost
 
     working_directory: ~/repo
 
