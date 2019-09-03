@@ -59,13 +59,9 @@ development:
 test:
   <<: *default
   database: share_map_test
-
   username: postgres
   adapter:  postgis
-
-  # The password associated with the postgres role (username).
   password: Password
-
   host: localhost
 
 # As with config/secrets.yml, you never want to store sensitive information,
