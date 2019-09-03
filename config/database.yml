@@ -89,6 +89,8 @@ test:
 #
 production:
   <<: *default
-  database: share_map_production
-  username: share_map
-  password: <%= ENV['SHARE_MAP_DATABASE_PASSWORD'] %>
+  database: <%= Rails.application.credentials.db[:database] %>
+  username: <%= Rails.application.credentials.db[:username] %>
+  password: <%= Rails.application.credentials.db[:password] %>
+  url: <%= Rails.application.credentials.db[:url] %>
+  adapter: postgis
