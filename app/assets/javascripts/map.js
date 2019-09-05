@@ -19,9 +19,9 @@ function hideEditButton(e) {
   e.target.firstElementChild.classList.remove('shown');
 }
 
-async function mapInit(mapId) {
+async function mapInit(location) {
 
-  let json = await fetch(`http://localhost:3000/maps/${mapId}/pins.json`)
+  let json = await fetch(`${location}/pins.json`)
     .then(function(response) {
       return response.json();
     })
@@ -123,13 +123,15 @@ document.addEventListener("turbolinks:load", async function(){
 
   if(/maps\/\d\/?$/.test(location.href)) {
 
-    let mapId = location.href.match(/\/(\d+)\/?/)[1]
+    // let mapId = location.href.match(/\/(\d+)\/?/)[1]
 
-    await mapInit(mapId);
+    // await mapInit(mapId, location.href);
+    await mapInit(location.href);
 
     let addMemberButton = document.querySelector('.add-member');
     addMemberButton.addEventListener('click', async () => {
-      open(`http://localhost:3000/maps/${mapId}/authorized_maps/new`, '_blank');
+      // open(`http://localhost:3000/maps/${mapId}/authorized_maps/new`, '_blank');
+      open(`${location.href}/authorized_maps/new`, '_blank');
     })
   }
 
