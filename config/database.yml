@@ -75,6 +75,7 @@ production:
   database: <%= Rails.application.credentials.db[:database] %>
   username: <%= Rails.application.credentials.db[:username] %>
   password: <%= Rails.application.credentials.db[:password] %>
-  # url: <%= Rails.application.credentials.db[:url] %>
-  url: <%= ENV.fetch('postgres://vrlyyzcqsehzwu:514fad3aa050ab3738727534ac7af9686e0f3ec9dc25906b2e0ce563630de7d3@ec2-184-72-237-95.compute-1.amazonaws.com:5432/d5e77589lc7iuu', '').sub(/^postgres/, "postgis") %>
-  adapter: postgis
+  url: <%= Rails.application.credentials.db[:url] %>
+  # url: <%= ENV.fetch('postgres://vrlyyzcqsehzwu:514fad3aa050ab3738727534ac7af9686e0f3ec9dc25906b2e0ce563630de7d3@ec2-184-72-237-95.compute-1.amazonaws.com:5432/d5e77589lc7iuu', '').sub(/^postgres/, "postgis") %>
+  # adapter: postgis
+  adapter: <%= Rails.application.credentials.db[:adapter] %>
