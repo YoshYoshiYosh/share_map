@@ -15,7 +15,7 @@
 # gem 'pg'
 #
 default: &default
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
@@ -23,7 +23,7 @@ development:
   <<: *default
   database: share_map_development
   username: postgres
-  adapter:  postgis
+  # adapter:  postgis
   password: Password
   host: localhost
 
@@ -47,7 +47,7 @@ test:
   <<: *default
   database: share_map_test
   username: postgres
-  adapter:  postgis
+  # adapter:  postgis
   password: Password
   host: localhost
 
@@ -74,8 +74,10 @@ production:
   <<: *default
   database: <%= Rails.application.credentials.db[:database] %>
   username: <%= Rails.application.credentials.db[:username] %>
+  # adapter: <%= Rails.application.credentials.db[:adapter] %>
   password: <%= Rails.application.credentials.db[:password] %>
-  url: <%= Rails.application.credentials.db[:url] %>
-  # url: <%= ENV.fetch('postgres://vrlyyzcqsehzwu:514fad3aa050ab3738727534ac7af9686e0f3ec9dc25906b2e0ce563630de7d3@ec2-184-72-237-95.compute-1.amazonaws.com:5432/d5e77589lc7iuu', '').sub(/^postgres/, "postgis") %>
+  url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
+  postgis_extension: postgis
+  schema_search_path: public,postgis
   # adapter: postgis
-  adapter: <%= Rails.application.credentials.db[:adapter] %>
+  # url: <%= Rails.application.credentials.db[:url] %>
