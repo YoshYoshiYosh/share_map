@@ -23,7 +23,6 @@ development:
   <<: *default
   database: share_map_development
   username: postgres
-  # adapter:  postgis
   password: Password
   host: localhost
 
@@ -47,7 +46,6 @@ test:
   <<: *default
   database: share_map_test
   username: postgres
-  # adapter:  postgis
   password: Password
   host: localhost
 
@@ -72,14 +70,12 @@ test:
 #
 production:
   <<: *default
-  database: <%= Rails.application.credentials.db[:database] %>
+  database: d5e77589lc7iuu
   username: <%= Rails.application.credentials.db[:username] %>
-  # adapter: <%= Rails.application.credentials.db[:adapter] %>
   password: <%= Rails.application.credentials.db[:password] %>
-  # url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
   url: <%= ENV['POSTGIS_URL'] %>
   postgis_extension: postgis
   schema_search_path: public,postgis
   
-  # adapter: postgis
   # url: <%= Rails.application.credentials.db[:url] %>
+  # url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
