@@ -1,4 +1,4 @@
-function escape_html (string) {
+function escapeHtml (string) {
   return string.replace(/[&'`"<>]/g, function(match) {
     return {
       '&': '&amp;',
@@ -21,16 +21,16 @@ function hideEditButton(e) {
 
 async function mapInit(location) {
 
-  let json = await fetch(`${location}/pins.json`)
+  let storedPins = await fetch(`${location}/pins.json`)
     .then(function(response) {
       return response.json();
     })
 
-  if(json.length === 0) {
-    json.push({ title: 'default', lonlat: { x: 51.476853, y: -0.0005002 } })
+  if(storedPins.length === 0) {
+    storedPins.push({ title: 'default', lonlat: { x: 51.476853, y: -0.0005002 } })
   }
 
-  map = L.map('mapid').setView([json[0].lonlat.x, json[0].lonlat.y], 5);
+  map = L.map('mapid').setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
 
   let pinIcon = L.icon({
     iconUrl: '/pin_icon.png',
@@ -47,17 +47,17 @@ async function mapInit(location) {
     onAdd: function(map) {
 
       // 一番外の枠
-      let outer_div = L.DomUtil.create('div', "map-button-container d-flex");
-      outer_div.style.backgroundColor = 'rgba(255,255,255,.5)';
-      outer_div.style.padding = '20px';
-      outer_div.style.margin = '0';
-      outer_div.style.zIndex = '5';
+      let outerDiv = L.DomUtil.create('div', "map-button-container d-flex");
+      outerDiv.style.backgroundColor = 'rgba(255,255,255,.5)';
+      outerDiv.style.padding = '20px';
+      outerDiv.style.margin = '0';
+      outerDiv.style.zIndex = '5';
 
-      let image_sources = ['/single_point_gps_navigation_pin_icon-icons.com_59903.svg', '/目的地アイコン2.svg', '/位置情報の無料アイコン2.svg', '/人物アイコン　チーム.svg']
+      let imageSources = ['/single_point_gps_navigation_pin_icon-icons.com_59903.svg', '/目的地アイコン2.svg', '/位置情報の無料アイコン2.svg', '/人物アイコン　チーム.svg']
       let textContents  = ['New Pin', 'New Pin', 'View Pins', 'Add Member']
 
       for(let i = 0; i < 4; i++) {
-        let div = L.DomUtil.create('div', "map-button-container__box", outer_div);
+        let div = L.DomUtil.create('div', "map-button-container__box", outerDiv);
         let img = L.DomUtil.create('img', "pin-icon", div);   
         
         switch(i) {
@@ -78,10 +78,10 @@ async function mapInit(location) {
         }
 
         let smallText = L.DomUtil.create('p', "small-text", div);
-        img.src = image_sources[i]
+        img.src = imageSources[i]
         smallText.textContent = textContents[i]
       };
-      return outer_div;
+      return outerDiv;
     },
 
     onRemove: function(map) {
@@ -95,14 +95,14 @@ async function mapInit(location) {
   
   L.control.watermark({ position: 'topright' }).addTo(map);
   
-  for (let i = 0; i < json.length; i++) {
-    if (json[i].image === undefined) {
-      L.marker([json[i].lonlat.x, json[i].lonlat.y]).addTo(map)
-      .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3>`)
+  for (let i = 0; i < storedPins.length; i++) {
+    if (storedPins[i].image === undefined) {
+      L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
+      .bindPopup(`This is <br><h3>${escapeHtml(storedPins[i].title)}</h3>`)
       .openPopup()      
     } else {
-      L.marker([json[i].lonlat.x, json[i].lonlat.y]).addTo(map)
-      .bindPopup(`This is <br><h3>${escape_html(json[i].title)}</h3><img class="pin-image" src=${json[i].image}>`)
+      L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
+      .bindPopup(`This is <br><h3>${escapeHtml(storedPins[i].title)}</h3><img class="pin-image" src=${storedPins[i].image}>`)
       .openPopup()
     }
   }
@@ -113,7 +113,11 @@ document.addEventListener("turbolinks:load", async function(){
   console.log('読み込まれました');
   
   if (/maps\/\d\/admin$/.test(location.href)) {
-    let showEditButtonAtAdminPages = [document.querySelector('.manage-title'), document.querySelector('.manage-description'), document.querySelector('.manage-users'), document.querySelector('.manage-pins')];
+    let showEditButtonAtAdminPages = [document.querySelector('.manage-title'),
+                                      document.querySelector('.manage-description'),
+                                      document.querySelector('.manage-users'),
+                                      document.querySelector('.manage-pins')
+                                    ];
   
     showEditButtonAtAdminPages.forEach((element) => {
       element.addEventListener('pointerover', showEditButton, false);
@@ -123,14 +127,10 @@ document.addEventListener("turbolinks:load", async function(){
 
   if(/maps\/\d\/?$/.test(location.href)) {
 
-    // let mapId = location.href.match(/\/(\d+)\/?/)[1]
-
-    // await mapInit(mapId, location.href);
     await mapInit(location.href);
 
     let addMemberButton = document.querySelector('.add-member');
     addMemberButton.addEventListener('click', async () => {
-      // open(`http://localhost:3000/maps/${mapId}/authorized_maps/new`, '_blank');
       open(`${location.href}/authorized_maps/new`, '_blank');
     })
   }
