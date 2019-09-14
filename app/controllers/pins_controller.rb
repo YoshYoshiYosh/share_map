@@ -89,6 +89,7 @@ class PinsController < ApplicationController
       require 'uri'
       require 'net/http'
       require 'openssl'
+      require 'json'
       
       url = URI("https://ip-geo-location.p.rapidapi.com/ip/60.150.226.216?format=json")
       
@@ -100,18 +101,19 @@ class PinsController < ApplicationController
       request["x-rapidapi-host"] = 'ip-geo-location.p.rapidapi.com'
       request["x-rapidapi-key"] = 'a70cd5897bmsh06091d0401bb855p108cd8jsn09868e0d771d'
       
-      response = http.request(request)
-      puts response.read_body
+      json = JSON.parse http.request(request).body
+      
+      { lat: json["location"]["latitude"], lon: json["location"]["longitude"] }
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pin_params
 
-      # この[:pin][:lonlat]を、set_ip_addressを利用して入れる
-      params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
-
-      # これをコメントアウトする
-      # params[:pin][:lonlat] = "POINT(#{json["location"]["latitude"]} #{json["location"]["longitude"]})"
+      @lonlat = set_ip_address
+      
+      # params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
+      params[:pin][:lonlat] = "POINT(#{@lonlat[:lat]} #{@lonlat[:lon]})"
 
       params.require(:pin).permit(:author_id, :title, :description, :lonlat, :image)
     end
