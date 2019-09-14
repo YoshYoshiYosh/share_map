@@ -3,3 +3,8 @@
 #mapid
 
 = render partial: "pins/modal" , locals: { map: @map, pin: @pin }
+
+- if current_user == @map.author
+  p#is-author.d-none
+/ - else
+/   p#is-not-author.d-none

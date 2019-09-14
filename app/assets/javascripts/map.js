@@ -21,6 +21,8 @@ function hideEditButton(e) {
 
 async function mapInit(location) {
 
+  let isAuthor = !!document.getElementById('is-author')
+
   let storedPins = await fetch(`${location}/pins.json`)
     .then(function(response) {
       return response.json();
@@ -46,17 +48,24 @@ async function mapInit(location) {
   L.Control.Watermark = L.Control.extend({
     onAdd: function(map) {
 
-      // 一番外の枠
       let outerDiv = L.DomUtil.create('div', "map-button-container d-flex");
+      
       outerDiv.style.backgroundColor = 'rgba(255,255,255,.5)';
       outerDiv.style.padding = '20px';
       outerDiv.style.margin = '0';
       outerDiv.style.zIndex = '5';
 
-      let imageSources = ['/single_point_gps_navigation_pin_icon-icons.com_59903.svg', '/目的地アイコン2.svg', '/位置情報の無料アイコン2.svg', '/人物アイコン　チーム.svg']
-      let textContents  = ['New Pin', 'New Pin', 'View Pins', 'Add Member']
+      let imageAndTextOfButton = [
+        { imgSrc: '/single_pin_icon.svg', text: 'New Pin' },
+        { imgSrc: '/destination_icon.svg', text: 'New Pin' },
+        { imgSrc: '/human_pin_icon.svg', text: 'View Pins' }
+      ]
+      
+      if (isAuthor) {
+        imageAndTextOfButton.push({ imgSrc: '/teams_icon.svg', text: 'Add Member' })
+      }
 
-      for(let i = 0; i < 4; i++) {
+      for (let i = 0; i < imageAndTextOfButton.length; i++) {
         let div = L.DomUtil.create('div', "map-button-container__box", outerDiv);
         let img = L.DomUtil.create('img', "pin-icon", div);   
         
@@ -67,10 +76,14 @@ async function mapInit(location) {
             img.setAttribute('data-target', '#exampleModalCenter')
             break;
           }
+
+          // case 1:は、現在地を取得するピン作成？
+          
           case 2: {
             img.classList.add("add-menber-form");
             break;
           }
+
           case 3: {
             img.classList.add("add-member");
             break;
@@ -78,8 +91,10 @@ async function mapInit(location) {
         }
 
         let smallText = L.DomUtil.create('p', "small-text", div);
-        img.src = imageSources[i]
-        smallText.textContent = textContents[i]
+
+        smallText.textContent = imageAndTextOfButton[i].text
+        img.src = imageAndTextOfButton[i].imgSrc
+
       };
       return outerDiv;
     },
@@ -113,7 +128,8 @@ document.addEventListener("turbolinks:load", async function(){
   console.log('読み込まれました');
   
   if (/maps\/\d\/admin$/.test(location.href)) {
-    let showEditButtonAtAdminPages = [document.querySelector('.manage-title'),
+    let showEditButtonAtAdminPages = [
+                                      document.querySelector('.manage-title'),
                                       document.querySelector('.manage-description'),
                                       document.querySelector('.manage-users'),
                                       document.querySelector('.manage-pins')
