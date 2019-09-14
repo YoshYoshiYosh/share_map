@@ -1,8 +1,5 @@
 .w-50.mx-auto
-  - if flash.present?
-    h2.text-center Sign in with your Email
-  - else
-    h2.mt-5.text-center Sign in with your Email
+  h2.mt-5.pt-2.text-center Sign in with your Email
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     .form-group
       = f.label :email
