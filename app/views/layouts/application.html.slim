@@ -34,7 +34,7 @@ html
         - flash.each do |type, message|
           - if type == 'success' || type == 'notice'
             p.alert.alert-success= message
-          - elsif type == 'danger' || type == 'alert'
+          - elsif (type == 'danger' || type == 'alert') && !request.url.match(/maps\/\d\/?$/)
             p.alert.alert-danger= message
     
     .wrapper= yield 
