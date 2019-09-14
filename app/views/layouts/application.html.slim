@@ -10,30 +10,31 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
-    nav.navbar.navbar-expand-sm.navbar-dark.bg-image-color
-      = link_to root_path, class: 'navbar-brand mr-1' do
-        = image_tag("/earth-icon.svg", size: "45x45")
-        h2.d-inline-block.text-white.m-0.pl-0 ShareMap
-        
-      ul.navbar-nav.mr-auto
-        -if user_signed_in?
-          li.nav-item
-            = link_to '自分のマップへ', mymap_maps_path, class: 'nav-link'
+    .nav-wrap
+      nav.navbar.navbar-expand-sm.navbar-dark.bg-image-color
+        = link_to root_path, class: 'navbar-brand mr-1' do
+          = image_tag("/earth-icon.svg", size: "45x45")
+          h2.d-inline-block.text-white.m-0.pl-0 ShareMap
+          
+        ul.navbar-nav.mr-auto
+          -if user_signed_in?
+            li.nav-item
+              = link_to '自分のマップへ', mymap_maps_path, class: 'nav-link'
 
-      ul.navbar-nav
-        - if user_signed_in?
-          li.nav-item
-            = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link'
-        - else
-          li.nav-item
-            = link_to 'ログイン', new_user_session_path, class: 'nav-link'
-          li.nav-item
-            = link_to '新規登録はこちら', new_user_registration_path, class: 'nav-link'
-    
-    - flash.each do |type, message|
-      - if type == 'success' || type == 'notice'
-        p.alert.alert-success= message
-      - elsif type == 'danger' || type == 'alert'
-        p.alert.alert-danger= message
+        ul.navbar-nav
+          - if user_signed_in?
+            li.nav-item
+              = link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link'
+          - else
+            li.nav-item
+              = link_to 'ログイン', new_user_session_path, class: 'nav-link'
+            li.nav-item
+              = link_to '新規登録はこちら', new_user_registration_path, class: 'nav-link'
+      .nav-flash
+        - flash.each do |type, message|
+          - if type == 'success' || type == 'notice'
+            p.alert.alert-success= message
+          - elsif type == 'danger' || type == 'alert'
+            p.alert.alert-danger= message
     
     .wrapper= yield 

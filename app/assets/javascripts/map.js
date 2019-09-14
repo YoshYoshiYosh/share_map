@@ -19,6 +19,13 @@ function hideEditButton(e) {
   e.target.firstElementChild.classList.remove('shown');
 }
 
+function adjustMarginWhenPinCreated() {
+  successFlash = document.querySelector('.alert-success') || ''
+  if (successFlash.textContent === 'Pin was successfully created.') {
+    return true
+  }
+}
+
 async function mapInit(location) {
 
   let isAuthor = !!document.getElementById('is-author')
@@ -143,6 +150,10 @@ document.addEventListener("turbolinks:load", async function(){
 
   if(/maps\/\d\/?$/.test(location.href)) {
 
+    if (adjustMarginWhenPinCreated()) {
+      document.querySelector('.breadcrumb').classList.replace('mt-0', 'flash-fix-margin')
+    }
+    
     await mapInit(location.href);
 
     let addMemberButton = document.querySelector('.add-member');

@@ -8,19 +8,6 @@ $base-back: #fefefe;
 
 $sky-blue: #67c5ff;
 
-// html {
-//   font-size: 62.5%;
-// }
-
-// body {
-//   font-size: 1.2rem;
-//   font-family: 'BrandonTextWeb', 'YuGothic','.SF NS Text', 'YuGothic','Yu Gothic','Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', Meiryo,'ＭＳ Ｐゴシック','MS PGothic';
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   }
-
-
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -38,7 +25,6 @@ a, a:hover, a:active, a:visited {
   color: inherit;
 }
 
-
 body {
   // font-family: '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
   font-family: 'YuGothic', '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
@@ -48,23 +34,35 @@ body {
   
 .wrapper {
   padding-top: 72.6px; /* 打ち消し用のパディング */
-  background-color: #f0ebeb;
+  // background-color: #f0ebeb;
+  background-color: #fff;
   height: 100vh;
 }
 
 body {
   background-color: $base-back;
 
-  .navbar {
+  .nav-wrap {
     position: fixed;
-    width: 100%;
-    height: 10vh;
     z-index: 100;
+    width: 100%;
+  }
+  
+  .navbar {
+    // position: fixed;
+    // z-index: 100;    
+    width: 100%;
+    // height: 10vh;
   }
 
   .alert {
-    padding-top: 83px;
+    // padding-top: 83px;
     margin-bottom: 0;
+    padding: 5px 10px;
+  }
+
+  .flash-fix-margin {
+    margin-top: 36px;
   }
 
   #added-message > .alert {
