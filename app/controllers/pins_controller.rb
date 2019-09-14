@@ -38,9 +38,12 @@ class PinsController < ApplicationController
     @pin.author = current_user
     @pin.map = @map
 
+    # IPアドレスの検証用コード
+    remote_ip = request.env["HTTP_X_FORWARDED_FOR"] || request.remote_ip
+
     respond_to do |format|
       if @pin.save
-        format.html { redirect_to @map, notice: 'Pin was successfully created.' }
+        format.html { redirect_to @map, notice: "Pin was successfully created.#{remote_ip}" }
         # format.js { flash[:success] = "ピンが無事に作成された。" }
         # format.html do
         #   redirect_to @map
