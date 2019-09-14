@@ -42,6 +42,7 @@ class AuthorizedMapsController < ApplicationController
 
   private
 
+  # 招待する画面へ遷移するボタン自体を削除する可能性あり。そうなった場合はこのメソッドは削除する。
   def author?
     if current_user != @map.author
       flash[:notice] = "ユーザーを招待する権限がありません。"
