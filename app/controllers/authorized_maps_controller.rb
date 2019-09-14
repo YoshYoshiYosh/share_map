@@ -14,7 +14,7 @@ class AuthorizedMapsController < ApplicationController
   end
   
   def create
-    if @authorized_user = User.find_by(authorized_params)
+    if @authorized_user = User.find_by(authorized_params) && @authorized_user != current_user
       begin
         @map.authorizing_user(@authorized_user)
         flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
@@ -22,6 +22,8 @@ class AuthorizedMapsController < ApplicationController
         flash.delete(:success)
         flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
       end
+    elsif @authorized_user == current_user
+      flash[:danger] = "自分を招待することはできません"
     else
       flash[:danger] = "（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
     end
