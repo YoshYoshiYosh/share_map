@@ -2,6 +2,7 @@ class PinsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_pin, only: [:show, :edit, :update, :destroy]
   before_action :set_map
+  before_action :set_ip_address
   before_action :can_edit?, only: [:edit, :update, :destroy] # :showを制限するか悩み中
   protect_from_forgery
 
@@ -44,10 +45,6 @@ class PinsController < ApplicationController
     respond_to do |format|
       if @pin.save
         format.html { redirect_to @map, notice: "Pin was successfully created.#{remote_ip}" }
-        # format.js { flash[:success] = "ピンが無事に作成された。" }
-        # format.html do
-        #   redirect_to @map
-        # end
       else
         format.js { flash[:danger] = "入力が完了していない項目があります。" }
       end
@@ -88,9 +85,34 @@ class PinsController < ApplicationController
       @map = Map.find(params[:map_id])
     end
 
+    def set_ip_address
+      require 'uri'
+      require 'net/http'
+      require 'openssl'
+      
+      url = URI("https://ip-geo-location.p.rapidapi.com/ip/60.150.226.216?format=json")
+      
+      http = Net::HTTP.new(url.host, url.port)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      
+      request = Net::HTTP::Get.new(url)
+      request["x-rapidapi-host"] = 'ip-geo-location.p.rapidapi.com'
+      request["x-rapidapi-key"] = 'a70cd5897bmsh06091d0401bb855p108cd8jsn09868e0d771d'
+      
+      response = http.request(request)
+      puts response.read_body
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def pin_params
+
+      # この[:pin][:lonlat]を、set_ip_addressを利用して入れる
       params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
+
+      # これをコメントアウトする
+      # params[:pin][:lonlat] = "POINT(#{json["location"]["latitude"]} #{json["location"]["longitude"]})"
+
       params.require(:pin).permit(:author_id, :title, :description, :lonlat, :image)
     end
 
