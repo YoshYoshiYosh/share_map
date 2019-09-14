@@ -17,6 +17,6 @@
     - @can_view_map.each do |map|
       .mymap-box
         .mymap-box__title
-          p.m-0.text-center.mymap-title-text= link_to map.title, admin_map_path(map)
+          p.m-0.text-center.mymap-title-text= link_to map.title, map_path(map)
         .mymap-box__description
           p= map.description
