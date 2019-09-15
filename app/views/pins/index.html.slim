@@ -29,12 +29,16 @@
     span.font-weight-bolder= @map.title
     = link_to '＜ マップ管理画面へ戻る', admin_map_path(@map), class: 'help-link title-small d-inline-block pl-3'
   .products-container
-    - @pins.each do |pin|
-      .w-50.product-box.mb-4
-        .p-3
-          p.text-s= pin.title
-          small.d-block= "ひとこと： #{pin.description}"
-          small.d-block= "作成者： #{pin.author.email}"
-          small.d-block= "作成日時： #{pin.created_at}"
-
-  = link_to '＜ マップ管理画面へ戻る', admin_map_path(@map), class: 'help-link d-inline-block my-4'
+    - if @pins.count == 0
+      .text-center
+        h2.mt-5 まだピンがありません。
+        = link_to '⇨ マップでピンを作成する', map_path(@map), class: 'help-link d-block mt-3 ml-5'
+    - else
+      - @pins.each do |pin|
+        .w-50.product-box.mb-4
+          .p-3
+            p.text-s= pin.title
+            small.d-block= "ひとこと： #{pin.description}"
+            small.d-block= "作成者： #{pin.author.email}"
+            small.d-block= "作成日時： #{pin.created_at}"
+      = link_to '＜ マップ管理画面へ戻る', admin_map_path(@map), class: 'help-link d-inline-block my-4'
