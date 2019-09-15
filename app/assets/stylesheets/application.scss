@@ -143,6 +143,26 @@ body {
   border-radius: 50%;
 }
 
+.circle-map {
+  font-size: 17.5px;
+  font-weight: bold;
+  // border: 1px solid #458ae4;
+  // background: #458ae4;
+  border: 1px solid #d66e67;
+  background: #d66e67;
+  color: #fff;
+  width: 100px;
+  height: 75px;
+  line-height: 75px;
+  margin-bottom: 0;
+  transition-duration: .5s;
+  &:hover {
+    opacity: .7;
+    transform: scale(1.2);
+    
+  }
+}
+
 .small-text {
   text-align: center;
   font-size: 15px;
@@ -420,9 +440,9 @@ body {
 span.to-map {
   // line-height: 30px;
   // display: inline-block;
-  font-size: 15px;
+  font-size: 16px;
   color: royalblue;
-  border-bottom: 1px double royalblue;
+  // border-bottom: 1px double royalblue;
   bottom: 5px;
   .fa-map {
     padding-left: 5px;
@@ -499,7 +519,8 @@ h1.mb-3 {
   color: white;
   // background: #e06737;  
   // background: #da4b41e3;  
-  background: #da4b41e3;  
+  // background: #da4b41e3;  
+  background: #458ae4;  
   line-height: 1.4;
   padding: 0.5em 0.5em 0.5em 1.8em;
   border-radius: 20px;
@@ -515,7 +536,8 @@ h1.mb-3:before {
 }
 
 .yourmap-title {
-  border-left: 7px solid #f8a304;
+  // border-left: 7px solid #f8a304;
+  border-left: 7px solid #e7cd79;
   font-weight: normal;
   padding-left: 5px;
   color: #75828b;
