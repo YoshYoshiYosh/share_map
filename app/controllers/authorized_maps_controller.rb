@@ -14,7 +14,7 @@ class AuthorizedMapsController < ApplicationController
   end
   
   def create
-    if @authorized_user = User.find_by(authorized_params) && @authorized_user != current_user
+    if (@authorized_user = User.find_by(authorized_params)) && (@authorized_user != current_user)
       begin
         @map.authorizing_user(@authorized_user)
         flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
