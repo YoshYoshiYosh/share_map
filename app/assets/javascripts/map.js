@@ -19,9 +19,16 @@ function hideEditButton(e) {
   e.target.firstElementChild.classList.remove('shown');
 }
 
+// function adjustMarginWhenPinCreated() {
+//   successFlash = document.querySelector('.alert-success') || ''
+//   if (successFlash.textContent === 'Pin was successfully created.') {
+//     return true
+//   }
+// }
+
 function adjustMarginWhenPinCreated() {
   successFlash = document.querySelector('.alert-success') || ''
-  if (successFlash.textContent === 'Pin was successfully created.') {
+  if (successFlash) {
     return true
   }
 }
