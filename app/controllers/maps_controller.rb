@@ -5,6 +5,8 @@ class MapsController < ApplicationController
   before_action :can_edit?, only: [:show, :edit, :update, :destroy]
   before_action :author?, only: [:admin]
 
+  before_action :is_show_or_admin?, only: [:show, :admin]
+
   # GET /maps
   # GET /maps.json
   def index
@@ -110,4 +112,9 @@ class MapsController < ApplicationController
         render 'errors/forbidden', status: 403
       end
     end
+
+    def is_show_or_admin?
+      session[:previous_action] = request.url.include?("admin") ? "admin" : "show"
+    end
+
 end

@@ -3,6 +3,8 @@ class AuthorizedMapsController < ApplicationController
   before_action :set_map, except: [:edit]
   before_action :set_authorized_users, only: [:index, :new, :create, :destroy]
 
+  before_action :get_previous_url, only: :new
+
   def index
     respond_to do |format|
       format.json
@@ -64,4 +66,10 @@ class AuthorizedMapsController < ApplicationController
   def authorized_params
     params.require(:authorized_map).permit(:email)
   end
+
+  def get_previous_url
+    @previous_url = session[:previous_action]
+    session.delete(:previous_action)
+  end
+  
 end
