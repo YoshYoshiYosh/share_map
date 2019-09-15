@@ -31,7 +31,9 @@
   .products-container
     - if @pins.count == 0
       .text-center
-        h2.mt-5 まだピンがありません。
+        h2.mt-5
+          i.far.fa-frown
+          | まだピンがありません。
         = link_to '⇨ マップでピンを作成する', map_path(@map), class: 'help-link d-block mt-3 ml-5'
     - else
       - @pins.each do |pin|
