@@ -11,8 +11,9 @@
         
       = f.submit '招待する', class: 'btn-flat-border'
 
+  / previousのURLで表示を分ける
   = link_to '＜ マップ管理画面へ戻る', admin_map_path(@map), class: 'help-link d-inline-block mt-4'
-
+  = link_to '＜ マップへ戻る', map_path(@map), class: 'help-link d-block mt-3'
   / #added-message.mt-3
   / p.mt-5 ・許可されたユーザ
   / ul#result
