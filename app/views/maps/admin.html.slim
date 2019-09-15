@@ -1,11 +1,15 @@
 .container.not-top.mt-4.pt-4.px-4.text-center
   h1.mb-3
     = "#{@map.title}管理画面"
-    
-  = link_to map_path(@map), class: 'mb-5 to-map-text' do
-    span.to-map
-      |マップへ
-      <i class="far fa-map"></i>
+
+  .admin-nav.d-flex.justify-content-between.mb-3.px-5
+    = link_to '＜自分のマップ一覧へ戻る', mymap_maps_path, class: 'help-link d-inline-block'
+      
+    = link_to map_path(@map), class: 'to-map-text' do
+      span.to-map
+        |マップへ
+        <i class="far fa-map"></i>
+        | ＞
 
   .manage-wrap.d-flex
     .manage-title
