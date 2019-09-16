@@ -215,7 +215,7 @@ document.addEventListener("turbolinks:load", async function(){
 
         if (postRequest.status === 200) {
           console.log('成功');
-          location.href = location.href
+          location.reload()
         } else {
           console.log('失敗');
           console.log(postRequest.status);
