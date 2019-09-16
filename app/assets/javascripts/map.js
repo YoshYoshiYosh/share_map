@@ -151,7 +151,7 @@ async function mapInit(location) {
 };
 
 document.addEventListener("turbolinks:load", async function(){
-  console.log('読み込まれました');
+  console.log('読み込まれました。これは自動デプロイ。');
   
   if (/maps\/\d\/admin$/.test(location.href)) {
     let showEditButtonAtAdminPages = [
