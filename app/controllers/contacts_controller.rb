@@ -4,7 +4,6 @@ class ContactsController < ApplicationController
   
   def create
     if user_signed_in?
-      byebug
       opinion = params[:contact]
       # flash[:success] = "#{opinion}!!"
       puts "#{opinion}"
