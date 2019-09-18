@@ -159,17 +159,28 @@ document.addEventListener("turbolinks:load", async function(){
   
   if (/localhost:3000\/?$/.test(location.href) || /rails-heroku-sharemap.herokuapp.com\/?$/.test(location.href)) {
     let sendOpinionButton = document.getElementById('send-opinion')
-    sendOpinionButton.addEventListener('click', () => {
+    sendOpinionButton.addEventListener('click', async () => {
       let opinionText = document.querySelector('.opinion-text').value
-      // location.reload()
 
       // params[:test] = opinionText;
 
-      let formData = new FormData();
+      const token = document.getElementsByName('csrf-token').item(0).content;
+
+      // ボディを作る
+      const formData = new FormData();
+      formData.append('authenticity_token', token);
       formData.append("contact", opinionText);
 
-      for (let [key, value] of formData.entries()) {
-        console.log(key, value);
+      const postRequest = await fetch(location.href + '/contact', {
+        method: "POST",
+        body: formData
+      });
+
+      if (postRequest.status === 200) {
+        console.log('成功');
+      } else {
+        console.log('失敗');
+        console.log(postRequest.status);
       }
 
       // ありがとうございます。みたいなFlash入れたい
@@ -177,7 +188,7 @@ document.addEventListener("turbolinks:load", async function(){
       // ここでアプリ側にメールを送りたい
 
       // document.querySelector('.opinion-text').value = ""
-      console.log(`${opinionText}とのことです。`)
+      // console.log(`${opinionText}とのことです。`)
     })
   }
   // ここまでこのブランチで追記した
