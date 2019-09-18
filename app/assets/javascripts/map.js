@@ -146,6 +146,36 @@ async function mapInit(location) {
 };
 
 document.addEventListener("turbolinks:load", async function(){
+<<<<<<< HEAD
+=======
+  console.log('読み込まれました');
+
+  // ここからこのブランチで追記
+  // 編集したのは、①application.html.slim ②application.scss ③map.js 
+  // ④routes.rbも？ ⑤controller作成？
+  // お客さんから届いたメールをDBに保存するためのモデル、コントローラを作成する必要がある？かも
+  // もしくは、適当にコントローラだけを作成して、そのコントローラにPOSTされたらAction Mailerを起動して、yoshikik@live.jpへメールを送付する
+  // https://sendgrid.kke.co.jp/docs/Tutorials/E_Receive_Mail/receive_mail.html
+  
+  if (/localhost:3000\/?$/.test(location.href) || /rails-heroku-sharemap.herokuapp.com\/?$/.test(location.href)) {
+    let sendOpinionButton = document.getElementById('send-opinion')
+    sendOpinionButton.addEventListener('click', () => {
+      let opinionText = document.querySelector('.opinion-text').value
+      location.reload()
+
+      // params[:test] = opinionText;
+
+      // ありがとうございます。みたいなFlash入れたい
+
+      // ここでアプリ側にメールを送りたい
+
+      document.querySelector('.opinion-text').value = ""
+      console.log(`${opinionText}とのことです。`)
+    })
+  }
+  // ここまでこのブランチで追記した
+
+>>>>>>> [修正]
   
   if (/maps\/\d\/admin$/.test(location.href)) {
     let showEditButtonAtAdminPages = [
