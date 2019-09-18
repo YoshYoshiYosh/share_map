@@ -1,10 +1,10 @@
 class ContactMailer < ApplicationMailer
-  default from: 'from@example.com'
+  default from: '"rails-heroku-sharemap" <service@example.com>'
 
   def contact_arrived_mail
     @sender  = params[:user]
     @opinion = params[:opinion]
-    mail(to: "yoshikik@live.jp", subject: "#{@sender}様よりコンタクトメールが届きました。")
+    mail(to: "yoshikik@live.jp", subject: "#{@sender.email}様よりコンタクトメールが届きました。")
   end
   
 end
