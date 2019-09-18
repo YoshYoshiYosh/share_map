@@ -46,11 +46,33 @@ html
             h3.inner__title__text About
           .inner__menu
             ul
-              li.list__item ShareMapについて
-              li.list__item 利用規約
-              li.list__item プライバシーポリシー 
-              li.list__item 特定商取引及び古物営業法に基づく表記
-              li.list__item 運営会社
+              / li.list__item.p-1
+              /   = link_to 'ShareMapについて', root_path, class: 'd-block'
+              / li.list__item.p-1
+              /   = link_to '利用規約', root_path, class: 'd-block', class: 'd-block'
+              / li.list__item.p-1 
+              /   = link_to 'プライバシーポリシー', root_path, class: 'd-block'
+              / li.list__item.p-1
+              /   = link_to '特定商取引及び古物営業法に基づく表記', root_path, class: 'd-block'
+              / li.list__item.p-1
+              /   = link_to '運営会社', root_path, class: 'd-block'
+              
+              = link_to root_path do
+                li.list__item.p-1 ShareMapについて
+              = link_to root_path do
+                li.list__item.p-1 利用規約
+              = link_to root_path do
+                li.list__item.p-1 プライバシーポリシー
+              = link_to root_path do
+                li.list__item.p-1 特定商取引及び古物営業法に基づく表記
+              = link_to root_path do
+                li.list__item.p-1 運営会社
+
+              / li.list__item ShareMapについて
+              / li.list__item 利用規約
+              / li.list__item プライバシーポリシー 
+              / li.list__item 特定商取引及び古物営業法に基づく表記
+              / li.list__item 運営会社
         .footer__inner--right
           .inner__title
             h3.inner__title__text Contact

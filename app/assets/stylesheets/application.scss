@@ -580,8 +580,21 @@ h1.mb-3:before {
 
     justify-content: space-around;
 
-    .list__item:nth-child(-n+4) {
-      margin-bottom: 5px;
+    .list__item {
+
+      transition-duration: .5s;
+      
+      &:hover {
+        // opacity: 0.5;
+        // background-color: rgba(199,199,199,0.5);
+        background-color: rgba(150, 147, 147, 0.5);
+        // background-color: #c7c7c7;
+      }
+
+      &:nth-child(-n+4) {
+        margin-bottom: 5px;
+      }
+      
     }
 
     .inner__title {
@@ -611,6 +624,11 @@ h1.mb-3:before {
       .send-opinion-button {
         background-color: #f0f4f5;
         width: 100%;
+        transition-duration: .5s;
+
+        &:hover {
+          opacity: 0.6;
+        }
       }
     }
     
