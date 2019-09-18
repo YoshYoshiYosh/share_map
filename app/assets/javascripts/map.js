@@ -161,15 +161,22 @@ document.addEventListener("turbolinks:load", async function(){
     let sendOpinionButton = document.getElementById('send-opinion')
     sendOpinionButton.addEventListener('click', () => {
       let opinionText = document.querySelector('.opinion-text').value
-      location.reload()
+      // location.reload()
 
       // params[:test] = opinionText;
+
+      let formData = new FormData();
+      formData.append("contact", opinionText);
+
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
 
       // ありがとうございます。みたいなFlash入れたい
 
       // ここでアプリ側にメールを送りたい
 
-      document.querySelector('.opinion-text').value = ""
+      // document.querySelector('.opinion-text').value = ""
       console.log(`${opinionText}とのことです。`)
     })
   }
