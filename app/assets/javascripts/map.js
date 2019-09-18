@@ -180,6 +180,7 @@ document.addEventListener("turbolinks:load", async function(){
       open(`${location.href}/authorized_maps/new`);
     })
 
+    // このブランチで追記したのここから ////////////////////////////////////
     let addPinButton = document.querySelector('.add-pin');
     addPinButton.addEventListener('click', async () => {
       let latlon = {lat: 0, lon: 0}
@@ -224,6 +225,8 @@ document.addEventListener("turbolinks:load", async function(){
       }
       )
     })
+    // このブランチで追記したのここまで ////////////////////////////////
+
   }
 
 });
