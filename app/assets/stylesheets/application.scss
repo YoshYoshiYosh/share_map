@@ -32,7 +32,13 @@ body {
   font-family: 'YuGothic', '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
   }
+  
+
   
 .wrapper {
   padding-top: 72.6px; /* 打ち消し用のパディング */
@@ -567,6 +573,7 @@ h1.mb-3:before {
 }
 
 .footer {
+  margin-top: auto;
   // background-color: #2d2d2d;
   color: #fff;
   background-color: #4c4c4c;
