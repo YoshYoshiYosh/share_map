@@ -19,24 +19,19 @@ function hideEditButton(e) {
   e.target.firstElementChild.classList.remove('shown');
 }
 
-function setLonlat(latlon) {
-  return new Promise(resolve => {
+function setLonlat() {
+  return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(pos => {
-      resolve([pos.coords.latitude, pos.coords.longitude])
+      resolve({lat: pos.coords.latitude, lon: pos.coords.longitude})
+    },
+    err => {
+      reject(err)
+    },
+    {
+      enableHighAccuracy: true
     })
-  }).then(response => {
-    latlon.lat = response[0]
-    latlon.lon = response[1]
   })
 }
-
-// この関数が実行される前に、なぜか呼び出し元の console.log(`lat:${latlon.lat}, lon:${latlon.lon}`) が実行されてしまう
-// function secondSetLonlat(latlon) {
-//     navigator.geolocation.getCurrentPosition(pos => {
-//       latlon.lat = pos.coords.latitude
-//       latlon.lon = pos.coords.longitude
-//   })
-// }
 
 function adjustMarginWhenPinCreated() {
   successFlash = document.querySelector('.alert-success') || ''
@@ -151,7 +146,6 @@ async function mapInit(location) {
 };
 
 document.addEventListener("turbolinks:load", async function(){
-  console.log('読み込まれました。これは自動デプロイ。');
   
   if (/maps\/\d\/admin$/.test(location.href)) {
     let showEditButtonAtAdminPages = [
@@ -180,12 +174,9 @@ document.addEventListener("turbolinks:load", async function(){
       open(`${location.href}/authorized_maps/new`);
     })
 
-    // このブランチで追記したのここから ////////////////////////////////////
     let addPinButton = document.querySelector('.add-pin');
     addPinButton.addEventListener('click', async () => {
-      let latlon = {lat: 0, lon: 0}
-      await setLonlat(latlon);
-      // await secondSetLonlat(latlon);
+      const latlon = await setLonlat();
       console.log(`lat:${latlon.lat}, lon:${latlon.lon}`)
 
       let submitButton = document.getElementsByName('commit')[0]
@@ -195,14 +186,12 @@ document.addEventListener("turbolinks:load", async function(){
         
         event.preventDefault();
         
-        // CSRF用のトークン
         const token = document.getElementsByName('csrf-token').item(0).content;
 
         let inputTitle       = document.getElementById("pin_title").value;
         let inputDescription = document.getElementById("pin_description").value;
         let inputLonlat      = `${latlon.lat} ${latlon.lon}`;
 
-        // ボディを作る
         const formData = new FormData();
         formData.append('authenticity_token', token);
         formData.append('pin[title]', inputTitle);
@@ -225,7 +214,6 @@ document.addEventListener("turbolinks:load", async function(){
       }
       )
     })
-    // このブランチで追記したのここまで ////////////////////////////////
 
   }
 
