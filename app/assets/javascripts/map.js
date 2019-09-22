@@ -179,7 +179,7 @@ document.addEventListener("turbolinks:load", async function(){
       if (postRequest.status === 200) {
         console.log('成功');
         const flashWrapper = document.querySelector('.nav-flash');
-        const message = document.createTextNode(opinionText);
+        const message = document.createTextNode("貴重なご意見をありがとうございます。サービス向上のため、活用させていただきます。");
         const flashElement = document.createElement("p");
         flashElement.appendChild(message);
         flashElement.classList.add('alert','alert-success');
