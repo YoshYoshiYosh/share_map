@@ -178,12 +178,27 @@ document.addEventListener("turbolinks:load", async function(){
 
       if (postRequest.status === 200) {
         console.log('成功');
+        const flashWrapper = document.querySelector('.nav-flash');
+        const message = document.createTextNode(opinionText);
+        const flashElement = document.createElement("p");
+        flashElement.appendChild(message);
+        flashElement.classList.add('alert','alert-success');
+        flashWrapper.appendChild(flashElement);
+        // setTimeout(() => {
+        //   flashElement.parentNode.removeChild(flashElement);
+        // }, 5000)
       } else {
         console.log('失敗');
         console.log(postRequest.status);
-      }
+      } 
 
       // ありがとうございます。みたいなFlash入れたい
+    
+
+      // newMessageElement.appendChild(newMessage);
+      // messages.appendChild(newMessageElement);
+      // <p class="alert alert-success">ログアウトしました。<div></div></p>
+
 
       // ここでアプリ側にメールを送りたい
 
