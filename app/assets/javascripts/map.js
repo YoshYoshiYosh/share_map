@@ -146,8 +146,6 @@ async function mapInit(location) {
 };
 
 document.addEventListener("turbolinks:load", async function(){
-<<<<<<< HEAD
-=======
   console.log('読み込まれました');
 
   // ここからこのブランチで追記
@@ -176,39 +174,28 @@ document.addEventListener("turbolinks:load", async function(){
         body: formData
       });
 
+      const flashWrapper = document.querySelector('.nav-flash');
+      const flashElement = document.createElement("p");
+
       if (postRequest.status === 200) {
         console.log('成功');
-        const flashWrapper = document.querySelector('.nav-flash');
         const message = document.createTextNode("貴重なご意見をありがとうございます。サービス向上のため、活用させていただきます。");
-        const flashElement = document.createElement("p");
         flashElement.appendChild(message);
         flashElement.classList.add('alert','alert-success');
         flashWrapper.appendChild(flashElement);
-        // setTimeout(() => {
-        //   flashElement.parentNode.removeChild(flashElement);
-        // }, 5000)
       } else {
         console.log('失敗');
         console.log(postRequest.status);
-      } 
-
-      // ありがとうございます。みたいなFlash入れたい
-    
-
-      // newMessageElement.appendChild(newMessage);
-      // messages.appendChild(newMessageElement);
-      // <p class="alert alert-success">ログアウトしました。<div></div></p>
-
-
-      // ここでアプリ側にメールを送りたい
-
-      // document.querySelector('.opinion-text').value = ""
-      // console.log(`${opinionText}とのことです。`)
+        const message = document.createTextNode("アカウント登録もしくはログインしてください。");
+        flashElement.appendChild(message);
+        flashElement.classList.add('alert','alert-danger');
+        flashWrapper.appendChild(flashElement);
+      }
+      setTimeout(() => {
+        flashElement.parentNode.removeChild(flashElement);
+      }, 5000)
     })
   }
-  // ここまでこのブランチで追記した
-
->>>>>>> [修正]
   
   if (/maps\/\d\/admin$/.test(location.href)) {
     let showEditButtonAtAdminPages = [
