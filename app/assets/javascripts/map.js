@@ -40,6 +40,34 @@ function adjustMarginWhenPinCreated() {
   }
 }
 
+function setFlash(successOrDanger) {
+  const flashWrapper = document.querySelector('.nav-flash');
+  const flashElement = document.createElement("p");
+
+  if (successOrDanger === "success") {
+    var message = document.createTextNode("貴重なご意見をありがとうございます。サービス向上のため、活用させていただきます。"); 
+  } else {
+    var message = document.createTextNode("アカウント登録もしくはログインしてください。");
+  }
+  flashElement.appendChild(message);
+  flashElement.classList.add('alert',`alert-${successOrDanger}`);
+  flashWrapper.appendChild(flashElement);
+}
+
+
+// const message = document.createTextNode("貴重なご意見をありがとうございます。サービス向上のため、活用させていただきます。");
+// flashElement.appendChild(message);
+// flashElement.classList.add('alert','alert-success');
+// flashWrapper.appendChild(flashElement);
+// setFlash("success")
+
+// console.log(postRequest.status);
+// const message = document.createTextNode("アカウント登録もしくはログインしてください。");
+// flashElement.appendChild(message);
+// flashElement.classList.add('alert','alert-danger');
+// flashWrapper.appendChild(flashElement);
+
+
 async function mapInit(location) {
 
   let isAuthor = !!document.getElementById('is-author')
@@ -174,24 +202,16 @@ document.addEventListener("turbolinks:load", async function(){
         body: formData
       });
 
-      const flashWrapper = document.querySelector('.nav-flash');
-      const flashElement = document.createElement("p");
-
       if (postRequest.status === 200) {
         console.log('成功');
-        const message = document.createTextNode("貴重なご意見をありがとうございます。サービス向上のため、活用させていただきます。");
-        flashElement.appendChild(message);
-        flashElement.classList.add('alert','alert-success');
-        flashWrapper.appendChild(flashElement);
+        setFlash("success")
       } else {
         console.log('失敗');
         console.log(postRequest.status);
-        const message = document.createTextNode("アカウント登録もしくはログインしてください。");
-        flashElement.appendChild(message);
-        flashElement.classList.add('alert','alert-danger');
-        flashWrapper.appendChild(flashElement);
+        setFlash("danger")
       }
       setTimeout(() => {
+        const flashElement = document.querySelector('.alert')
         flashElement.parentNode.removeChild(flashElement);
       }, 5000)
     })
