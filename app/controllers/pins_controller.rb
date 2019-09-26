@@ -40,7 +40,7 @@ class PinsController < ApplicationController
 
     respond_to do |format|
       if @pin.save
-        format.html { redirect_to @map, notice: 'Pin was successfully created.' }
+        format.html { redirect_to @map, notice: "Pin was successfully created." }
         # format.js { flash[:success] = "ピンが無事に作成された。" }
         # format.html do
         #   redirect_to @map

@@ -5,24 +5,24 @@
       i.fas.fa-users
     = form_with model: [:map, @new_authorized], class: 'invite-form mt-5', remote: true do |f|
 
-      / - if @new_authorized.errors.any?
-      /   #error_explanation
-      /     h2 = "#{pluralize(@new_authorized.errors.count, "error")} prohibited this new_authorized from being saved:"
-      /     ul
-      /       - @new_authorized.errors.full_messages.each do |message|
-      /         li = message
-
       .form-group.mb-3
         = f.label :email, '招待する友達のメールアドレスを入力してください', class: 'mb-3 left-border'
         = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'form-control  font-weight-lighter'
         
       = f.submit '招待する', class: 'btn-flat-border'
 
-  #added-message.mt-3
-  p.mt-5 ・許可されたユーザ
-  ul#result
-    - @authorized_users.each do |user|
-      - if current_user == user
-        li= "#{user.email}（所有者）"
-      - else
-        li= user.email
+  - if @previous_url == "admin"
+    = link_to '＜ マップ管理画面へ戻る', admin_map_path(@map), class: 'help-link d-inline-block mt-4'
+  - elsif @previous_url == "show"
+    = link_to '＜ マップへ戻る', map_path(@map), class: 'help-link d-block mt-3'
+  - else
+    = link_to '＜ マップ管理画面へ', admin_map_path(@map), class: 'help-link d-inline-block mt-4'
+    = link_to '＜ マップへ', map_path(@map), class: 'help-link d-block mt-3'
+  / #added-message.mt-3
+  / p.mt-5 ・許可されたユーザ
+  / ul#result
+  /   - @authorized_users.each do |user|
+  /     - if current_user == user
+  /       li= "#{user.email}（所有者）"
+  /     - else
+  /       li= user.email

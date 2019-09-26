@@ -6,9 +6,13 @@
         - @map.errors.full_messages.each do |message|
           li = message
   .form-group
-    = f.label :title
-    = f.text_field :title, class: 'form-control'
+    = f.label :title, "タイトル"
+    = f.text_field :title, placeholder: "例) 食べ歩きグルメマップ", class: 'form-control font-weight-lighter'
   .form-group
-    = f.label :description
-    = f.text_area :description, class: 'form-control'
-  = f.submit nil, class: 'btn btn-primary'
+    = f.label :description, "説明"
+    = f.text_area :description, placeholder: "例) ほっぺた落ちそうなグルメを食べ歩いた記録用マップ", class: 'form-control font-weight-lighter'
+
+  - if request.url.include?("/maps/#{@map.id}/edit")
+    = f.submit "マップを更新！", class: 'btn btn-primary'
+  - else
+    = f.submit "マップを作成！", class: 'btn btn-primary'

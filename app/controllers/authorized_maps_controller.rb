@@ -3,6 +3,8 @@ class AuthorizedMapsController < ApplicationController
   before_action :set_map, except: [:edit]
   before_action :set_authorized_users, only: [:index, :new, :create, :destroy]
 
+  before_action :get_previous_url, only: :new
+
   def index
     respond_to do |format|
       format.json
@@ -14,7 +16,7 @@ class AuthorizedMapsController < ApplicationController
   end
   
   def create
-    if @authorized_user = User.find_by(authorized_params)
+    if (@authorized_user = User.find_by(authorized_params)) && (@authorized_user != current_user)
       begin
         @map.authorizing_user(@authorized_user)
         flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
@@ -22,6 +24,8 @@ class AuthorizedMapsController < ApplicationController
         flash.delete(:success)
         flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
       end
+    elsif @authorized_user == current_user
+      flash[:danger] = "自分を招待することはできません"
     else
       flash[:danger] = "（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
     end
@@ -42,6 +46,7 @@ class AuthorizedMapsController < ApplicationController
 
   private
 
+  # 招待する画面へ遷移するボタン自体を削除する可能性あり。そうなった場合はこのメソッドは削除する。
   def author?
     if current_user != @map.author
       flash[:notice] = "ユーザーを招待する権限がありません。"
@@ -61,4 +66,10 @@ class AuthorizedMapsController < ApplicationController
   def authorized_params
     params.require(:authorized_map).permit(:email)
   end
+
+  def get_previous_url
+    @previous_url = session[:previous_action]
+    session.delete(:previous_action)
+  end
+  
 end
