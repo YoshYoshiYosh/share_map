@@ -54,20 +54,6 @@ function setFlash(successOrDanger) {
   flashWrapper.appendChild(flashElement);
 }
 
-
-// const message = document.createTextNode("貴重なご意見をありがとうございます。サービス向上のため、活用させていただきます。");
-// flashElement.appendChild(message);
-// flashElement.classList.add('alert','alert-success');
-// flashWrapper.appendChild(flashElement);
-// setFlash("success")
-
-// console.log(postRequest.status);
-// const message = document.createTextNode("アカウント登録もしくはログインしてください。");
-// flashElement.appendChild(message);
-// flashElement.classList.add('alert','alert-danger');
-// flashWrapper.appendChild(flashElement);
-
-
 async function mapInit(location) {
 
   let isAuthor = !!document.getElementById('is-author')
@@ -199,7 +185,8 @@ document.addEventListener("turbolinks:load", async function(){
 
       const postRequest = await fetch(location.href + '/contact', {
         method: "POST",
-        body: formData
+        body: formData,
+        credentials: 'same-origin'
       });
 
       if (postRequest.status === 200) {
