@@ -7,7 +7,10 @@ async function sendContactMessage() {
   formData.append('authenticity_token', token);
   formData.append("contact", opinionText);
 
-  const postRequest = await fetch('http://' + location.host + '/contact', {
+  // 開発環境と本番環境のどちらでも稼働させるために記載(環境によってPOST先を変更する必要があるため)
+  let tmpVariableProtocol = /^https/.test(location.href) ? "https://" : "http://";
+  
+  const postRequest = await fetch(tmpVariableProtocol + location.host + '/contact', {
     method: "POST",
     body: formData,
   });
@@ -31,4 +34,5 @@ async function sendContactMessage() {
 document.addEventListener("turbolinks:load", async () => {
   let sendOpinionButton = document.getElementById('send-opinion');
   sendOpinionButton.addEventListener('click', sendContactMessage);
+
 });
