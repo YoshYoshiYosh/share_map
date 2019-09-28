@@ -174,7 +174,6 @@ async function sendContactMessage() {
   const postRequest = await fetch(rootUrl + '/contact', {
     method: "POST",
     body: formData,
-    redirect: "error"
   });
 
   if (postRequest.status === 200) {
