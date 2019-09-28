@@ -159,19 +159,16 @@ async function mapInit(location) {
 
 };
 
-
-// Contactのメソッド
 async function sendContactMessage() {
   let opinionText = document.querySelector('.opinion-text').value;
 
   const token = document.getElementsByName('csrf-token').item(0).content;
 
-  // ボディを作る
   const formData = new FormData();
   formData.append('authenticity_token', token);
   formData.append("contact", opinionText);
 
-  const postRequest = await fetch(rootUrl + '/contact', {
+  const postRequest = await fetch('http://' + location.host + '/contact', {
     method: "POST",
     body: formData,
   });
@@ -195,8 +192,6 @@ async function sendContactMessage() {
 document.addEventListener("turbolinks:load", async function(){
   console.log('読み込まれました');
 
-  rootUrl = /rails-heroku-sharemap/.test(location.href) ? "https://rails-heroku-sharemap.herokuapp.com" : "http://localhost:3000";
-  
   let sendOpinionButton = document.getElementById('send-opinion');
   sendOpinionButton.addEventListener('click', sendContactMessage);
   
