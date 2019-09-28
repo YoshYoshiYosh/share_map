@@ -19,12 +19,19 @@ function hideEditButton(e) {
   e.target.firstElementChild.classList.remove('shown');
 }
 
-// function adjustMarginWhenPinCreated() {
-//   successFlash = document.querySelector('.alert-success') || ''
-//   if (successFlash.textContent === 'Pin was successfully created.') {
-//     return true
-//   }
-// }
+function setLonlat() {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(pos => {
+      resolve({lat: pos.coords.latitude, lon: pos.coords.longitude})
+    },
+    err => {
+      reject(err)
+    },
+    {
+      enableHighAccuracy: true
+    })
+  })
+}
 
 function adjustMarginWhenPinCreated() {
   successFlash = document.querySelector('.alert-success') || ''
@@ -139,7 +146,6 @@ async function mapInit(location) {
 };
 
 document.addEventListener("turbolinks:load", async function(){
-  console.log('読み込まれました');
   
   if (/maps\/\d\/admin$/.test(location.href)) {
     let showEditButtonAtAdminPages = [
@@ -164,9 +170,51 @@ document.addEventListener("turbolinks:load", async function(){
     await mapInit(location.href);
 
     let addMemberButton = document.querySelector('.add-member');
-    addMemberButton.addEventListener('click', async () => {
-      open(`${location.href}/authorized_maps/new`, '_blank');
+    addMemberButton.addEventListener('click', () => {
+      open(`${location.href}/authorized_maps/new`);
     })
+
+    let addPinButton = document.querySelector('.add-pin');
+    addPinButton.addEventListener('click', async () => {
+      const latlon = await setLonlat();
+      console.log(`lat:${latlon.lat}, lon:${latlon.lon}`)
+
+      let submitButton = document.getElementsByName('commit')[0]
+      submitButton.addEventListener('click', async (event) => {
+
+        console.log("送信ボタンがクリックされました")
+        
+        event.preventDefault();
+        
+        const token = document.getElementsByName('csrf-token').item(0).content;
+
+        let inputTitle       = document.getElementById("pin_title").value;
+        let inputDescription = document.getElementById("pin_description").value;
+        let inputLonlat      = `${latlon.lat} ${latlon.lon}`;
+
+        const formData = new FormData();
+        formData.append('authenticity_token', token);
+        formData.append('pin[title]', inputTitle);
+        formData.append('pin[description]', inputDescription);
+        formData.append('pin[lonlat]', inputLonlat);
+
+        const postRequest = await fetch(location.href + '/pins', {
+          method: "POST",
+          body: formData
+        });
+
+        if (postRequest.status === 200) {
+          console.log('成功');
+          location.reload()
+        } else {
+          console.log('失敗');
+          console.log(postRequest.status);
+        }
+        
+      }
+      )
+    })
+
   }
 
 });
