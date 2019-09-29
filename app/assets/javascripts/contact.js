@@ -1,3 +1,18 @@
+function setFlash(successOrDanger) {
+  const flashWrapper = document.querySelector('.nav-flash');
+  const flashElement = document.createElement('p');
+  let message;
+
+  if (successOrDanger === 'success') {
+    message = document.createTextNode('貴重なご意見をありがとうございます。サービス向上のため、活用させていただきます。');
+  } else {
+    message = document.createTextNode('アカウント登録もしくはログインしてください。');
+  }
+  flashElement.appendChild(message);
+  flashElement.classList.add('alert', `alert-${successOrDanger}`);
+  flashWrapper.appendChild(flashElement);
+}
+
 async function sendContactMessage() {
   const opinionText = document.querySelector('.opinion-text').value;
 

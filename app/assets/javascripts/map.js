@@ -32,24 +32,11 @@ function setLonlat() {
 }
 
 function adjustMarginWhenPinCreated() {
-  successFlash = document.querySelector('.alert-success') || '';
+  const successFlash = document.querySelector('.alert-success') || '';
   if (successFlash) {
     return true;
   }
-}
-
-function setFlash(successOrDanger) {
-  const flashWrapper = document.querySelector('.nav-flash');
-  const flashElement = document.createElement('p');
-
-  if (successOrDanger === 'success') {
-    var message = document.createTextNode('貴重なご意見をありがとうございます。サービス向上のため、活用させていただきます。');
-  } else {
-    var message = document.createTextNode('アカウント登録もしくはログインしてください。');
-  }
-  flashElement.appendChild(message);
-  flashElement.classList.add('alert', `alert-${successOrDanger}`);
-  flashWrapper.appendChild(flashElement);
+  return false;
 }
 
 async function mapInit(location) {
@@ -62,14 +49,7 @@ async function mapInit(location) {
     storedPins.push({ title: 'default', lonlat: { x: 51.476853, y: -0.0005002 } });
   }
 
-  map = L.map('mapid').setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
-
-  const pinIcon = L.icon({
-    iconUrl: '/pin_icon.png',
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-    popupAnchor: [0, -40],
-  });
+  const map = L.map('mapid').setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
