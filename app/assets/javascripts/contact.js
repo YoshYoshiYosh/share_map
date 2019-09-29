@@ -13,9 +13,12 @@ async function sendContactMessage() {
   const postRequest = await fetch(tmpVariableProtocol + location.host + '/contact', {
     method: "POST",
     body: formData,
+    redirect: "manual"
   });
 
-  if (postRequest.status === 200) {
+  console.log(postRequest)
+
+  if (postRequest.status === 201) {
     console.log('成功');
     setFlash("success");
   } else {
