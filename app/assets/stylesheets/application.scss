@@ -32,13 +32,21 @@ body {
   font-family: 'YuGothic', '.SF NS Text', 'Montserrat', 'Avenir','Helvetica Neue','Helvetica','Arial','Hiragino Sans','ヒラギノ角ゴシック','メイリオ', 'Meiryo','ＭＳ Ｐゴシック','MS PGothic';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
   }
+  
+
   
 .wrapper {
   padding-top: 72.6px; /* 打ち消し用のパディング */
   // background-color: #f0ebeb;
   background-color: #fff;
-  height: 100vh;
+
+  // これを有効化すると、footerが上に出てきてしまう
+  // height: 100vh;
 }
 
 body {
@@ -564,3 +572,73 @@ h1.mb-3:before {
   width: 500px;
 }
 
+.footer {
+  margin-top: auto;
+  // background-color: #2d2d2d;
+  color: #fff;
+  background-color: #4c4c4c;
+  padding-bottom: 20px;
+  // height: 100px;
+
+  .footer__inner {
+    width: 75%;
+    display: flex;
+    margin: 0 auto;
+
+    justify-content: space-around;
+
+    .list__item {
+
+      transition-duration: .5s;
+      
+      &:hover {
+        // opacity: 0.5;
+        // background-color: rgba(199,199,199,0.5);
+        background-color: rgba(150, 147, 147, 0.5);
+        // background-color: #c7c7c7;
+      }
+
+      &:nth-child(-n+4) {
+        margin-bottom: 5px;
+      }
+      
+    }
+
+    .inner__title {
+      border-bottom: 2px solid #fff;
+      margin-top: 20px;
+      margin-bottom: 15px;
+
+      .inner__title__text {
+        margin-bottom: 5px;
+        font-weight: bolder;
+      }
+      
+    }
+
+    .inner__menu {
+
+      .form-group {
+        min-height: 50px;
+      }
+
+      .opinion-text {
+        height: inherit;
+        line-height: 20px;
+        width: 100%;
+      }
+
+      .send-opinion-button {
+        background-color: #f0f4f5;
+        width: 100%;
+        transition-duration: .5s;
+
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+    }
+    
+  }
+
+}
