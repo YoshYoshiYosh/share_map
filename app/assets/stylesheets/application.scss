@@ -75,6 +75,12 @@ body {
     padding: 5px 10px;
   }
 
+  .alert-danger {
+    // padding-top: 83px;
+    margin-bottom: 0;
+    padding: 5px 10px;
+  }
+
   .flash-fix-margin {
     margin-top: 36px;
   }
@@ -83,7 +89,7 @@ body {
     font-size: 40px;
   }
 
-  #added-message > .alert {
+  #flash-message > .alert {
     padding-top: 12px;
   }
 
