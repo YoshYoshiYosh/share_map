@@ -38,17 +38,13 @@ class PinsController < ApplicationController
     @pin.author = current_user
     @pin.map = @map
 
-    respond_to do |format|
       if @pin.save
-        # format.html { redirect_to @map, notice: "Pin was successfully created." }
         flash[:notice] = "Pin was successfully created."
-        format.html { render json: {}, status: 201 }
+        render json: {}, status: 201
       else
-        # format.js { flash[:danger] = "入力が完了していない項目があります。" }
         flash[:danger] = "入力が完了していない項目があります。"
         render json: {}, status: 303
       end
-    end
   end
 
   # PATCH/PUT /pins/1
