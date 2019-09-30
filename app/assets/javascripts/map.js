@@ -52,6 +52,17 @@ function setFlash(successOrDanger) {
   flashWrapper.appendChild(flashElement);
 }
 
+function requestRetype() {
+  const flashWrapper = document.getElementById('flash-message');
+  const flashElement = document.createElement('p')
+  const message = document.createTextNode('入力が完了していない項目があります。');
+
+  flashElement.appendChild(message);
+  flashElement.classList.add('alert', 'alert-danger');
+  flashWrapper.appendChild(flashElement);
+  return true
+}
+
 async function mapInit(location) {
   const isAuthor = !!document.getElementById('is-author');
 
@@ -215,6 +226,9 @@ document.addEventListener('turbolinks:load', async () => {
         } else {
           console.log('失敗');
           console.log(postRequest.status);
+          if (document.querySelector('.alert-danger') == null) {
+            requestRetype();
+          }
         }
       });
     });
