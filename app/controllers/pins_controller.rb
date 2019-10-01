@@ -43,7 +43,7 @@ class PinsController < ApplicationController
         render json: {}, status: 201
       else
         flash[:danger] = "入力が完了していない項目があります。"
-        render json: {}, status: 303
+        render json: {}, status: 400
       end
   end
 
