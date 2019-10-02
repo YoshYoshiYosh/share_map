@@ -216,10 +216,10 @@ document.addEventListener('turbolinks:load', async () => {
           console.log('失敗');
           console.log(postRequest.status);
 
-          const isDisplayNone = document.getElementsByClassName('alert-danger')[0];
-          if (document.defaultView.getComputedStyle(isDisplayNone,null).display === 'none') {
-            document.querySelector('.alert-danger').classList.replace('d-none', 'd-block');
-          }
+          $(function() {
+            $('.alert-danger').show();
+          })
+
         }
       });
     });

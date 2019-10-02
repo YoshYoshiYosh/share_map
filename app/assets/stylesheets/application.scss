@@ -81,6 +81,12 @@ body {
     padding: 5px 10px;
   }
 
+  #flash-message {
+    .alert-danger {
+      display: none;
+    }
+  }
+
   .flash-fix-margin {
     margin-top: 36px;
   }
