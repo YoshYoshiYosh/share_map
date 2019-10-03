@@ -42,7 +42,6 @@ class PinsController < ApplicationController
         flash[:notice] = "ピンの作成が完了しました！"
         render json: {}, status: 201
       else
-        flash[:danger] = "入力が完了していない項目があります。"
         render json: {}, status: 400
       end
   end
