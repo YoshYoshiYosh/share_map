@@ -215,11 +215,7 @@ document.addEventListener('turbolinks:load', async () => {
         } else {
           console.log('失敗');
           console.log(postRequest.status);
-
-          $(function() {
-            $('.alert-danger').show();
-          })
-
+          $('.alert-danger').show();
         }
       });
     });
