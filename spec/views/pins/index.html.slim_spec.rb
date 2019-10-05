@@ -21,6 +21,6 @@ RSpec.describe "pins/index", type: :view do
     assert_select "div>small", :text => "ひとこと： test1-description", :count => 1
     assert_select "div>small", :text => "作成者： test-1@example.com", :count => 2
     assert_select "div>small", :text => "作成日時： #{time}", :count => 2
-    assert_select "h1>a", :text => "＜ マップ管理画面へ戻る".to_s, :count => 1
+    assert_select "a", :text => "＜ マップへ".to_s, :count => 2
   end
 end
