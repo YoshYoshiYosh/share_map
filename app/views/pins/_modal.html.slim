@@ -14,11 +14,9 @@
         .form-group
           = f.label :description, '説明', class: 'mb-1 left-border'
           = f.text_area :description, autofocus: true, autocomplete: 'description', placeholder: '例) チャーハンが相変わらず美味しかった...', class: 'form-control mb-3 font-weight-lighter'
-        / .form-group
-        /   = f.label :lonlat, '座標（後々は消したい）', class: 'mb-1 left-border'
-        /   = f.text_field :lonlat, autofocus: true, autocomplete: 'lonlat', placeholder: '10 10', class: 'form-control mb-3 font-weight-lighter'
         .form-group
           = f.label :image
           = f.file_field :image, accept: '.jpeg, .jpg, .gif, .png, .bmp', class: 'form-control mb-3 p-0 font-weight-lighter'
         = f.submit 'ピンを作成', class: 'btn-flat-border'
-      #added-message.mt-3
+      #flash-message.mt-3
+        p.alert.alert-danger 入力が完了していない項目があります。

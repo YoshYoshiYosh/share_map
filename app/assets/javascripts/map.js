@@ -186,14 +186,16 @@ document.addEventListener('turbolinks:load', async () => {
         const postRequest = await fetch(`${location.href}/pins`, {
           method: 'POST',
           body: formData,
+          redirect: 'manual',
         });
 
-        if (postRequest.status === 200) {
+        if (postRequest.status === 201) {
           console.log('成功');
           location.reload();
         } else {
           console.log('失敗');
           console.log(postRequest.status);
+          $('.alert-danger').show();
         }
       });
     });
