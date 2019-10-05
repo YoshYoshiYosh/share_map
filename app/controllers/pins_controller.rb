@@ -3,13 +3,14 @@ class PinsController < ApplicationController
   before_action :set_pin, only: [:show, :edit, :update, :destroy]
   before_action :set_map
   before_action :can_edit?, only: [:edit, :update, :destroy] # :showを制限するか悩み中
+  before_action :get_previous_url, only: :index
   protect_from_forgery
 
   # GET /pins
   # GET /pins.json
   def index
     @pins = Pin.all.where(map: @map)
-
+    
     respond_to do |format|
       format.html
       format.json
@@ -89,6 +90,13 @@ class PinsController < ApplicationController
     def can_edit?
       if current_user != @pin.author
         render 'errors/forbidden', status: 403
+      end
+    end
+
+    def get_previous_url
+      unless request.url.include?('pins.json')
+        @previous_url = session[:previous_action]
+        session.delete(:previous_action)
       end
     end
 
