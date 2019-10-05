@@ -156,8 +156,7 @@ document.addEventListener('turbolinks:load', async () => {
 
     const viewPinsButton = document.querySelector('.view-pins');
     viewPinsButton.addEventListener('click', () => {
-      console.log('押された');
-      open(`${location.href}/pins`);
+      open(`${location.href}/pins`, '_self');
     })
     
     const addPinButton = document.querySelector('.add-pin');
@@ -203,7 +202,7 @@ document.addEventListener('turbolinks:load', async () => {
     if (document.getElementById('is-author')) {
       const addMemberButton = document.querySelector('.add-member');
       addMemberButton.addEventListener('click', () => {
-        open(`${location.href}/authorized_maps/new`);
+        open(`${location.href}/authorized_maps/new`, '_self');
       });
     };
 
