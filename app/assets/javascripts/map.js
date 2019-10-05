@@ -66,7 +66,6 @@ async function mapInit(location) {
 
       const imageAndTextOfButton = [
         { imgSrc: '/single_pin_icon.svg', text: 'New Pin' },
-        { imgSrc: '/destination_icon.svg', text: 'New Pin' },
         { imgSrc: '/human_pin_icon.svg', text: 'View Pins' },
       ];
 
@@ -86,14 +85,12 @@ async function mapInit(location) {
             break;
           }
 
-          // case 1:は、現在地を取得するピン作成？
-
-          case 2: {
-            img.classList.add('add-menber-form');
+          case 1: {
+            img.classList.add('view-pins');
             break;
           }
 
-          case 3: {
+          case 2: {
             img.classList.add('add-member');
             break;
           }
@@ -155,11 +152,14 @@ document.addEventListener('turbolinks:load', async () => {
 
     await mapInit(location.href);
 
-    const addMemberButton = document.querySelector('.add-member');
-    addMemberButton.addEventListener('click', () => {
-      open(`${location.href}/authorized_maps/new`);
-    });
 
+
+    const viewPinsButton = document.querySelector('.view-pins');
+    viewPinsButton.addEventListener('click', () => {
+      console.log('押された');
+      open(`${location.href}/pins`);
+    })
+    
     const addPinButton = document.querySelector('.add-pin');
     addPinButton.addEventListener('click', async () => {
       const latlon = await setLonlat();
@@ -199,5 +199,13 @@ document.addEventListener('turbolinks:load', async () => {
         }
       });
     });
+
+    if (document.getElementById('is-author')) {
+      const addMemberButton = document.querySelector('.add-member');
+      addMemberButton.addEventListener('click', () => {
+        open(`${location.href}/authorized_maps/new`);
+      });
+    };
+
   }
 });
