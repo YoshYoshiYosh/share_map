@@ -92,6 +92,7 @@ async function mapInit(location) {
 
           case 2: {
             img.classList.add('add-member');
+            img.classList.add('mb-0');
             break;
           }
         }
