@@ -49,7 +49,7 @@ async function mapInit(location) {
     storedPins.push({ title: 'default', lonlat: { x: 51.476853, y: -0.0005002 } });
   }
 
-  const map = L.map('mapid').setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
+  const map = L.map('mapid', {minZoom: 5}).setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
