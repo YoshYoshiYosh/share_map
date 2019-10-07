@@ -117,5 +117,4 @@ class MapsController < ApplicationController
       # showアクションの時に、session[:previous_action]が格納されない⇨マップが呼ばれる際に、pins#indexが呼ばれており、その結果maps/showがレンダーされた時にはすでにsession[:previous_action]がnilになっていることが原因
       session[:previous_action] = request.url.include?("admin") ? "admin" : "show"
     end
-
 end
