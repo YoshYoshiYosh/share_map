@@ -3,7 +3,7 @@
 class MapsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_map, only: %i[show edit update destroy admin]
-  before_action :set_pins, only: [:show]
+  before_action :set_pins, only: %i[show admin]
   before_action :can_edit?, only: %i[show edit update destroy]
   before_action :author?, only: [:admin]
 
@@ -35,7 +35,10 @@ class MapsController < ApplicationController
     end
   end
 
-  def admin; end
+  def admin
+    @displayed_pins  = @pins.length >= 16 ? @pins.last(15) : @pins
+    @displayed_users = @map.authorized_users.length >= 16 ? @map.authorized_users.last(15) : @map.authorized_users
+  end
 
   # GET /maps/new
   def new

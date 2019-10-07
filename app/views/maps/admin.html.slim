@@ -31,7 +31,7 @@
         span.profile-count= @map.authorized_users.count
       
       ul.d-flex.px-3
-        - @map.authorized_users.each do |user|
+        - @displayed_users.each do |user|
           li
             = user.email
 
@@ -41,5 +41,5 @@
         |ピン一覧
         span.profile-count.text-center= @map.pins.count
       ul.d-flex.px-3
-        - @map.pins.each_with_index do |pin, i|
+        - @displayed_pins.each_with_index do |pin, i|
           li= "#{i+1}：#{pin.title}"
