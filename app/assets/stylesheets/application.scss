@@ -116,9 +116,10 @@ body {
 }
 
   //  パンくずリスト
-  .fa-map-marked-alt {
-    font-size: 13px;
+  .fa-map-marked-alt, .fa-atlas, .fa-cogs {
+    font-size: 14px;
     color: #479cec;
+    margin-right: 6px;
     // color: #000;
   }
 
@@ -133,7 +134,7 @@ body {
   }
 
   @media (min-width: 1500px) {
-    .fa-map-marked-alt,.fa-home {
+    .fa-map-marked-alt,.fa-home, .fa-atlas, .fa-cogs {
       font-size: 15px;
     }
 
@@ -536,7 +537,7 @@ span.to-map {
 }
 
 
-h1.mb-3 {
+.admin-title, .mymap-title {
   position: relative;
   color: white;
   // background: #e06737;  
