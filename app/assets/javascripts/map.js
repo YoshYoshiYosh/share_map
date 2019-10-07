@@ -49,7 +49,7 @@ async function mapInit(location) {
     storedPins.push({ title: 'default', lonlat: { x: 51.476853, y: -0.0005002 } });
   }
 
-  const map = L.map('mapid').setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
+  const map = L.map('mapid', {minZoom: 5}).setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -66,7 +66,6 @@ async function mapInit(location) {
 
       const imageAndTextOfButton = [
         { imgSrc: '/single_pin_icon.svg', text: 'New Pin' },
-        { imgSrc: '/destination_icon.svg', text: 'New Pin' },
         { imgSrc: '/human_pin_icon.svg', text: 'View Pins' },
       ];
 
@@ -86,15 +85,14 @@ async function mapInit(location) {
             break;
           }
 
-          // case 1:は、現在地を取得するピン作成？
-
-          case 2: {
-            img.classList.add('add-menber-form');
+          case 1: {
+            img.classList.add('view-pins');
             break;
           }
 
-          case 3: {
+          case 2: {
             img.classList.add('add-member');
+            img.classList.add('mb-0');
             break;
           }
         }
@@ -155,11 +153,13 @@ document.addEventListener('turbolinks:load', async () => {
 
     await mapInit(location.href);
 
-    const addMemberButton = document.querySelector('.add-member');
-    addMemberButton.addEventListener('click', () => {
-      open(`${location.href}/authorized_maps/new`);
-    });
 
+
+    const viewPinsButton = document.querySelector('.view-pins');
+    viewPinsButton.addEventListener('click', () => {
+      open(`${location.href}/pins`, '_self');
+    })
+    
     const addPinButton = document.querySelector('.add-pin');
     addPinButton.addEventListener('click', async () => {
       const latlon = await setLonlat();
@@ -199,5 +199,13 @@ document.addEventListener('turbolinks:load', async () => {
         }
       });
     });
+
+    if (document.getElementById('is-author')) {
+      const addMemberButton = document.querySelector('.add-member');
+      addMemberButton.addEventListener('click', () => {
+        open(`${location.href}/authorized_maps/new`, '_self');
+      });
+    };
+
   }
 });
