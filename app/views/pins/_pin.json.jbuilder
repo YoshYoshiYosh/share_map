@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.id           pin.id
 json.author_id    pin.author_id
 json.lonlat       x: pin.lonlat.x, y: pin.lonlat.y

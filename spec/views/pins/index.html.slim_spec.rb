@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "pins/index", type: :view do
-
+RSpec.describe 'pins/index', type: :view do
   let(:user) { FactoryBot.create(:user) }
   let(:map) { FactoryBot.create(:map, author: user) }
-  let(:pins) { [FactoryBot.create(:pin, :same_author, map: map),
-                FactoryBot.create(:pin, :same_author, map: map)] }
+  let(:pins) do
+    [FactoryBot.create(:pin, :same_author, map: map),
+     FactoryBot.create(:pin, :same_author, map: map)]
+  end
 
   before do
     assign(:user, user)
@@ -13,14 +16,14 @@ RSpec.describe "pins/index", type: :view do
     assign(:pins, pins)
   end
 
-  it "renders a list of pins" do
+  it 'renders a list of pins' do
     render
 
     time = pins.first.created_at
 
-    assert_select "div>small", :text => "ひとこと： test1-description", :count => 1
-    assert_select "div>small", :text => "作成者： test-1@example.com", :count => 2
-    assert_select "div>small", :text => "作成日時： #{time}", :count => 2
-    assert_select "a", :text => "＜ マップへ".to_s, :count => 2
+    assert_select 'div>small', text: 'ひとこと： test1-description', count: 1
+    assert_select 'div>small', text: '作成者： test-1@example.com', count: 2
+    assert_select 'div>small', text: "作成日時： #{time}", count: 2
+    assert_select 'a', text: '＜ マップへ'.to_s, count: 2
   end
 end

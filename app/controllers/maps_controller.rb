@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class MapsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_map, only: [:show, :edit, :update, :destroy, :admin]
+  before_action :set_map, only: %i[show edit update destroy admin]
   before_action :set_pins, only: [:show]
-  before_action :can_edit?, only: [:show, :edit, :update, :destroy]
+  before_action :can_edit?, only: %i[show edit update destroy]
   before_action :author?, only: [:admin]
 
-  before_action :is_show_or_admin?, only: [:show, :admin]
+  before_action :show_or_admin?, only: %i[show admin]
 
   # GET /maps
   # GET /maps.json
@@ -13,7 +15,7 @@ class MapsController < ApplicationController
     # 削除予定
     @maps = Map.all
   end
-  
+
   # GET /maps/1
   # GET /maps/1.json
   def show
@@ -29,12 +31,11 @@ class MapsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => @maps }
+      format.json { render json: @maps }
     end
   end
 
-  def admin
-  end
+  def admin; end
 
   # GET /maps/new
   def new
@@ -42,8 +43,7 @@ class MapsController < ApplicationController
   end
 
   # GET /maps/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /maps
   # POST /maps.json
@@ -87,34 +87,33 @@ class MapsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_map
-      @map = Map.find(params[:id])
-    end
 
-    def set_pins
-      @pins = @map.pins
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_map
+    @map = Map.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def map_params
-      params.require(:map).permit(:title, :description)
-    end
+  def set_pins
+    @pins = @map.pins
+  end
 
-    def can_edit?
-      if current_user != @map.author && @map.authorized_users.exclude?(current_user)
-        render 'errors/forbidden', status: 403
-      end
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def map_params
+    params.require(:map).permit(:title, :description)
+  end
 
-    def author?
-      if current_user != @map.author
-        render 'errors/forbidden', status: 403
-      end
+  def can_edit?
+    if current_user != @map.author && @map.authorized_users.exclude?(current_user)
+      render 'errors/forbidden', status: 403
     end
+  end
 
-    def is_show_or_admin?
-      # showアクションの時に、session[:previous_action]が格納されない⇨マップが呼ばれる際に、pins#indexが呼ばれており、その結果maps/showがレンダーされた時にはすでにsession[:previous_action]がnilになっていることが原因
-      session[:previous_action] = request.url.include?("admin") ? "admin" : "show"
-    end
+  def author?
+    render 'errors/forbidden', status: 403 if current_user != @map.author
+  end
+
+  def show_or_admin?
+    # showアクションの時に、session[:previous_action]が格納されない⇨マップが呼ばれる際に、pins#indexが呼ばれており、その結果maps/showがレンダーされた時にはすでにsession[:previous_action]がnilになっていることが原因
+    session[:previous_action] = request.url.include?('admin') ? 'admin' : 'show'
+  end
 end

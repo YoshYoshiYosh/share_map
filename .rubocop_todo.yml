@@ -211,7 +211,7 @@ Layout/TrailingWhitespace:
 
 # Offense count: 1
 Metrics/AbcSize:
-  Max: 16
+  Max: 20
 
 # Offense count: 7
 # Configuration parameters: CountComments, ExcludedMethods.
@@ -221,8 +221,6 @@ Metrics/BlockLength:
 
 # Offense count: 3
 # Configuration parameters: CountComments, ExcludedMethods.
-Metrics/MethodLength:
-  Max: 15
 
 # Offense count: 9
 # Configuration parameters: AllowedChars.
@@ -353,8 +351,6 @@ Style/StringLiterals:
 # Cop supports --auto-correct.
 # Configuration parameters: MinSize.
 # SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: brackets
 
 # Offense count: 1
 # Cop supports --auto-correct.
@@ -370,3 +366,12 @@ Style/WordArray:
 # URISchemes: http, https
 Metrics/LineLength:
   Max: 154
+
+Style/AccessorMethodName:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 30

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class PinsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_pin, only: [:show, :edit, :update, :destroy]
+  before_action :set_pin, only: %i[show edit update destroy]
   before_action :set_map
-  before_action :can_edit?, only: [:edit, :update, :destroy] # :showを制限するか悩み中
+  before_action :can_edit?, only: %i[edit update destroy] # :showを制限するか悩み中
   before_action :get_previous_url, only: :index
   protect_from_forgery
 
@@ -10,7 +12,7 @@ class PinsController < ApplicationController
   # GET /pins.json
   def index
     @pins = Pin.all.where(map: @map)
-    
+
     respond_to do |format|
       format.html
       format.json
@@ -19,8 +21,7 @@ class PinsController < ApplicationController
 
   # GET /pins/1
   # GET /pins/1.json
-  def show
-  end
+  def show; end
 
   # GET /pins/new
   # Mapモデルと紐づけるのを忘れないように実装する
@@ -29,8 +30,7 @@ class PinsController < ApplicationController
   end
 
   # GET /pins/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /pins
   # POST /pins.json
@@ -39,12 +39,12 @@ class PinsController < ApplicationController
     @pin.author = current_user
     @pin.map = @map
 
-      if @pin.save
-        flash[:notice] = "ピンの作成が完了しました！"
-        render json: {}, status: 201
-      else
-        render json: {}, status: 400
-      end
+    if @pin.save
+      flash[:notice] = 'ピンの作成が完了しました！'
+      render json: {}, status: 201
+    else
+      render json: {}, status: 400
+    end
   end
 
   # PATCH/PUT /pins/1
@@ -72,32 +72,30 @@ class PinsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_pin
-      @pin = Pin.find(params[:id])
-    end
 
-    def set_map
-      @map = Map.find(params[:map_id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_pin
+    @pin = Pin.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def pin_params
-      params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
-      params.require(:pin).permit(:author_id, :title, :description, :lonlat, :image)
-    end
+  def set_map
+    @map = Map.find(params[:map_id])
+  end
 
-    def can_edit?
-      if current_user != @pin.author
-        render 'errors/forbidden', status: 403
-      end
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def pin_params
+    params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
+    params.require(:pin).permit(:author_id, :title, :description, :lonlat, :image)
+  end
 
-    def get_previous_url
-      unless request.url.include?('pins.json')
-        @previous_url = session[:previous_action]
-        session.delete(:previous_action)
-      end
-    end
+  def can_edit?
+    render 'errors/forbidden', status: 403 if current_user != @pin.author
+  end
 
+  def get_previous_url
+    unless request.url.include?('pins.json')
+      @previous_url = session[:previous_action]
+      session.delete(:previous_action)
+    end
+  end
 end
