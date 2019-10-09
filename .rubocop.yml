@@ -2,3 +2,9 @@ inherit_from: .rubocop_todo.yml
 
 Rails:
   Enabled: true
+
+AsciiComments:
+  Enabled: false
+
+Documentation:
+  Enabled: false

@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class AuthorizedMapsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_map, except: [:edit]
-  before_action :set_authorized_users, only: [:index, :new, :create, :destroy]
+  before_action :set_authorized_users, only: %i[index new create destroy]
 
   before_action :get_previous_url, only: :new
 
@@ -14,20 +16,20 @@ class AuthorizedMapsController < ApplicationController
   def new
     @new_authorized = AuthorizedMap.new(map: @map)
   end
-  
+
   def create
     if (@authorized_user = User.find_by(authorized_params)) && (@authorized_user != current_user)
       begin
         @map.authorizing_user(@authorized_user)
         flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
-      rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid => e
+      rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
         flash.delete(:success)
-        flash[:danger] = "（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
+        flash[:danger] = '（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです'
       end
     elsif @authorized_user == current_user
-      flash[:danger] = "自分を招待することはできません"
+      flash[:danger] = '自分を招待することはできません'
     else
-      flash[:danger] = "（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです"
+      flash[:danger] = '（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです'
     end
 
     redirect_to new_map_authorized_map_path(@map)
@@ -46,12 +48,11 @@ class AuthorizedMapsController < ApplicationController
 
   private
 
-  # 招待する画面へ遷移するボタン自体を削除する可能性あり。そうなった場合はこのメソッドは削除する。
   def author?
-    if current_user != @map.author
-      flash[:notice] = "ユーザーを招待する権限がありません。"
-      redirect_to map_url(@map)
-    end
+    return if current_user == @map.author
+    
+    flash[:notice] = 'ユーザーを招待する権限がありません。'
+    redirect_to map_url(@map)
   end
 
   def set_map
@@ -71,5 +72,4 @@ class AuthorizedMapsController < ApplicationController
     @previous_url = session[:previous_action]
     session.delete(:previous_action)
   end
-  
 end

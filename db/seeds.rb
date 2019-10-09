@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -17,11 +19,10 @@ def form_num(num)
 end
 
 30.times do |n|
-  no = form_num(n+1)
+  no = form_num(n + 1)
   User.create(
     email: "test#{no}@example.com",
-    password: "Password",
-    password_confirmation: "Password"
+    password: 'Password',
+    password_confirmation: 'Password'
   )
-
 end
