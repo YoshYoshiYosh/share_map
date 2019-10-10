@@ -4,15 +4,6 @@
   h1.admin-title.mb-5
     = "#{@map.title}管理画面"
 
-  / .admin-nav.d-flex.justify-content-between.mb-3.px-5
-  /   = link_to '＜自分のマップ一覧へ戻る', mymap_maps_path, class: 'help-link d-inline-block'
-      
-  /   = link_to map_path(@map), class: 'to-map-text' do
-  /     span.to-map
-  /       |マップへ
-  /       <i class="far fa-map"></i>
-  /       | ＞
-
   .manage-wrap.d-flex
     .manage-title
       = link_to '編集する', edit_map_path(@map), class: 'btn-flat-border hidden'
