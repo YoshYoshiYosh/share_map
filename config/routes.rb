@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
     member do
       scope :admin do
-        get '/', to: 'maps#admin'
+        get '/', to: 'maps#admin', as: 'admin'
         get '/edit', to: 'maps#edit'
         resources :authorized_maps, except: [:edit]
       end
