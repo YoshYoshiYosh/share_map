@@ -22,17 +22,15 @@ ul.breadcrumb.mt-0.mb-0.p-1.pl-3
         - if request.url.include?('admin')
           span.mx-2 >
           li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
-            i.fas.fa-cogs.ml-1
-            span.bread-text[itemprop="title"]
-              = map.title
-              | 管理画面
-            / = link_to admin_map_path(map) do
-            /   i.fas.fa-cogs.ml-1
+            = link_to admin_map_path(map) do
+              i.fas.fa-cogs.ml-1
+              span.bread-text[itemprop="title"]
+                = map.title
+                | 管理画面
       - else
         li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]
         span.bread-text[itemprop="title"]
           = map.title
-
 
 / ul.breadcrumb.mt-0.mb-0.p-1.pl-3
 /   li[itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb"]

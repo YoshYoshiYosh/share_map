@@ -210,7 +210,7 @@ document.addEventListener('turbolinks:load', async () => {
     if (document.getElementById('is-author')) {
       const addMemberButton = document.querySelector('.add-member');
       addMemberButton.addEventListener('click', () => {
-        open(`${location.href}/authorized_maps/new`, '_self');
+        open(`${location.href}/admin/authorized_maps/new`, '_self');
       });
 
       const settingButton = document.querySelector('.setting');
