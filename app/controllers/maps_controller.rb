@@ -36,8 +36,8 @@ class MapsController < ApplicationController
   end
 
   def admin
-    @displayed_pins  = @pins.length >= 16 ? @pins.last(15) : @pins
-    @displayed_users = @map.authorized_users.length >= 16 ? @map.authorized_users.last(15) : @map.authorized_users
+    @displayed_pins  = @pins.last(15)
+    @displayed_users = @map.authorized_users.last(15)
   end
 
   # GET /maps/new
