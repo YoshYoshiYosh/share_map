@@ -90,7 +90,7 @@ class MapsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_map
-    @map = Map.find(params[:id])
+    @map = Map.find(params[:map_id])
   end
 
   def set_pins

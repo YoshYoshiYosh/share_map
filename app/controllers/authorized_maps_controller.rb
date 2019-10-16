@@ -56,7 +56,7 @@ class AuthorizedMapsController < ApplicationController
   end
 
   def set_map
-    @map = Map.find(params[:id])
+    @map = Map.find(params[:map_id])
     author?
   end
 
