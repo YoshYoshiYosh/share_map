@@ -1,9 +1,9 @@
-= form_with model: [@map, @pin], local: true do |f|
-  - if @pin.errors.any?
+= form_with model: [map, pin], url: url, local: true do |f|
+  - if pin.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@pin.errors.count, "error")} prohibited this pin from being saved:"
+      h2 = "#{pluralize(pin.errors.count, "error")} prohibited this pin from being saved:"
       ul
-        - @pin.errors.full_messages.each do |message|
+        - pin.errors.full_messages.each do |message|
           li = message
 
   .form-group

@@ -1,8 +1,8 @@
 .w-75.mx-auto.mt-5
   h1 Editing pin
 
-  == render 'form'
+  = render partial: 'form' , locals: { map: @map, pin: @pin, url: edit_pin_path(@map, @pin) }
 
-  => link_to 'Show', map_pin_path(@map, @pin)
+  => link_to 'Show', pin_path(@map, @pin)
   '|
-  =< link_to 'Back', map_pins_path(@map)
+  =< link_to 'Back', pins_path(@map)
