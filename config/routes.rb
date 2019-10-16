@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
-  resources :maps, except: [:edit] do
+  resources :maps, except: [:edit], param: 'map_id' do
     get :mymap, on: :collection
 
     member do
@@ -18,8 +18,7 @@ Rails.application.routes.draw do
         get '/edit', to: 'maps#edit'
         resources :authorized_maps, except: [:edit]
       end
+      resources :pins
     end
-    
-    resources :pins
   end
 end
