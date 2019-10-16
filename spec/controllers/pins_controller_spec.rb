@@ -105,7 +105,7 @@ RSpec.describe PinsController, type: :controller do
 
         it 'redirects to the pin' do
           put :update, params: { map_id: map.id, id: same_author_pin.id, pin: new_attributes }, session: valid_session
-          expect(response).to redirect_to([map, same_author_pin])
+          expect(response).to redirect_to(pin_url(map, same_author_pin))
         end
       end
 
@@ -127,7 +127,7 @@ RSpec.describe PinsController, type: :controller do
 
       it 'redirects to the pins list' do
         delete :destroy, params: { map_id: map.id, id: same_author_pin.id }, session: valid_session
-        expect(response).to redirect_to(map_pins_url)
+        expect(response).to redirect_to(pins_url(map))
       end
     end
   end

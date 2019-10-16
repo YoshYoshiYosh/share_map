@@ -19,7 +19,7 @@ RSpec.describe 'pins/new', type: :view do
   it 'renders new pin form' do
     render
 
-    assert_select 'form[action=?][method=?]', map_pins_path(map), 'post' do
+    assert_select 'form[action=?][method=?]', pins_path(map), 'post' do
       assert_select 'input[name=?]', 'pin[title]'
 
       assert_select 'textarea[name=?]', 'pin[description]'

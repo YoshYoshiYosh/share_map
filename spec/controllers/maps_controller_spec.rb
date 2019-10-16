@@ -65,14 +65,14 @@ RSpec.describe MapsController, type: :controller do
 
     describe 'GET #show' do
       it 'returns a success response' do
-        get :show, params: { id: map.id }, session: valid_session
+        get :show, params: { map_id: map.id }, session: valid_session
         expect(response).to be_successful
       end
     end
 
     describe 'GET #edit' do
       it 'returns a success response' do
-        get :edit, params: { id: map.id }, session: valid_session
+        get :edit, params: { map_id: map.id }, session: valid_session
         expect(response).to be_successful
       end
     end
@@ -109,20 +109,20 @@ RSpec.describe MapsController, type: :controller do
         end
 
         it 'updates the requested map' do
-          put :update, params: { id: map.id, map: new_attributes }, session: valid_session
+          put :update, params: { map_id: map.id, map: new_attributes }, session: valid_session
           map.reload
           expect(map.title).to eq '新しい名前'
         end
 
         it 'redirects to the map' do
-          put :update, params: { id: map.id, map: new_attributes }, session: valid_session
+          put :update, params: { map_id: map.id, map: new_attributes }, session: valid_session
           expect(response).to redirect_to(map)
         end
       end
 
       context 'with invalid params' do
         it "returns a success response (i.e. to display the 'edit' template)" do
-          put :update, params: { id: map.id, map: invalid_attributes }, session: valid_session
+          put :update, params: { map_id: map.id, map: invalid_attributes }, session: valid_session
           expect(response).to be_successful
         end
       end
@@ -132,12 +132,12 @@ RSpec.describe MapsController, type: :controller do
       it 'destroys the requested map' do
         map
         expect do
-          delete :destroy, params: { id: map.id }, session: valid_session
+          delete :destroy, params: { map_id: map.id }, session: valid_session
         end.to change(Map, :count).by(-1)
       end
 
       it 'redirects to the maps list' do
-        delete :destroy, params: { id: map.id }, session: valid_session
+        delete :destroy, params: { map_id: map.id }, session: valid_session
         expect(response).to redirect_to(maps_url)
       end
     end
