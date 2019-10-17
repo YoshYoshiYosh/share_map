@@ -1,28 +1,4 @@
-/ .w-80.mx-auto.mt-5
-/   h1.d-inline.ml-3= @map.title
-/   p.d-inline-block.ml-5.pd-5= link_to 'マップ一覧へ', mymap_maps_path
-
-/   table.table
-/     thead
-/       tr
-/         th Author
-/         th Title
-/         th Description
-/         th Lonlat
-/         th 
-/         th
-/         th
-
-/     tbody
-/       - @pins.each do |pin|
-/         tr
-/           td = pin.author.email
-/           td = pin.title
-/           td = pin.description
-/           td = pin.lonlat
-/           td = link_to 'Show', map_pin_path(@map, pin)
-/           td = link_to 'Edit', edit_map_pin_path(@map, pin)
-/           td = link_to 'Destroy', map_pin_path(@map, pin), data: { confirm: 'Are you sure?' }, method: :delete
+= render partial: 'maps/breadcrumb', locals: { map: @map }
 
 .container
   h1.d-inline-block.ml-3.mt-3.page-title

@@ -1,15 +1,8 @@
-.container.not-top.mt-4.pt-4.px-4.text-center
-  h1.mb-3
-    = "#{@map.title}管理画面"
+= render partial: "breadcrumb", locals: {map: @map}
 
-  .admin-nav.d-flex.justify-content-between.mb-3.px-5
-    = link_to '＜自分のマップ一覧へ戻る', mymap_maps_path, class: 'help-link d-inline-block'
-      
-    = link_to map_path(@map), class: 'to-map-text' do
-      span.to-map
-        |マップへ
-        <i class="far fa-map"></i>
-        | ＞
+.container.not-top.mt-4.pt-4.px-4.text-center
+  h1.admin-title.mb-5
+    = "#{@map.title}管理画面"
 
   .manage-wrap.d-flex
     .manage-title
@@ -29,7 +22,7 @@
         span.profile-count= @map.authorized_users.count
       
       ul.d-flex.px-3
-        - @map.authorized_users.each do |user|
+        - @displayed_users.each do |user|
           li
             = user.email
 
@@ -39,5 +32,5 @@
         |ピン一覧
         span.profile-count.text-center= @map.pins.count
       ul.d-flex.px-3
-        - @map.pins.each_with_index do |pin, i|
+        - @displayed_pins.each_with_index do |pin, i|
           li= "#{i+1}：#{pin.title}"

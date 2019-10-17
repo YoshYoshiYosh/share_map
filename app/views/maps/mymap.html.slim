@@ -1,6 +1,8 @@
+= render partial: "breadcrumb", locals: {map: @map}
+
 .container.not-top.my-4.pt-4.px-4
 
-  h1.mb-3.text-center
+  h1.mymap-title.mb-3.text-center
     = "#{current_user.email}さんのMap一覧"
   
   .text-right.pr-5
@@ -11,7 +13,7 @@
     - @maps.each do |map|
       .mymap-box
         .mymap-box__title
-          p.m-0.text-center.mymap-title-text= link_to map.title, admin_map_path(map)
+          p.m-0.text-center.mymap-title-text= link_to map.title, map_path(map)
         .mymap-box__description
           p= map.description
   
