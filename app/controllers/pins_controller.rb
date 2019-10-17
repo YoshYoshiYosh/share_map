@@ -12,14 +12,13 @@ class PinsController < ApplicationController
   # GET /pins.json
   def index
     @pins = Pin.where(map: @map)
-               .map { |pin| pin.as_json.merge(
+               .map { |pin| pin.as_json(except: :lonlat).merge(
                  lonlat: pin.custom_lonlat,
                  image:  pin.custom_image,
                ) }
-    byebug
     render json: @pins
   end
-
+  
   # GET /pins/1
   # GET /pins/1.json
   def show; end
