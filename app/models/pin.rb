@@ -11,13 +11,13 @@ class Pin < ApplicationRecord
 
   def custom_lonlat
     {
-      x: self.lonlat.x,
-      y: self.lonlat.y,
+      x: lonlat.x,
+      y: lonlat.y
     }
   end
   
   def custom_image
-    url_for(self.image) if self.image.attached?
+    url_for(image) if image.attached?
   end
   
 end
