@@ -71,6 +71,7 @@ async function mapInit(location) {
 
       if (isAuthor) {
         imageAndTextOfButton.push({ imgSrc: '/teams_icon.svg', text: 'Add Member' });
+        imageAndTextOfButton.push({ imgSrc: '/setting-gear.svg', text: 'Settings' });
       }
 
       for (let i = 0; i < imageAndTextOfButton.length; i++) {
@@ -93,6 +94,12 @@ async function mapInit(location) {
           case 2: {
             img.classList.add('add-member');
             img.classList.add('mb-0');
+            break;
+          }
+
+          case 3: {
+            img.classList.add('setting');
+            // img.classList.add('mb-0');
             break;
           }
         }
@@ -203,7 +210,12 @@ document.addEventListener('turbolinks:load', async () => {
     if (document.getElementById('is-author')) {
       const addMemberButton = document.querySelector('.add-member');
       addMemberButton.addEventListener('click', () => {
-        open(`${location.href}/authorized_maps/new`, '_self');
+        open(`${location.href}/admin/authorized_maps/new`, '_self');
+      });
+
+      const settingButton = document.querySelector('.setting');
+      settingButton.addEventListener('click', () => {
+        open(`${location.href}/admin`, '_self');
       });
     };
 

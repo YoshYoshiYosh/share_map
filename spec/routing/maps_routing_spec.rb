@@ -13,11 +13,11 @@ RSpec.describe MapsController, type: :routing do
     end
 
     it 'routes to #show' do
-      expect(get: '/maps/1').to route_to('maps#show', id: '1')
+      expect(get: '/maps/1').to route_to('maps#show', map_id: '1')
     end
 
     it 'routes to #edit' do
-      expect(get: '/maps/1/edit').to route_to('maps#edit', id: '1')
+      expect(get: '/maps/1/admin/edit').to route_to('maps#edit', map_id: '1')
     end
 
     it 'routes to #create' do
@@ -25,15 +25,15 @@ RSpec.describe MapsController, type: :routing do
     end
 
     it 'routes to #update via PUT' do
-      expect(put: '/maps/1').to route_to('maps#update', id: '1')
+      expect(put: '/maps/1').to route_to('maps#update', map_id: '1')
     end
 
     it 'routes to #update via PATCH' do
-      expect(patch: '/maps/1').to route_to('maps#update', id: '1')
+      expect(patch: '/maps/1').to route_to('maps#update', map_id: '1')
     end
 
     it 'routes to #destroy' do
-      expect(delete: '/maps/1').to route_to('maps#destroy', id: '1')
+      expect(delete: '/maps/1').to route_to('maps#destroy', map_id: '1')
     end
   end
 end

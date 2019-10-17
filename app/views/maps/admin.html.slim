@@ -16,7 +16,7 @@
       p
         = @map.description
     .manage-users
-      = link_to '編集する', new_map_authorized_map_path(@map), class: 'btn-flat-border hidden', target: :_blank
+      = link_to '編集する', new_authorized_map_path(@map), class: 'btn-flat-border hidden', target: :_blank
       p.py-2.gb-white
         |招待者一覧
         span.profile-count= @map.authorized_users.count
@@ -27,7 +27,7 @@
             = user.email
 
     .manage-pins
-      = link_to '編集する', map_pins_path(@map), class: 'btn-flat-border hidden'
+      = link_to '編集する', pins_path(@map), class: 'btn-flat-border hidden'
       p.py-2.gb-white
         |ピン一覧
         span.profile-count.text-center= @map.pins.count

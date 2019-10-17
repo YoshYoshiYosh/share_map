@@ -15,8 +15,10 @@ RSpec.describe 'maps/show', type: :view do
                           description: 'pin-description',
                           lonlat: 'POINT(10 10)',
                           map: @map,
-                          author: User.new
+                          author: @map.author
                         ))
+    puts @map.save 
+    puts @pin.save 
   end
 
   it 'renders attributes in <p>' do

@@ -26,7 +26,8 @@ class PinsController < ApplicationController
   # GET /pins/new
   # Mapモデルと紐づけるのを忘れないように実装する
   def new
-    @pin = Pin.new
+    # @pin = Pin.new
+    @pin = Pin.new(map: @map)
   end
 
   # GET /pins/1/edit
@@ -52,7 +53,7 @@ class PinsController < ApplicationController
   def update
     respond_to do |format|
       if @pin.update(pin_params)
-        format.html { redirect_to map_pin_url(@map, @pin), notice: 'Pin was successfully updated.' }
+        format.html { redirect_to pin_url(@map, @pin), notice: 'Pin was successfully updated.' }
         format.json { render :show, status: :ok, location: @pin }
       else
         format.html { render :edit }
@@ -66,7 +67,7 @@ class PinsController < ApplicationController
   def destroy
     @pin.destroy
     respond_to do |format|
-      format.html { redirect_to map_pins_url(@map), notice: 'Pin was successfully destroyed.' }
+      format.html { redirect_to pins_url(@map), notice: 'Pin was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

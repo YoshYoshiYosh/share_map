@@ -3,12 +3,6 @@
 .container
   h1.d-inline-block.ml-3.mt-3.page-title
     span.font-weight-bolder= @map.title
-  - if @previous_url == "admin"
-    = link_to '＜ マップ管理画面へ戻る', admin_map_path(@map), class: 'help-link title-small d-inline-block pl-3'
-  - elsif @previous_url == "show"
-    = link_to '＜ マップへ戻る', map_path(@map), class: 'help-link title-small d-inline-block pl-3'
-  - else
-    = link_to '＜ マップへ', map_path(@map), class: 'help-link title-small d-inline-block pl-3'
   .products-container
     - if @pins.count == 0
       .text-center
@@ -24,9 +18,3 @@
             small.d-block= "ひとこと： #{pin.description}"
             small.d-block= "作成者： #{pin.author.email}"
             small.d-block= "作成日時： #{pin.created_at}"
-      - if @previous_url == "admin"
-        = link_to '＜ マップ管理画面へ戻る', admin_map_path(@map), class: 'help-link d-inline-block my-4'
-      - elsif @previous_url == "show"
-        = link_to '＜ マップへ戻る', map_path(@map), class: 'help-link d-inline-block my-4'
-      - else
-        = link_to '＜ マップへ', map_path(@map), class: 'help-link d-inline-block my-4'

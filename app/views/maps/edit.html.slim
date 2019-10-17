@@ -1,6 +1,5 @@
+= render partial: "breadcrumb", locals: {map: @map}
 .w-50.mx-auto
   h1.mt-5.pt-2.text-center.font-weight-bolder.page-title マップを編集する
 
   == render 'form'
-
-  = link_to '＜ マップ管理画面へ戻る', admin_map_path(@map), class: 'help-link d-inline-block mt-3'

@@ -9,10 +9,16 @@ Rails.application.routes.draw do
 
   mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 
-  resources :maps do
+  resources :maps, except: [:edit], param: 'map_id' do
     get :mymap, on: :collection
-    get :admin, on: :member # それぞれのMapの管理画面みたいなもの、ここからauthorized_maps/newとかに遷移させる。もしくはeditアクションで対応？
-    resources :authorized_maps, except: [:edit]
-    resources :pins
+
+    member do
+      scope :admin do
+        get '/', to: 'maps#admin', as: 'admin'
+        get '/edit', to: 'maps#edit'
+        resources :authorized_maps, except: [:edit]
+      end
+      resources :pins
+    end
   end
 end

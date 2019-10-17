@@ -32,7 +32,7 @@ class AuthorizedMapsController < ApplicationController
       flash[:danger] = '（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです'
     end
 
-    redirect_to new_map_authorized_map_path(@map)
+    redirect_to new_authorized_map_path(@map)
   end
 
   def edit; end
