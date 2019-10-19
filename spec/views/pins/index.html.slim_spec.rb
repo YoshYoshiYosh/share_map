@@ -19,10 +19,7 @@ RSpec.describe 'pins/index', type: :view do
   it 'renders a list of pins' do
     render
 
-    time = pins.first.created_at
-
     assert_select 'div>small', text: 'ひとこと： test1-description', count: 1
     assert_select 'div>small', text: '作成者： test-1@example.com', count: 2
-    assert_select 'div>small', text: "作成日時： #{time}", count: 2
   end
 end
