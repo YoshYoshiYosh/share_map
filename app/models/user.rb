@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :authorized_maps, foreign_key: 'user_id'
   has_many :can_edit_maps, through: :authorized_maps, source: :map
   
-  validates :force_avatar_attached, presence: true
+  validate :force_avatar_attached
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
