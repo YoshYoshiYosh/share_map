@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+Rails.application.routes.default_url_options[:host] = 'https://rails-heroku-sharemap.herokuapp.com'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -28,8 +30,6 @@ Rails.application.configure do
     authentication: :plain,
     enable_starttls_auto: true
   }
-
-  config.default_url_options = { host: 'https://rails-heroku-sharemap.herokuapp.com' }
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
