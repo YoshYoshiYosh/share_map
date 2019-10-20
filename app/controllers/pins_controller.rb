@@ -11,14 +11,15 @@ class PinsController < ApplicationController
   # GET /pins
   # GET /pins.json
   def index
-    @pins = Pin.all.where(map: @map)
-
-    respond_to do |format|
-      format.html
-      format.json
+    @pins = Pin.where(map: @map).map do |pin|
+      pin.as_json(except: :lonlat).merge(
+        lonlat: pin.custom_lonlat,
+        image: pin.custom_image
+      ) 
     end
+    render json: @pins
   end
-
+  
   # GET /pins/1
   # GET /pins/1.json
   def show; end

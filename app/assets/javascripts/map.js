@@ -126,7 +126,7 @@ async function mapInit(location) {
   L.control.watermark({ position: 'topright' }).addTo(map);
 
   for (let i = 0; i < storedPins.length; i++) {
-    if (storedPins[i].image === undefined) {
+    if (!storedPins[i].image) {
       L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
         // .bindPopup(`作った人：${storedPins[i].author}<br><p>${escapeHtml(storedPins[i].title)}</p>`)
         .bindPopup(`<img class="avatar-image" src=${storedPins[i].avatar}><span class="pin-author">${storedPins[i].author}</span><br><p class="pin-text">${escapeHtml(storedPins[i].title)}</p>`)
