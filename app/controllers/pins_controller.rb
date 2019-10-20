@@ -14,7 +14,9 @@ class PinsController < ApplicationController
     @pins = Pin.where(map: @map).map do |pin|
       pin.as_json(except: :lonlat).merge(
         lonlat: pin.custom_lonlat,
-        image: pin.custom_image
+        image: pin.custom_image,
+        author: pin.author.email,
+        avatar: pin.custom_avatar
       ) 
     end
     render json: @pins
