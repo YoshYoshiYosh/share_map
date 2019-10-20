@@ -663,3 +663,13 @@ h1.mb-3:before {
   margin-right: 5px;
   border: 1px solid #a59898;
 }
+
+.dropdownMenuButton {
+  cursor: pointer;
+}
+
+.dropdown-item {
+  &:hover {
+    background-color: #c2cdcf;
+  }
+}
