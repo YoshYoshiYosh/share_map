@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+Rails.application.routes.default_url_options[:host] = 'localhost'
+Rails.application.routes.default_url_options[:port] = 3000
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -28,7 +31,7 @@ Rails.application.configure do
 
     config.cache_store = :null_store
   end
-
+  
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
 
