@@ -51,6 +51,8 @@ async function mapInit(location) {
 
   const map = L.map('mapid', {minZoom: 5}).setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
 
+  console.log(storedPins[storedPins.length - 1].avatar);
+
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
@@ -126,11 +128,13 @@ async function mapInit(location) {
   for (let i = 0; i < storedPins.length; i++) {
     if (storedPins[i].image === undefined) {
       L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
-        .bindPopup(`This is <br><h3>${escapeHtml(storedPins[i].title)}</h3>`)
+        // .bindPopup(`作った人：${storedPins[i].author}<br><p>${escapeHtml(storedPins[i].title)}</p>`)
+        .bindPopup(`<img class="avatar-image" src=${storedPins[i].avatar}><span class="pin-author">${storedPins[i].author}</span><br><p class="pin-text">${escapeHtml(storedPins[i].title)}</p>`)
+        // .bindPopup(`This is <br><h3>${escapeHtml(storedPins[i].title)}</h3>`)
         .openPopup();
     } else {
       L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
-        .bindPopup(`This is <br><h3>${escapeHtml(storedPins[i].title)}</h3><img class="pin-image" src=${storedPins[i].image}>`)
+        .bindPopup(`作った人：${storedPins[i].author}<br><p>${escapeHtml(storedPins[i].title)}</p><img class="pin-image" src=${storedPins[i].image}>`)
         .openPopup();
     }
   }

@@ -6,6 +6,9 @@
       = f.label :email, "メールアドレス"
       = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'form-control font-weight-lighter'
     .form-group
+      = f.label :avatar, "アバター用画像"
+      = f.file_field :avatar, accept: '.jpeg, .jpg, .gif, .png, .bmp', class: 'form-control font-weight-lighter'
+    .form-group
       = f.label :password, "パスワード"
       = f.password_field :password, autocomplete: 'current-password', placeholder: 'password', class: 'form-control font-weight-lighter'
       - if @minimum_password_length

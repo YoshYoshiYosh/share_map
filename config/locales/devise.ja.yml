@@ -55,6 +55,8 @@ ja:
       already_confirmed: 'は既に登録済みです。ログインしてください。'
       confirmation_period_expired: "の期限が切れました。%{period} までに確認する必要があります。 新しくリクエストしてください。"
       expired: 'の有効期限が切れました。新しくリクエストしてください。'
+      force_avatar_attached:
+        blank: 'は添付必須項目です。'
       not_found: 'は見つかりませんでした。'
       not_locked: 'は凍結されていません。'
       not_saved:
