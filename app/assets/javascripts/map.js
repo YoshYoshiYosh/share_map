@@ -187,12 +187,14 @@ document.addEventListener('turbolinks:load', async () => {
         const inputTitle = document.getElementById('pin_title').value;
         const inputDescription = document.getElementById('pin_description').value;
         const inputLonlat = `${latlon.lat} ${latlon.lon}`;
+        const inputImage = document.getElementById('pin_image').files[0];
 
         const formData = new FormData();
         formData.append('authenticity_token', token);
         formData.append('pin[title]', inputTitle);
         formData.append('pin[description]', inputDescription);
         formData.append('pin[lonlat]', inputLonlat);
+        formData.append('pin[image]', inputImage);
 
         const postRequest = await fetch(`${location.href}/pins`, {
           method: 'POST',
