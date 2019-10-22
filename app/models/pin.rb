@@ -19,5 +19,9 @@ class Pin < ApplicationRecord
   def custom_image
     url_for(image) if image.attached?
   end
+
+  def custom_avatar
+    url_for(author.avatar) if author.avatar.attached?
+  end
   
 end
