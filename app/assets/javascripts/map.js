@@ -128,13 +128,11 @@ async function mapInit(location) {
   for (let i = 0; i < storedPins.length; i++) {
     if (!storedPins[i].image) {
       L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
-        // .bindPopup(`作った人：${storedPins[i].author}<br><p>${escapeHtml(storedPins[i].title)}</p>`)
         .bindPopup(`<img class="avatar-image" src=${storedPins[i].avatar}><span class="pin-author">${storedPins[i].author}</span><br><p class="pin-text">${escapeHtml(storedPins[i].title)}</p>`)
-        // .bindPopup(`This is <br><h3>${escapeHtml(storedPins[i].title)}</h3>`)
         .openPopup();
     } else {
       L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
-        .bindPopup(`作った人：${storedPins[i].author}<br><p>${escapeHtml(storedPins[i].title)}</p><img class="pin-image" src=${storedPins[i].image}>`)
+        .bindPopup(`<img class="avatar-image" src=${storedPins[i].avatar}><span class="pin-author">${storedPins[i].author}</span><br><p class="pin-text">${escapeHtml(storedPins[i].title)}</p><img class="pin-image" src=${storedPins[i].image}>`)
         .openPopup();
     }
   }
