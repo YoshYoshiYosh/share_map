@@ -575,14 +575,14 @@ h1.mb-3:before {
   background-color: #fff;
 }
 
-
 .pin-image {
-  max-width: 500px;
+  display: block;
+  max-width: 460px;
 }
 
-// 要調整
-.leaflet-popup {
+.leaflet-popup-content-wrapper {
   width: 500px;
+  padding: 5px 0 5px 0;
 }
 
 .footer {
