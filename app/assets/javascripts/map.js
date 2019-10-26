@@ -192,7 +192,10 @@ document.addEventListener('turbolinks:load', async () => {
         formData.append('pin[title]', inputTitle);
         formData.append('pin[description]', inputDescription);
         formData.append('pin[lonlat]', inputLonlat);
-        formData.append('pin[image]', inputImage);
+
+        if (inputImage) {
+          formData.append('pin[image]', inputImage);
+        }
 
         const postRequest = await fetch(`${location.href}/pins`, {
           method: 'POST',
