@@ -18,21 +18,13 @@ class AuthorizedMapsController < ApplicationController
   end
 
   def create
-    if (@authorized_user = User.find_by(authorized_params)) && (@authorized_user != current_user)
-      begin
-        @map.authorizing_user(@authorized_user)
-        flash[:success] = "ユーザー：#{@authorized_user.email} を追加しました。"
-      rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
-        flash.delete(:success)
-        flash[:danger] = '（既存ユーザーを招待した場合のメッセージ）招待できないメールアドレスです'
-      end
-    elsif @authorized_user == current_user
-      flash[:danger] = '自分を招待することはできません'
+    if @map.authorizing_user(authorized_params, current_user)
+      redirect_to new_authorized_map_path(@map)
     else
-      flash[:danger] = '（存在しないユーザーを招待した場合のメッセージ）招待できないメールアドレスです'
+      @new_authorized = AuthorizedMap.new(map: @map)
+      render :new
     end
 
-    redirect_to new_authorized_map_path(@map)
   end
 
   def edit; end
