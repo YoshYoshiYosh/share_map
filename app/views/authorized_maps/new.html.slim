@@ -5,10 +5,19 @@
     h2.text-center.text-muted
       = "友達を#{@map.title}へ招待する"
       i.fas.fa-users
-    = form_with model: [:map, @new_authorized], url: authorized_maps_path, class: 'invite-form mt-5', remote: true do |f|
-
+    h3
+      - if @map.errors.any?
+        - logger.debug('@mapのerrorsにエラーはあります')
+      - if @new_authorized == nil
+        - logger.debug('@new_authorizedはnilです')
+    = form_with model: [@map, @new_authorized], url: authorized_maps_path, class: 'invite-form mt-5', local: true do |f|
+      - if @map.errors.any?
+        #error_explanation
+          ul
+            - @map.errors.full_messages.each do |message|
+              li.alert.alert-danger = message
       .form-group.mb-3
         = f.label :email, '招待する友達のメールアドレスを入力してください', class: 'mb-3 left-border'
-        = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'form-control  font-weight-lighter'
+        = f.email_field :email, autofocus: true, autocomplete: 'email', placeholder: 'email', class: 'form-control font-weight-lighter'
         
       = f.submit '招待する', class: 'btn-flat-border'
