@@ -10,8 +10,11 @@ class Map < ApplicationRecord
   validates :title, presence: true
 
   def authorizing_user(params, user)
-    authorized_user = User.find_by!(params)
-    if authorized_user == user || AuthorizedMap.find_by(map: self, user: authorized_user)
+    authorized_user = User.find_by(params)
+    if authorized_user == nil
+      errors[:base] << '存在しないユーザを招待することはできません'
+      false
+    elsif authorized_user == user || AuthorizedMap.find_by(map: self, user: authorized_user)
       errors[:base] << '招待済みのユーザー、もしくは自身を招待することはできません'
       false
     else
