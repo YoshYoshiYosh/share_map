@@ -71,3 +71,4 @@ gem 'aws-sdk-s3', require: false
 gem 'devise-bootstrap-views'
 gem 'rb-readline'
 gem 'rubocop', '~> 0.72.0', require: false
+gem 'rails-i18n', '~> 5.1'
