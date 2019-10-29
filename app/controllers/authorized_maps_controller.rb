@@ -3,6 +3,7 @@
 class AuthorizedMapsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_map, except: [:edit]
+  before_action :set_new_authorized, only: %i[new create]
   before_action :set_authorized_users, only: %i[index new create destroy]
 
   before_action :get_previous_url, only: :new
@@ -14,17 +15,17 @@ class AuthorizedMapsController < ApplicationController
   end
 
   def new
-    @new_authorized = AuthorizedMap.new(map: @map)
   end
 
   def create
-    if @map.authorizing_user(authorized_params, current_user)
+    @new_authorized.current_user = current_user
+    @new_authorized.user = User.find_by(authorized_params)
+
+    if @new_authorized.save
       redirect_to new_authorized_map_path(@map)
     else
-      @new_authorized = AuthorizedMap.new(map: @map)
       render :new
     end
-
   end
 
   def edit; end
@@ -42,7 +43,7 @@ class AuthorizedMapsController < ApplicationController
 
   def author?
     return if current_user == @map.author
-    
+
     flash[:notice] = 'ユーザーを招待する権限がありません。'
     redirect_to map_url(@map)
   end
@@ -50,6 +51,10 @@ class AuthorizedMapsController < ApplicationController
   def set_map
     @map = Map.find(params[:map_id])
     author?
+  end
+
+  def set_new_authorized
+    @new_authorized = AuthorizedMap.new(map: @map)
   end
 
   def set_authorized_users
