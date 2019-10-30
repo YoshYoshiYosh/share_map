@@ -22,6 +22,7 @@ class AuthorizedMapsController < ApplicationController
     @new_authorized.user = User.find_by(authorized_params)
 
     if @new_authorized.save
+      flash[:success] = "#{@new_authorized.user.email}を招待しました！"
       redirect_to new_authorized_map_path(@map)
     else
       render :new
