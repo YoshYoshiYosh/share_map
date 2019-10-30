@@ -14,8 +14,7 @@ class AuthorizedMapsController < ApplicationController
     end
   end
 
-  def new
-  end
+  def new; end
 
   def create
     @new_authorized.current_user = current_user
