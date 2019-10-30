@@ -14,7 +14,7 @@
       - if @new_authorized.errors.any?
         #error_explanation
           ul
-            - @new_authorized.errors.full_messages.each do |message|
+            - @new_authorized.errors.messages[:base].each do |message|
               li.alert.alert-danger = message
       .form-group.mb-3
         = f.label :email, '招待する友達のメールアドレスを入力してください', class: 'mb-3 left-border'
