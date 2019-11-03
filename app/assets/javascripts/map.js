@@ -181,7 +181,7 @@ document.addEventListener('turbolinks:load', async () => {
 
         event.preventDefault();
 
-        // const token = document.getElementsByName('csrf-token').item(0).content;
+        const token = document.getElementsByName('csrf-token').item(0).content;
 
         const inputTitle = document.getElementById('pin_title').value;
         const inputDescription = document.getElementById('pin_description').value;
@@ -189,7 +189,7 @@ document.addEventListener('turbolinks:load', async () => {
         const inputImage = document.getElementById('pin_image').files[0];
 
         const formData = new FormData();
-        // formData.append('authenticity_token', token);
+        formData.append('authenticity_token', token);
         formData.append('pin[title]', inputTitle);
         formData.append('pin[description]', inputDescription);
         formData.append('pin[lonlat]', inputLonlat);
