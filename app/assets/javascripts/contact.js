@@ -29,6 +29,7 @@ async function sendContactMessage() {
     method: 'POST',
     body: formData,
     redirect: 'manual',
+    credentials: 'same-origin'
   });
 
   console.log(postRequest);
