@@ -99,18 +99,52 @@ body {
   //   padding-top: 5px;
   // }
 
+
+  .text-blue {
+    color: rgb(96, 126, 205);
+  }
+  
+  // #book-image:hover + .map-box__text {
+  //   color: rgb(96, 126, 205);
+  // }
+  .about-share-map h2 {
+    font-size: 45px;
+    font-weight: bold;
+  }
+
+  .image-shadow {
+    box-shadow: 0 0 2rem rgba(0,0,0,.2);
+  }
+
   @media (min-width: 1500px) {
     .navbar {
       height: inherit;
       font-size: 20px;
     }
 
-  .map-box {
-    padding: 30px;
-    border: 1px solid #555;
-    .map-text {
-      color: #555;
+    .map-box {
+      padding: 30px;
+
+    .map-box--left, .map-box--right {
+      max-width: 35%;
+    }
+
+    .image-shadow {
+      box-shadow: 0 0 2rem rgba(0,0,0,.1);
+    }
+    
+    .map-box__icon {
+      height: 100px;
+      // .map-box--left:hover + .map-box__text {
+      //   color: rgb(96, 126, 205);
+      // }
+    }
+    .map-box__text {
+      // color: #555;
+      color: #696969;
       text-decoration: none;
+      font-size: 17.5px;
+      font-weight: bold;
     }
   }
 }
@@ -346,7 +380,12 @@ body {
 }
 
 .about-share-map {
-  margin-top: 70px;
+  margin-top: 90px;
+  margin-bottom: 80px;;
+  .sub-title {
+    margin: 0 auto;
+    width: 80%;
+  }
 }
 
 .sub-title {

@@ -11,9 +11,26 @@
       = image_tag("/shareMapsample.png", size: "600x600")
 
   .about-share-map
-    h2.sub-title.text-center ShareMapで出来ること
-    .mt-5.mb-3.d-flex.justify-content-around
-      .map-box
-        = link_to '新しくMapを作成する（後ほど削除）', new_map_path, class: 'map-text'
-      .map-box
-        = link_to '自分のマップを見に行く（後ほど削除）', mymap_maps_path, class: 'map-text'
+    h2.sub-title.text-center.d-block ShareMapで出来ること
+    .mt-5.mb-3
+    .map-box.d-flex.justify-content-around
+      .map-box--left
+        .map-box--hidden__left.d-none
+          = image_tag("/invite-friend3.png", size: '430x230', class: 'image-shadow' )
+        .map-box__icon
+          = image_tag("/diary.svg", size: "85x85", id: 'book-image')
+        .map-box__text
+          h4.mb-4 日々の行動や風景を記録する
+          p.detail
+            | 美味しいお店や「わ！」と感じた風景の写真、ひと言コメントを簡単に記録することが可能です。「写真」と「ひと言メモ」で行動の記録、思い出の保存をしてみませんか？
+      .map-box--right
+        .map-box--hidden__right.d-none
+          = image_tag("/sharemap.png", size: '410x270', class: 'image-shadow' )
+        .map-box__icon
+          = image_tag("/friend.svg", size: "100x100", id: 'friend-image')
+        .map-box__text
+          h4.mb-4 友達と地図を共有して作り上げる
+          p.detail
+            | 友達を地図に招待することも、地図に招待してもらうことも可能です。お互いの行動やお気に入りの場所、共有してみませんか？
+            br
+            | 一緒に地図を作り上げる喜びは格別です。
