@@ -139,9 +139,57 @@ async function mapInit(location) {
   }
 }
 
+function noneBlockSwitch(enterOrLeave, hideSide) {
+  let addOrRemove = enterOrLeave === 'mouseenter' ? 'add' : 'remove'
+  if (addOrRemove === 'add') {
+    document.querySelector(`.map-box--hidden__${hideSide}`).classList.replace('d-none', 'd-block');
+  } else {
+    document.querySelector(`.map-box--hidden__${hideSide}`).classList.replace('d-block', 'd-none');
+  }
+  document.querySelector(`.map-box--${hideSide} .map-box__icon`).classList[addOrRemove]('d-none');
+  document.querySelector(`.map-box--${hideSide} .map-box__text`).classList[addOrRemove]('d-none');
+}
+
 document.addEventListener('turbolinks:load', async () => {
   console.log('読み込まれました');
 
+  if (/http:\/\/localhost:3000\/?$|https:\/\/rails-heroku-sharemap.herokuapp.com\/?$/.test(location.href)) {
+
+    let mapBoxContents = [
+      {
+        id: 'book-image',
+        event: 'mouseenter',
+        image: '/diary-blue.svg',
+        hideSide: 'right'
+      },
+      {
+        id: 'book-image',
+        event: 'mouseleave',
+        image: '/diary.svg',
+        hideSide: 'right'
+      },
+      {
+        id: 'friend-image',
+        event: 'mouseenter',
+        image: '/friend-blue.svg',
+        hideSide: 'left'
+      },
+      {
+        id: 'friend-image',
+        event: 'mouseleave',
+        image: '/friend.svg',
+        hideSide: 'left'
+      }
+    ];
+
+    mapBoxContents.forEach((element) => {
+      document.getElementById(element.id).addEventListener(element.event, (e) => {
+        e.target.src = element.image;
+        noneBlockSwitch(e.type, element.hideSide);
+      })
+    });
+  }
+  
   if (/maps\/\d\/admin\/?$/.test(location.href)) {
     const showEditButtonAtAdminPages = [
       document.querySelector('.manage-title'),
