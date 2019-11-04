@@ -139,8 +139,6 @@ async function mapInit(location) {
   }
 }
 
-
-
 function noneBlockSwitch(enterOrLeave, hideSide) {
   let addOrRemove = enterOrLeave === 'mouseenter' ? 'add' : 'remove'
   if (addOrRemove === 'add') {
@@ -155,8 +153,7 @@ function noneBlockSwitch(enterOrLeave, hideSide) {
 document.addEventListener('turbolinks:load', async () => {
   console.log('読み込まれました');
 
-  // 後日、heroku環境用に修正する
-  if (/http:\/\/localhost:3000\/?$/.test(location.href)) {
+  if (/http:\/\/localhost:3000\/?$|https:\/\/rails-heroku-sharemap.herokuapp.com\/?/.test(location.href)) {
 
     let mapBoxContents = [
       {
