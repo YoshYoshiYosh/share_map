@@ -153,7 +153,7 @@ function noneBlockSwitch(enterOrLeave, hideSide) {
 document.addEventListener('turbolinks:load', async () => {
   console.log('読み込まれました');
 
-  if (/http:\/\/localhost:3000\/?$|https:\/\/rails-heroku-sharemap.herokuapp.com\/?/.test(location.href)) {
+  if (/http:\/\/localhost:3000\/?$|https:\/\/rails-heroku-sharemap.herokuapp.com\/?$/.test(location.href)) {
 
     let mapBoxContents = [
       {
