@@ -10,8 +10,8 @@
     .title-image
       = image_tag("/shareMapsample.png", size: "600x600")
 
-  .about-share-map
-    h2.sub-title.text-center.d-block ShareMapで出来ること
+  .about-share-map.full-width
+    h2.sub-title.py-3.text-center.d-block ShareMapで出来ること
     .mt-5.mb-3
     .map-box.d-flex.justify-content-around
       .map-box--left
@@ -34,3 +34,9 @@
             | 友達を地図に招待することも、地図に招待してもらうことも可能です。お互いの行動やお気に入りの場所、共有してみませんか？
             br
             | 一緒に地図を作り上げる喜びは格別です。
+  .try-sharemap.full-width.blue.text-center
+    h2.py-3.d-block.text-white  Sharemapをはじめましょう
+    = link_to '今すぐ始める', redirect_path, class: 'btn-flat-border mt-4'
+
+  .inform-contact.full-width.text-center
+    p.m-0 ※お問合せやご要望は、下記のフォームからご連絡くださいませ。
