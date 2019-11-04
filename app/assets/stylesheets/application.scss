@@ -104,9 +104,6 @@ body {
     color: rgb(96, 126, 205);
   }
   
-  // #book-image:hover + .map-box__text {
-  //   color: rgb(96, 126, 205);
-  // }
   .about-share-map h2 {
     font-size: 45px;
     font-weight: bold;
@@ -116,7 +113,7 @@ body {
     box-shadow: 0 0 2rem rgba(0,0,0,.2);
   }
 
-  @media (min-width: 1500px) {
+  // @media (min-width: 1500px) {
     .navbar {
       height: inherit;
       font-size: 20px;
@@ -124,9 +121,11 @@ body {
 
     .map-box {
       padding: 30px;
-
+      margin: 0 auto;
+      width: 80%;
+      
     .map-box--left, .map-box--right {
-      max-width: 35%;
+      max-width: 28%;
     }
 
     .image-shadow {
@@ -147,7 +146,7 @@ body {
       font-weight: bold;
     }
   }
-}
+// }
 
   //  パンくずリスト
   .fa-map-marked-alt, .fa-atlas, .fa-cogs {
@@ -358,6 +357,16 @@ body {
   max-width: 50%;
 }
 
+.btn-flat-border {
+  color: rgb(59, 101, 228);
+  font-size: 15px;
+  width: 200px;
+  padding: 14px;
+  &:hover {
+    color: #fff;
+  }
+}
+
 .title-message {
   // padding-right: 20px;
   max-width: 40%;
@@ -380,12 +389,31 @@ body {
 }
 
 .about-share-map {
+  background-color: #f5f5f5;
   margin-top: 90px;
-  margin-bottom: 80px;;
+  // margin-bottom: 80px;
   .sub-title {
     margin: 0 auto;
     width: 80%;
+    // background-color: #ededed;
+    border-radius: 7px 7px 0 0 / 7px 7px 0 0;
   }
+}
+
+.try-sharemap h2 {
+  font-size: 45px;
+  font-weight: bold;
+}
+
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  &.blue {
+    background-color: rgb(91, 123, 211);
+  }
+  padding: 40px;
 }
 
 .sub-title {
