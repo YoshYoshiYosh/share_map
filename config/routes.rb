@@ -2,8 +2,7 @@
 
 Rails.application.routes.draw do
   root 'home#index'
-  get '/mypage', to: 'home#mypage'
-  post '/contact', to: 'contacts#create'
+  resources :contacts, only: :create
 
   devise_for :users
 
