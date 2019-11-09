@@ -13,7 +13,6 @@
       = f.password_field :password, autocomplete: 'current-password', placeholder: 'password', class: 'form-control font-weight-lighter'
       - if @minimum_password_length
         small.form-text.text-muted
-          / = t('devise.shared.minimum_password_length', count: @minimum_password_length)
           | （最低6文字以上)
     .form-group
       = f.label :password_confirmation, "パスワード確認用"

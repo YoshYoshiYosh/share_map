@@ -35,11 +35,8 @@ async function sendContactMessage() {
   console.log(postRequest);
 
   if (postRequest.status === 201) {
-    console.log('成功');
     setFlash('success');
   } else {
-    console.log('失敗');
-    console.log(postRequest.status);
     setFlash('danger');
   }
 

@@ -9,8 +9,6 @@ class User < ApplicationRecord
   
   validate :force_avatar_attached
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
 

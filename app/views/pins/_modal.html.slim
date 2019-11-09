@@ -7,10 +7,6 @@
           span[aria-hidden="true"]
             | ×
 
-      / = form_with model: [map, pin], remote: true do |f|
-
-      / なぜ通らない？
-      / = form_with model: pin, method: :post, remote: true do |f|
       = form_with model: pin, url: pins_path(map, pin), remote: true do |f|
         .form-group
           = f.label :title, 'タイトル', class: 'mb-1 mt-3 left-border'

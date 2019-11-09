@@ -4,12 +4,10 @@ class PinsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_pin, only: %i[show edit update destroy]
   before_action :set_map
-  before_action :can_edit?, only: %i[edit update destroy] # :showを制限するか悩み中
+  before_action :can_edit?, only: %i[edit update destroy]
   before_action :get_previous_url, only: :index
   protect_from_forgery
 
-  # GET /pins
-  # GET /pins.json
   def index
     @pins = Pin.where(map: @map).map do |pin|
       pin.as_json(except: :lonlat).merge(
@@ -22,22 +20,14 @@ class PinsController < ApplicationController
     render json: @pins
   end
   
-  # GET /pins/1
-  # GET /pins/1.json
   def show; end
 
-  # GET /pins/new
-  # Mapモデルと紐づけるのを忘れないように実装する
   def new
-    # @pin = Pin.new
     @pin = Pin.new(map: @map)
   end
 
-  # GET /pins/1/edit
   def edit; end
 
-  # POST /pins
-  # POST /pins.json
   def create
     @pin = Pin.new(pin_params)
     @pin.author = current_user
@@ -51,8 +41,6 @@ class PinsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /pins/1
-  # PATCH/PUT /pins/1.json
   def update
     respond_to do |format|
       if @pin.update(pin_params)
@@ -65,8 +53,6 @@ class PinsController < ApplicationController
     end
   end
 
-  # DELETE /pins/1
-  # DELETE /pins/1.json
   def destroy
     @pin.destroy
     respond_to do |format|
@@ -77,7 +63,6 @@ class PinsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_pin
     @pin = Pin.find(params[:id])
   end
@@ -86,7 +71,6 @@ class PinsController < ApplicationController
     @map = Map.find(params[:map_id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def pin_params
     params[:pin][:lonlat] = "POINT(#{params[:pin][:lonlat]})"
     params.require(:pin).permit(:author_id, :title, :description, :lonlat, :image)
