@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class ContactsController < ApplicationController
-  # before_action :authenticate_user_for_contact
   before_action :authenticate_user!
-  # https://www.javadrive.jp/rails/controller/index6.html
 
   def create
     opinion = params[:contact]

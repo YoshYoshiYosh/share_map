@@ -5,7 +5,6 @@ class AuthorizedMapsController < ApplicationController
   before_action :set_map, except: [:edit]
   before_action :set_new_authorized, only: %i[new create]
   before_action :set_authorized_users, only: %i[index new create destroy]
-
   before_action :get_previous_url, only: :new
 
   def index
@@ -32,7 +31,6 @@ class AuthorizedMapsController < ApplicationController
 
   def update; end
 
-  # 今のところテストデータを消す目的だけでこのアクションを利用中
   def destroy
     @authorized_users.each do |user|
       AuthorizedMap.find_by(user_id: user.id).destroy unless user.email == current_user.email
