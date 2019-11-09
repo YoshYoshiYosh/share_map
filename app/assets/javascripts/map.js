@@ -102,7 +102,6 @@ async function mapInit(location) {
 
           case 3: {
             img.classList.add('setting');
-            // img.classList.add('mb-0');
             break;
           }
         }
@@ -151,7 +150,6 @@ function noneBlockSwitch(enterOrLeave, hideSide) {
 }
 
 document.addEventListener('turbolinks:load', async () => {
-  console.log('読み込まれました');
 
   if (/http:\/\/localhost:3000\/?$|https:\/\/rails-heroku-sharemap.herokuapp.com\/?$/.test(location.href)) {
 
@@ -211,8 +209,6 @@ document.addEventListener('turbolinks:load', async () => {
 
     await mapInit(location.href);
 
-
-
     const viewPinsButton = document.querySelector('.view-pins');
     viewPinsButton.addEventListener('click', () => {
       open(`${location.href}/pins`, '_self');
@@ -221,11 +217,9 @@ document.addEventListener('turbolinks:load', async () => {
     const addPinButton = document.querySelector('.add-pin');
     addPinButton.addEventListener('click', async () => {
       const latlon = await setLonlat();
-      console.log(`lat:${latlon.lat}, lon:${latlon.lon}`);
 
       const submitButton = document.getElementsByName('commit')[0];
       submitButton.addEventListener('click', async (event) => {
-        console.log('送信ボタンがクリックされました');
 
         event.preventDefault();
 
@@ -254,10 +248,8 @@ document.addEventListener('turbolinks:load', async () => {
         });
 
         if (postRequest.status === 201) {
-          console.log('成功');
           location.reload();
         } else {
-          console.log('失敗');
           console.log(postRequest.status);
           $('.alert-danger').show();
         }
