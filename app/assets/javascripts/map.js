@@ -47,7 +47,7 @@ async function mapInit(location) {
   }).then((response) => response.json());
 
   if (storedPins.length === 0) {
-    storedPins.push({ title: 'default', lonlat: { x: 51.476853, y: -0.0005002 } });
+    storedPins.push({ title: 'default', description: '旧グリニッジ天文台', lonlat: { x: 51.476853, y: -0.0005002 }, created_at: '2019-01-01' });
   }
 
   const map = L.map('mapid', {minZoom: 5}).setView([storedPins[0].lonlat.x, storedPins[0].lonlat.y], 5);
