@@ -129,12 +129,12 @@ async function mapInit(location) {
     if (!storedPins[i].image) {
       L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
         .bindPopup(`<img class="avatar-image" src=${storedPins[i].avatar}><span class="pin-author">${storedPins[i].author}</span><br>
-          <h3 class="pin-text">${escapeHtml(storedPins[i].title)}</h3><p>ひとこと：${escapeHtml(storedPins[i].title)}</p><p>${storedPins[i].created_at.slice(0,10)}</p>`)
+          <h3 class="pin-text">${escapeHtml(storedPins[i].title)}</h3><p>ひとこと：${escapeHtml(storedPins[i].description)}</p><p>${storedPins[i].created_at.slice(0,10)}</p>`)
         .openPopup();
     } else {
       L.marker([storedPins[i].lonlat.x, storedPins[i].lonlat.y]).addTo(map)
         .bindPopup(`<img class="avatar-image" src=${storedPins[i].avatar}><span class="pin-author">${storedPins[i].author}</span><br>
-          <h3 class="pin-text">${escapeHtml(storedPins[i].title)}</h3><p>ひとこと：${escapeHtml(storedPins[i].title)}</p><img class="pin-image" src=${storedPins[i].image}><p>${storedPins[i].created_at.slice(0,10)}</p>`)
+          <h3 class="pin-text">${escapeHtml(storedPins[i].title)}</h3><p>ひとこと：${escapeHtml(storedPins[i].description)}</p><img class="pin-image" src=${storedPins[i].image}><p>${storedPins[i].created_at.slice(0,10)}</p>`)
         .openPopup();
     }
   }
